@@ -137,6 +137,17 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .footer-contact-link{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;margin-bottom:9px;transition:color .2s;}
 .footer-contact-link:hover{color:#7FDBFF;}
 .footer-bottom{display:flex;justify-content:space-between;max-width:1200px;margin:28px auto 0;font-size:12px;color:rgba(255,255,255,.3);}
+
+/* FLYOUT SUBMENU */
+.has-flyout{position:relative;}
+.flyout{display:none;position:absolute;top:0;left:100%;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px 0;min-width:210px;box-shadow:0 12px 40px rgba(12,36,97,.12);z-index:400;margin-left:4px;}
+.has-flyout:hover .flyout{display:block;}
+.flyout a{display:block;padding:10px 18px;font-size:13px;color:var(--text);font-weight:500;transition:background .15s,color .15s;text-decoration:none;}
+.flyout a:hover{background:var(--bg);color:var(--navy);}
+.flyout-divider{height:1px;background:var(--border);margin:4px 0;}
+.flyout-label{padding:8px 18px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.has-flyout>a{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.has-flyout>a::after{content:'\203A';font-size:14px;color:var(--muted);}
 </style>
 </head>
 <body>
