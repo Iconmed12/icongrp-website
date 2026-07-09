@@ -126,6 +126,17 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .reveal.visible{opacity:1;transform:none;}
 @media(max-width:900px){nav{padding:0 24px;}.nav-links{display:none;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#fff;padding:24px;gap:16px;border-bottom:1px solid var(--border);z-index:199;}.nav-links.open{display:flex;}.nav-burger{display:block;}.stats-bar{grid-template-columns:repeat(2,1fr);}.stat-item:nth-child(2){border-right:none;}.stat-item:nth-child(3){border-top:1px solid var(--border);}section{padding:64px 24px;}.impact{padding:64px 24px;}.cta-section{padding:64px 24px;}footer{padding:48px 24px 24px;}.footer-grid{grid-template-columns:1fr 1fr;gap:32px;}.impact-grid{grid-template-columns:1fr 1fr;}.divisions-grid{grid-template-columns:1fr 1fr;}.divisions-header{flex-direction:column;align-items:flex-start;}.why-grid{grid-template-columns:1fr;gap:40px;}.why-visual{height:300px;}.dropdown{position:static;box-shadow:none;border:none;padding:0 0 0 16px;}.has-dropdown:hover .dropdown{display:none;}.has-dropdown.open .dropdown{display:block;}}
 @media(max-width:600px){.footer-grid{grid-template-columns:1fr;}.impact-grid{grid-template-columns:1fr;}.divisions-grid{grid-template-columns:1fr;}.hero-actions{flex-direction:column;align-items:center;}}
+
+/* FLYOUT SUBMENU */
+.has-flyout{position:relative;}
+.flyout{display:none;position:absolute;top:0;left:100%;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px 0;min-width:210px;box-shadow:0 12px 40px rgba(12,36,97,.12);z-index:400;margin-left:4px;}
+.has-flyout:hover .flyout{display:block;}
+.flyout a{display:block;padding:10px 18px;font-size:13px;color:var(--text);font-weight:500;transition:background .15s,color .15s;text-decoration:none;}
+.flyout a:hover{background:var(--bg);color:var(--navy);}
+.flyout-divider{height:1px;background:var(--border);margin:4px 0;}
+.flyout-label{padding:8px 18px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.has-flyout>a{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.has-flyout>a::after{content:'\203A';font-size:14px;color:var(--muted);}
 </style>
 </head>
 <body>
@@ -140,8 +151,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         <li><a href="logistics.html">Operations &amp; Logistics</a></li>
         <li><a href="workforce.html">Workforce Solutions</a></li>
         <li><a href="facilities.html">Facilities &amp; Cleaning</a></li>
-        <li><a href="consulting.html">Consulting Solutions</a></li>
-        <li style="border-top:1px solid rgba(14,65,180,.08);margin-top:4px;padding-top:4px;"><a href="south-africa.html" style="padding-left:28px!important;font-size:13px!important;color:var(--blue-light)!important;display:flex;align-items:center;gap:6px;">&#127462;&#127487; <span>South Africa</span> <span style="font-size:10px;background:var(--accent-dim);color:var(--blue-light);padding:1px 7px;border-radius:100px;font-weight:700;letter-spacing:.04em;">New</span></a></li>
+        <li class="has-flyout"><a href="consulting.html">Consulting Solutions</a><ul class="flyout"><div class="flyout-label">Services</div><li><a href="tender-writing.html">&#9999;&#65039;&nbsp; Tender Writing &amp; Bid Support</a></li><li><a href="translation.html">&#127760;&nbsp; Language &amp; Translation</a></li><li><a href="cqc-improvement.html">&#128203;&nbsp; CQC Improvement</a></li><div class="flyout-divider"></div><div class="flyout-label">International</div><li><a href="south-africa.html">&#127462;&#127487;&nbsp; South Africa <span style="font-size:10px;background:#EEF3FB;color:var(--blue-light);padding:1px 7px;border-radius:100px;font-weight:700;margin-left:4px;">New</span></a></li></ul></li>
       </ul>
     </li>
     <li><a href="about.html">About</a></li>
