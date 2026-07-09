@@ -236,6 +236,12 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .flyout-label{padding:8px 18px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
 .has-flyout>a{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .has-flyout>a::after{content:'\203A';font-size:14px;color:var(--muted);}
+
+/* SVG ICON COLORS */
+.card-icon svg,.division-icon svg,.service-icon svg,.who-card-icon svg,.who-icon svg,.problem-icon svg,.te-point-icon svg{color:var(--blue-light);width:26px;height:26px;}
+.why-badge-icon svg,.te-feature-icon svg,.hc-step-num svg{color:#7FDBFF;width:20px;height:20px;}
+.footer-contact-link svg,.hero-card-feature svg{color:currentColor;display:inline-block;vertical-align:middle;margin-right:4px;}
+.service-icon{display:flex;align-items:center;}
 </style>
 </head>
 <body>
@@ -251,7 +257,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         <li><a href="logistics.html">Operations &amp; Logistics</a></li>
         <li><a href="workforce.html">Workforce Solutions</a></li>
         <li><a href="facilities.html">Facilities &amp; Cleaning</a></li>
-        <li class="has-flyout"><a href="consulting.html">Consulting Solutions</a><ul class="flyout"><div class="flyout-label">Services</div><li><a href="tender-writing.html">&#9999;&#65039;&nbsp; Tender Writing &amp; Bid Support</a></li><li><a href="translation.html">&#127760;&nbsp; Language &amp; Translation</a></li><li><a href="cqc-improvement.html">&#128203;&nbsp; CQC Improvement</a></li><div class="flyout-divider"></div><div class="flyout-label">International</div><li><a href="south-africa.html">&#127462;&#127487;&nbsp; South Africa <span style="font-size:10px;background:#EEF3FB;color:var(--blue-light);padding:1px 7px;border-radius:100px;font-weight:700;margin-left:4px;">New</span></a></li></ul></li>
+        <li class="has-flyout"><a href="consulting.html">Consulting Solutions</a><ul class="flyout"><div class="flyout-label">Services</div><li><a href="tender-writing.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>&nbsp; Tender Writing &amp; Bid Support</a></li><li><a href="translation.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>&nbsp; Language &amp; Translation</a></li><li><a href="cqc-improvement.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2h6v4H9zM9 11h6M9 15h6"/></svg>&nbsp; CQC Improvement</a></li><div class="flyout-divider"></div><div class="flyout-label">International</div><li><a href="south-africa.html">&#127462;&#127487;&nbsp; South Africa <span style="font-size:10px;background:#EEF3FB;color:var(--blue-light);padding:1px 7px;border-radius:100px;font-weight:700;margin-left:4px;">New</span></a></li></ul></li>
       </ul>
     </li>
     <li><a href="about.html">About</a></li>
@@ -330,7 +336,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
     </div>
     <div class="services-grid">
       <div class="service-card reveal">
-        <div class="service-icon">&#9999;&#65039;</div>
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg></div>
         <h3>Full Tender Writing</h3>
         <p>We take on your entire bid from first pass to final submission, developing high-quality, scored responses that speak directly to evaluation criteria.</p>
         <ul class="service-list">
@@ -342,7 +348,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         </ul>
       </div>
       <div class="service-card reveal">
-        <div class="service-icon">&#128269;</div>
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></div>
         <h3>Bid Review &amp; QA</h3>
         <p>Already have responses drafted? We review, score and strengthen them before submission, identifying gaps and sharpening your competitive edge.</p>
         <ul class="service-list">
@@ -354,7 +360,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         </ul>
       </div>
       <div class="service-card reveal">
-        <div class="service-icon">&#128200;</div>
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
         <h3>Bid Strategy &amp; Planning</h3>
         <p>We help you decide which tenders to pursue and build a strategy that positions your organisation to win before you write a single word.</p>
         <ul class="service-list">
@@ -366,7 +372,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         </ul>
       </div>
       <div class="service-card reveal">
-        <div class="service-icon">&#128196;</div>
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M6 2h9l4 4v16H6z"/><path d="M14 2v5h5M9 12h6M9 16h6"/></svg></div>
         <h3>New to Tendering</h3>
         <p>If your organisation has never bid before, we guide you through the entire process from registration to submission with hands-on support at every step.</p>
         <ul class="service-list">
@@ -378,7 +384,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         </ul>
       </div>
       <div class="service-card reveal">
-        <div class="service-icon">&#129309;</div>
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M7 11l4-4 3 3M3 12l4-4M12 10l4 4 5-5M8 15l3 3M11 18l2 2"/></svg></div>
         <h3>Collaborative Bidding</h3>
         <p>Work alongside your internal team rather than handing everything over. We embed with your people and add senior bid expertise where it is needed most.</p>
         <ul class="service-list">
@@ -390,7 +396,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         </ul>
       </div>
       <div class="service-card reveal">
-        <div class="service-icon">&#127919;</div>
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
         <h3>Post-Bid Debrief</h3>
         <p>Win or lose, we help you learn. We analyse debrief feedback and build a stronger foundation for your next submission.</p>
         <ul class="service-list">
@@ -452,21 +458,21 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
         <p style="color:var(--muted);font-size:16px;line-height:1.75;margin-bottom:28px;">Our dedicated tender platform gives organisations direct access to AI-assisted bid writing, expert review and a structured library of sector-specific responses built from real winning submissions.</p>
         <div class="te-points">
           <div class="te-point">
-            <div class="te-point-icon">&#129302;</div>
+            <div class="te-point-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="4" y="8" width="16" height="12" rx="2"/><circle cx="9" cy="14" r="1.2" fill="currentColor"/><circle cx="15" cy="14" r="1.2" fill="currentColor"/><path d="M12 8V4M12 4h.01"/></svg></div>
             <div>
               <div class="te-point-title">AI-Assisted Response Generation</div>
               <div class="te-point-desc">Upload your specification and scoring documents. Our AI, trained on real tender responses, generates question-by-question answers that you review, refine and submit.</div>
             </div>
           </div>
           <div class="te-point">
-            <div class="te-point-icon">&#128218;</div>
+            <div class="te-point-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0 0 4h13"/></svg></div>
             <div>
               <div class="te-point-title">Sector-Specific Knowledge Base</div>
               <div class="te-point-desc">Built around care, NHS, local authority and social housing procurement. Every response draws on deep sector knowledge rather than generic templates.</div>
             </div>
           </div>
           <div class="te-point">
-            <div class="te-point-icon">&#128101;</div>
+            <div class="te-point-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-.5a6.5 6.5 0 0 1 13 0v.5M16 8.5a3.5 3.5 0 0 1 0 -6.9M21.5 20v-.5a6.5 6.5 0 0 0-4.5-6.2"/></svg></div>
             <div>
               <div class="te-point-title">Expert-in-the-Loop Review</div>
               <div class="te-point-desc">Every AI-generated response is available for expert review and upgrade by our consulting team before it goes anywhere near a commissioner.</div>
@@ -482,28 +488,28 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
           <span class="te-panel-sub">Powered by ICONGRP</span>
           <div class="te-features">
             <div class="te-feature">
-              <div class="te-feature-icon">&#128196;</div>
+              <div class="te-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M6 2h9l4 4v16H6z"/><path d="M14 2v5h5M9 12h6M9 16h6"/></svg></div>
               <div>
                 <div class="te-feature-title">Upload spec &amp; scoring documents</div>
                 <div class="te-feature-desc">Drop in your ITT, specification or scoring framework and our system reads and structures it instantly.</div>
               </div>
             </div>
             <div class="te-feature">
-              <div class="te-feature-icon">&#129302;</div>
+              <div class="te-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="4" y="8" width="16" height="12" rx="2"/><circle cx="9" cy="14" r="1.2" fill="currentColor"/><circle cx="15" cy="14" r="1.2" fill="currentColor"/><path d="M12 8V4M12 4h.01"/></svg></div>
               <div>
                 <div class="te-feature-title">AI generates each answer individually</div>
                 <div class="te-feature-desc">Every question gets a tailored, scored response written to the word count and evaluation criteria.</div>
               </div>
             </div>
             <div class="te-feature">
-              <div class="te-feature-icon">&#128270;</div>
+              <div class="te-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></div>
               <div>
                 <div class="te-feature-title">Review, edit and export</div>
                 <div class="te-feature-desc">Preview responses, request expert review, then download submission-ready documents.</div>
               </div>
             </div>
             <div class="te-feature">
-              <div class="te-feature-icon">&#128274;</div>
+              <div class="te-feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
               <div>
                 <div class="te-feature-title">Founding member pricing available</div>
                 <div class="te-feature-desc">Limited founding plan access at preferential rates for organisations joining early.</div>
@@ -532,42 +538,42 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
     </div>
     <div class="who-grid reveal">
       <div class="who-card">
-        <div class="who-card-icon">&#127973;</div>
+        <div class="who-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M12 6v12M6 12h12"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div>
         <div>
           <h4>Care Providers</h4>
           <p>Domiciliary, residential, supported living and community care organisations bidding to local authorities and NHS commissioners.</p>
         </div>
       </div>
       <div class="who-card">
-        <div class="who-card-icon">&#128101;</div>
+        <div class="who-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-.5a6.5 6.5 0 0 1 13 0v.5M16 8.5a3.5 3.5 0 0 1 0 -6.9M21.5 20v-.5a6.5 6.5 0 0 0-4.5-6.2"/></svg></div>
         <div>
           <h4>Staffing &amp; Recruitment Agencies</h4>
           <p>Workforce and healthcare staffing agencies bidding for frameworks and preferred supplier agreements across public and private sectors.</p>
         </div>
       </div>
       <div class="who-card">
-        <div class="who-card-icon">&#127970;</div>
+        <div class="who-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="4" y="3" width="16" height="18"/><path d="M8 7h2M8 11h2M8 15h2M14 7h2M14 11h2M14 15h2M10 21v-3h4v3"/></svg></div>
         <div>
           <h4>Facilities &amp; Construction</h4>
           <p>FM, cleaning and construction companies tendering for NHS estates, local authority contracts and housing association frameworks.</p>
         </div>
       </div>
       <div class="who-card">
-        <div class="who-card-icon">&#127891;</div>
+        <div class="who-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5M22 9v5"/></svg></div>
         <div>
           <h4>Training &amp; Skills Providers</h4>
           <p>Employment, skills and education organisations responding to Department for Education, ESFA and local authority funding tenders.</p>
         </div>
       </div>
       <div class="who-card">
-        <div class="who-card-icon">&#127968;</div>
+        <div class="who-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M3 11l9-8 9 8M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></div>
         <div>
           <h4>Housing Associations</h4>
           <p>Social landlords and housing providers tendering for care, support and community services on behalf of their residents.</p>
         </div>
       </div>
       <div class="who-card">
-        <div class="who-card-icon">&#128203;</div>
+        <div class="who-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2h6v4H9zM9 11h6M9 15h6"/></svg></div>
         <div>
           <h4>Consulting &amp; Professional Services</h4>
           <p>Advisory, consulting and professional services firms bidding for public sector frameworks and managed service contracts.</p>
@@ -634,8 +640,8 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
       <li><a href="cqc-improvement.html">CQC Improvement</a></li>
     </ul></div>
     <div class="footer-col"><h4>Contact</h4>
-      <a class="footer-contact-link" href="tel:01268203010">&#128222; 01268 20 30 10</a>
-      <a class="footer-contact-link" href="mailto:info@icongrp.co.uk">&#9993; info@icongrp.co.uk</a>
+      <a class="footer-contact-link" href="tel:01268203010"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M5 3h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg> 01268 20 30 10</a>
+      <a class="footer-contact-link" href="mailto:info@icongrp.co.uk"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> info@icongrp.co.uk</a>
     </div>
   </div>
   <div class="footer-bottom"><span>&#169; 2026 ICONGRP. All rights reserved.</span><span>Newport Pagnell, Milton Keynes</span></div>
