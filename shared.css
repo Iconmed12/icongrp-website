@@ -94,3 +94,8 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .reveal.visible{opacity:1;transform:none;}
 @media(max-width:900px){nav{padding:0 24px;}.nav-links{display:none;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#fff;padding:24px;gap:16px;border-bottom:1px solid var(--border);z-index:199;}.nav-links.open{display:flex;}.nav-burger{display:block;}.breadcrumb{padding:14px 24px;}.page-hero{padding:60px 24px;}.dark-section{padding:64px 24px;}.cta-banner{padding:64px 24px;}section{padding:64px 24px;}footer{padding:48px 24px 24px;}.footer-grid{grid-template-columns:1fr 1fr;gap:32px;}.impact-grid{grid-template-columns:1fr 1fr;}.dropdown{position:static;box-shadow:none;border:none;padding:0 0 0 16px;}.has-dropdown:hover .dropdown{display:none;}.has-dropdown.open .dropdown{display:block;}}
 @media(max-width:600px){.footer-grid{grid-template-columns:1fr;}.impact-grid{grid-template-columns:1fr;}}
+
+/* SVG ICON COLORS */
+.card-icon svg,.division-icon svg,.service-icon svg,.who-card-icon svg,.who-icon svg,.problem-icon svg,.te-point-icon svg{color:var(--blue-light);width:26px;height:26px;}
+.why-badge-icon svg,.te-feature-icon svg{color:#7FDBFF;width:20px;height:20px;}
+.footer-contact-link svg{color:currentColor;display:inline-block;vertical-align:middle;margin-right:4px;}
