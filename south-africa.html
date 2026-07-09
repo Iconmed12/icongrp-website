@@ -148,6 +148,12 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .flyout-label{padding:8px 18px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
 .has-flyout>a{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .has-flyout>a::after{content:'\203A';font-size:14px;color:var(--muted);}
+
+/* SVG ICON COLORS */
+.card-icon svg,.division-icon svg,.service-icon svg,.who-card-icon svg,.who-icon svg,.problem-icon svg,.te-point-icon svg{color:var(--blue-light);width:26px;height:26px;}
+.why-badge-icon svg,.te-feature-icon svg,.hc-step-num svg{color:#7FDBFF;width:20px;height:20px;}
+.footer-contact-link svg,.hero-card-feature svg{color:currentColor;display:inline-block;vertical-align:middle;margin-right:4px;}
+.service-icon{display:flex;align-items:center;}
 </style>
 </head>
 <body>
@@ -158,7 +164,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
     <li><a href="index.html">Home</a></li>
     <li><a href="consulting.html">Consulting</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://wa.me/27000000000" class="nav-wa">&#128172; WhatsApp SA Desk</a></li>
+    <li><a href="https://wa.me/27000000000" class="nav-wa"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg> WhatsApp SA Desk</a></li>
   </ul>
 </nav>
 
@@ -172,7 +178,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
       <p class="hero-sub">Win more government and corporate tenders with expert bid writing, CSD compliance support and strategic procurement consulting — delivered remotely by the ICONGRP group.</p>
       <div class="hero-btns">
         <a href="contact.html" class="btn-white">Get a Free Bid Review</a>
-        <a href="https://wa.me/27000000000" class="btn-wa">&#128172; WhatsApp Us</a>
+        <a href="https://wa.me/27000000000" class="btn-wa"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg> WhatsApp Us</a>
       </div>
       <div class="hero-stats">
         <div><div class="hero-stat-num">&#163;2M+</div><div class="hero-stat-lbl">Contracts Supported</div></div>
@@ -195,9 +201,9 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
       <div class="hc-item"><div class="hc-check">&#10003;</div><div class="hc-text">WhatsApp-first communication for fast responses</div></div>
       <div class="hc-divider"></div>
       <div class="hc-contact-label">SA Desk Contact</div>
-      <div class="hc-contact-val">&#128172; +27 00 000 0000</div>
-      <div class="hc-contact-val">&#9993; za@icongrp.co.uk</div>
-      <a href="https://wa.me/27000000000" class="hc-cta">&#128172; WhatsApp Our SA Team</a>
+      <div class="hc-contact-val"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg> +27 00 000 0000</div>
+      <div class="hc-contact-val"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> za@icongrp.co.uk</div>
+      <a href="https://wa.me/27000000000" class="hc-cta"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg> WhatsApp Our SA Team</a>
     </div>
   </div>
 </section>
@@ -209,12 +215,12 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
     <div class="divider"></div>
     <p class="section-desc">We support South African organisations to compete effectively for government, municipal and corporate tenders with a full suite of procurement intelligence services.</p>
     <div class="services-grid">
-      <div class="service-card"><span class="service-icon">&#9999;&#65039;</span><h3>Full Tender Writing</h3><p>End-to-end bid writing tailored to South African government procurement requirements, scoring criteria and evaluation frameworks.</p></div>
-      <div class="service-card"><span class="service-icon">&#128203;</span><h3>CSD &amp; Compliance Packs</h3><p>Full support with CSD registration, tax clearance, B-BBEE certificates and all documentation required for government supplier eligibility.</p></div>
-      <div class="service-card"><span class="service-icon">&#128101;</span><h3>Collaborative Bid Writing</h3><p>We work directly alongside your team, extracting the right information from your organisation to build compelling, evidence-based tender responses.</p></div>
-      <div class="service-card"><span class="service-icon">&#128269;</span><h3>Bid Review &amp; QA</h3><p>Already written your tender? We review, score and strengthen your responses before submission to maximise your chances of winning.</p></div>
-      <div class="service-card"><span class="service-icon">&#128200;</span><h3>Market &amp; Opportunity Intelligence</h3><p>We identify the right tenders to pursue, when to pursue them and how to position your organisation for maximum competitive advantage.</p></div>
-      <div class="service-card"><span class="service-icon">&#127919;</span><h3>Win Strategy &amp; Positioning</h3><p>We develop the win themes, differentiators and messaging that evaluators respond to, before you write a single word of your bid.</p></div>
+      <div class="service-card"><span class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg></span><h3>Full Tender Writing</h3><p>End-to-end bid writing tailored to South African government procurement requirements, scoring criteria and evaluation frameworks.</p></div>
+      <div class="service-card"><span class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2h6v4H9zM9 11h6M9 15h6"/></svg></span><h3>CSD &amp; Compliance Packs</h3><p>Full support with CSD registration, tax clearance, B-BBEE certificates and all documentation required for government supplier eligibility.</p></div>
+      <div class="service-card"><span class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-.5a6.5 6.5 0 0 1 13 0v.5M16 8.5a3.5 3.5 0 0 1 0 -6.9M21.5 20v-.5a6.5 6.5 0 0 0-4.5-6.2"/></svg></span><h3>Collaborative Bid Writing</h3><p>We work directly alongside your team, extracting the right information from your organisation to build compelling, evidence-based tender responses.</p></div>
+      <div class="service-card"><span class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></span><h3>Bid Review &amp; QA</h3><p>Already written your tender? We review, score and strengthen your responses before submission to maximise your chances of winning.</p></div>
+      <div class="service-card"><span class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span><h3>Market &amp; Opportunity Intelligence</h3><p>We identify the right tenders to pursue, when to pursue them and how to position your organisation for maximum competitive advantage.</p></div>
+      <div class="service-card"><span class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><h3>Win Strategy &amp; Positioning</h3><p>We develop the win themes, differentiators and messaging that evaluators respond to, before you write a single word of your bid.</p></div>
     </div>
   </div>
 </section>
@@ -235,11 +241,11 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
       </div>
       <div class="why-panel">
         <div class="why-panel-title">&#127462;&#127487; South Africa Desk</div>
-        <div class="why-badge"><div class="why-badge-icon">&#128172;</div><div><div class="why-badge-text">WhatsApp First</div><div class="why-badge-sub">Fast responses via WhatsApp Business</div></div></div>
-        <div class="why-badge"><div class="why-badge-icon">&#128176;</div><div><div class="why-badge-text">ZAR Pricing Available</div><div class="why-badge-sub">Invoiced in rand on request</div></div></div>
-        <div class="why-badge"><div class="why-badge-icon">&#9889;</div><div><div class="why-badge-text">48hr Fast Track</div><div class="why-badge-sub">Urgent bid turnaround available</div></div></div>
-        <div class="why-badge"><div class="why-badge-icon">&#128737;&#65039;</div><div><div class="why-badge-text">CSD &amp; B-BBEE Ready</div><div class="why-badge-sub">Full compliance documentation support</div></div></div>
-        <div class="why-badge"><div class="why-badge-icon">&#127758;</div><div><div class="why-badge-text">Part of ICONGRP Group</div><div class="why-badge-sub">Established UK group, global delivery</div></div></div>
+        <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg></div><div><div class="why-badge-text">WhatsApp First</div><div class="why-badge-sub">Fast responses via WhatsApp Business</div></div></div>
+        <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><path d="M12 6v12M15.5 8.5c-.8-1-2-1.5-3.5-1.5-2 0-3.5 1-3.5 2.5s1.3 2.2 3.5 2.5 3.5 1 3.5 2.5-1.5 2.5-3.5 2.5c-1.5 0-2.7-.5-3.5-1.5"/></svg></div><div><div class="why-badge-text">ZAR Pricing Available</div><div class="why-badge-sub">Invoiced in rand on request</div></div></div>
+        <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></div><div><div class="why-badge-text">48hr Fast Track</div><div class="why-badge-sub">Urgent bid turnaround available</div></div></div>
+        <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M12 2l8 3.5V11c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><div><div class="why-badge-text">CSD &amp; B-BBEE Ready</div><div class="why-badge-sub">Full compliance documentation support</div></div></div>
+        <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><div><div class="why-badge-text">Part of ICONGRP Group</div><div class="why-badge-sub">Established UK group, global delivery</div></div></div>
       </div>
     </div>
   </div>
@@ -302,7 +308,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
     <p>Get a free review of your next bid or speak to our SA desk today via WhatsApp.</p>
     <div class="cta-btns">
       <a href="contact.html" class="cta-btn-white">Get a Free Bid Review</a>
-      <a href="https://wa.me/27000000000" class="cta-btn-wa">&#128172; WhatsApp Our SA Team</a>
+      <a href="https://wa.me/27000000000" class="cta-btn-wa"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg> WhatsApp Our SA Team</a>
       <a href="mailto:za@icongrp.co.uk" class="cta-btn-outline">Email za@icongrp.co.uk</a>
     </div>
   </div>
@@ -328,9 +334,9 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
       <li><a href="index.html">icongrp.co.uk</a></li>
     </ul></div>
     <div class="footer-col"><h4>SA Contact</h4>
-      <a class="footer-contact-link" href="https://wa.me/27000000000">&#128172; +27 00 000 0000</a>
-      <a class="footer-contact-link" href="mailto:za@icongrp.co.uk">&#9993; za@icongrp.co.uk</a>
-      <a class="footer-contact-link" href="index.html">&#127760; icongrp.co.uk/south-africa</a>
+      <a class="footer-contact-link" href="https://wa.me/27000000000"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg> +27 00 000 0000</a>
+      <a class="footer-contact-link" href="mailto:za@icongrp.co.uk"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> za@icongrp.co.uk</a>
+      <a class="footer-contact-link" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg> icongrp.co.uk/south-africa</a>
     </div>
   </div>
   <div class="footer-bottom">
