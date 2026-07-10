@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Appels d'offres multilatéraux – ICONGRP</title>
+<meta name="description" content="Appui à la rédaction d'offres pour les marchés financés par la Banque mondiale, le PNUD, la BAD et le FCDO à travers l'Afrique. Analyse offre/pas d'offre gratuite. Honoraires fixes.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#0C2461;--navy-mid:#1A3A7A;--blue:#1E56B0;--blue-light:#2E72D2;--bg:#EEF3FB;--bg-mid:#E2EAF6;--white:#fff;--text:#0C1A35;--muted:#4E6490;--border:rgba(14,65,180,.12);--gold:#F59E0B;--green:#25D366;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;}
+svg{display:block;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-weight:800;font-size:22px;letter-spacing:.03em;text-decoration:none;}
+.nav-logo .i{color:var(--navy);}.nav-logo .g{color:var(--blue-light);}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;transition:color .2s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-wa{background:var(--green)!important;color:#fff!important;padding:10px 20px;border-radius:8px;font-weight:700!important;display:flex;align-items:center;gap:7px;}
+
+/* FLOATING WA */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:var(--green);width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:transform .2s;}
+.wa-float:hover{transform:scale(1.08);}
+
+.hero{background:linear-gradient(150deg,#0C2461 0%,#1A3A7A 45%,#1E56B0 100%);padding:130px 56px 72px;position:relative;overflow:hidden;}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px;}
+.hero-glow{position:absolute;bottom:-80px;right:5%;width:500px;height:500px;background:radial-gradient(circle,rgba(14,165,233,.18) 0%,transparent 65%);filter:blur(70px);}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7FDBFF;margin-bottom:22px;}
+.hero h1{font-weight:800;font-size:clamp(32px,4vw,56px);line-height:1.07;letter-spacing:-.025em;color:#fff;margin-bottom:18px;}
+.hero h1 span{color:#7FDBFF;}
+.hero-sub{color:rgba(255,255,255,.72);font-size:17px;max-width:530px;margin-bottom:14px;line-height:1.75;}
+.hero-fr{font-size:13px;color:rgba(255,255,255,.45);font-style:italic;margin-bottom:28px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-white{background:#fff;color:var(--navy);padding:14px 26px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:transform .2s;}
+.btn-white:hover{transform:translateY(-2px);}
+.btn-wa{background:var(--green);color:#fff;padding:14px 24px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;display:flex;align-items:center;gap:8px;}
+.btn-outline{border:2px solid rgba(255,255,255,.3);color:#fff;padding:14px 24px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;background:rgba(255,255,255,.07);}
+.hero-logos{margin-top:32px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1);}
+.hero-logos-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;}
+.hero-logos-row{display:flex;gap:10px;flex-wrap:wrap;}
+.funder-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:7px 15px;font-size:12px;font-weight:600;color:rgba(255,255,255,.8);}
+
+/* HERO CARD - FREE REVIEW */
+.hero-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:32px;backdrop-filter:blur(12px);position:relative;overflow:hidden;}
+.hero-card-glow{position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(14,165,233,.2) 0%,transparent 65%);filter:blur(30px);}
+.hc-badge{display:inline-block;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#FBBF24;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 13px;border-radius:100px;margin-bottom:14px;position:relative;}
+.hc-title{font-weight:800;font-size:22px;color:#fff;margin-bottom:8px;position:relative;line-height:1.25;}
+.hc-desc{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:22px;position:relative;}
+.hc-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:11px;position:relative;}
+.hc-check-icon{width:19px;height:19px;border-radius:50%;background:rgba(127,219,255,.15);border:1.5px solid #7FDBFF;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.hc-check-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;}
+.hc-cta{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;padding:14px;border-radius:9px;font-weight:700;font-size:15px;text-decoration:none;margin-top:22px;position:relative;}
+.hc-note{font-size:12px;color:rgba(255,255,255,.4);text-align:center;margin-top:10px;position:relative;}
+
+.max-w{max-width:1200px;margin:0 auto;}
+section{padding:88px 56px;}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light);margin-bottom:14px;display:block;}
+.section-title{font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1.12;letter-spacing:-.02em;color:var(--navy);}
+.section-desc{color:var(--muted);font-size:17px;max-width:560px;margin-top:14px;line-height:1.75;}
+.divider{width:48px;height:3px;background:var(--blue-light);margin:18px 0;border-radius:2px;}
+
+/* FOUNDER */
+.founder{background:var(--white);}
+.founder-grid{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:center;}
+.founder-photo{width:100%;aspect-ratio:1;border-radius:18px;background:linear-gradient(145deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.25);font-size:13px;font-weight:600;text-align:center;padding:20px;border:1px solid var(--border);}
+.founder-name{font-weight:800;font-size:24px;color:var(--navy);margin-bottom:4px;}
+.founder-role{font-size:14px;color:var(--blue-light);font-weight:600;margin-bottom:18px;}
+.founder-bio{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+.founder-meta{display:flex;gap:20px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--border);}
+.founder-meta-item{}
+.founder-meta-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.founder-meta-val{font-size:14px;font-weight:600;color:var(--navy);}
+.founder-meta-val a{color:var(--blue-light);text-decoration:none;}
+
+/* TRUST */
+.trust{background:var(--bg-mid);}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px;}
+.trust-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:26px;display:flex;gap:16px;align-items:flex-start;}
+.trust-icon{width:42px;height:42px;border-radius:10px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue-light);}
+.trust-card h4{font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;}
+.trust-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
+.service-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;transition:box-shadow .3s,transform .3s;display:flex;flex-direction:column;}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue-light));transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.service-card:hover::before{transform:scaleX(1);}
+.service-card:hover{box-shadow:0 12px 40px rgba(12,36,97,.1);transform:translateY(-4px);}
+.service-card.featured{background:var(--navy);border-color:var(--navy);}
+.service-icon{width:44px;height:44px;border-radius:10px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--blue-light);}
+.service-card.featured .service-icon{background:rgba(127,219,255,.12);color:#7FDBFF;}
+.service-card h3{font-weight:700;font-size:16px;color:var(--navy);margin-bottom:6px;}
+.service-card.featured h3{color:#fff;}
+.service-price{font-weight:800;font-size:22px;color:var(--blue-light);margin-bottom:10px;}
+.service-card.featured .service-price{color:#7FDBFF;}
+.service-price span{font-size:12px;font-weight:500;color:var(--muted);}
+.service-card.featured .service-price span{color:rgba(255,255,255,.45);}
+.service-card p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:12px;}
+.service-card.featured p{color:rgba(255,255,255,.6);}
+.service-list{list-style:none;margin-top:auto;}
+.service-list li{font-size:12.5px;color:var(--muted);padding:4px 0;display:flex;align-items:flex-start;gap:7px;}
+.service-card.featured .service-list li{color:rgba(255,255,255,.65);}
+.service-list li::before{content:'✓';font-weight:800;color:var(--blue-light);font-size:11px;flex-shrink:0;margin-top:1px;}
+.service-card.featured .service-list li::before{color:#7FDBFF;}
+.badge-pop{display:inline-block;background:var(--gold);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:10px;}
+.pricing-note{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-top:24px;display:flex;align-items:center;gap:14px;}
+.pricing-note-icon{color:var(--blue-light);flex-shrink:0;}
+.pricing-note p{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.pricing-note strong{color:var(--navy);}
+
+/* DOCUMENTS */
+.docs{background:var(--white);}
+.docs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:44px;}
+.doc-chip{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 16px;text-align:center;transition:background .2s,transform .2s;}
+.doc-chip:hover{background:var(--bg-mid);transform:translateY(-2px);}
+.doc-chip-icon{color:var(--blue-light);margin:0 auto 10px;display:flex;justify-content:center;}
+.doc-chip span{font-size:12.5px;font-weight:600;color:var(--navy);line-height:1.4;display:block;}
+
+/* PROCESS */
+.dark{background:var(--navy);}
+.dark .eyebrow{color:#7FDBFF;}
+.dark .section-title{color:#fff;}
+.dark .section-desc{color:rgba(255,255,255,.6);}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.07);border-radius:14px;overflow:hidden;margin-top:48px;}
+.process-step{background:var(--navy-mid);padding:34px 24px;transition:background .2s;}
+.process-step:hover{background:#1E4A9A;}
+.process-num{font-weight:800;font-size:42px;color:rgba(127,219,255,.15);line-height:1;margin-bottom:12px;}
+.process-step h3{font-weight:700;font-size:15px;color:#fff;margin-bottom:7px;}
+.process-step p{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.65;}
+
+/* EXAMPLES */
+.ex-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:44px;}
+.ex-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px 24px;display:flex;gap:14px;align-items:flex-start;}
+.ex-icon{width:38px;height:38px;border-radius:9px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue-light);}
+.ex-card p{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.ex-card strong{color:var(--navy);font-weight:700;}
+.ex-disclaimer{font-size:12.5px;color:var(--muted);margin-top:20px;font-style:italic;}
+
+/* FAQ */
+.faq{background:var(--bg-mid);}
+.faq-list{margin-top:44px;max-width:820px;}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.faq-q{padding:20px 24px;font-weight:700;font-size:15.5px;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;list-style:none;}
+.faq-q::-webkit-details-marker{display:none;}
+.faq-q::after{content:'+';font-size:22px;font-weight:400;color:var(--blue-light);flex-shrink:0;transition:transform .2s;}
+details[open] .faq-q::after{transform:rotate(45deg);}
+.faq-a{padding:0 24px 20px;font-size:14px;color:var(--muted);line-height:1.75;}
+
+/* CTA */
+.cta-sec{text-align:center;background:linear-gradient(160deg,#0C2461 0%,#1E56B0 100%);position:relative;overflow:hidden;}
+.cta-sec::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(14,165,233,.2) 0%,transparent 70%);}
+.cta-sec h2{font-weight:800;font-size:clamp(28px,3.8vw,48px);line-height:1.12;letter-spacing:-.02em;color:#fff;max-width:640px;margin:0 auto 16px;position:relative;}
+.cta-sec p{color:rgba(255,255,255,.65);font-size:17px;max-width:480px;margin:0 auto 34px;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.cta-white{background:#fff;color:var(--navy);padding:15px 30px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;}
+.cta-wa{background:var(--green);color:#fff;padding:15px 30px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;display:flex;align-items:center;gap:8px;}
+.cta-outline{border:2px solid rgba(255,255,255,.3);color:#fff;padding:15px 30px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;background:rgba(255,255,255,.07);}
+
+footer{background:var(--navy);padding:60px 56px 28px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;max-width:1200px;margin:0 auto;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-logo{font-weight:800;font-size:22px;text-decoration:none;}
+.footer-logo .i{color:#fff;}.footer-logo .g{color:#7FDBFF;}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,.5);margin-top:14px;line-height:1.7;max-width:290px;}
+.footer-reg{font-size:12px;color:rgba(255,255,255,.35);margin-top:14px;line-height:1.7;}
+.footer-col h4{font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:15px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:9px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;}
+.footer-col a:hover{color:#7FDBFF;}
+.footer-bottom{display:flex;justify-content:space-between;max-width:1200px;margin:24px auto 0;font-size:12px;color:rgba(255,255,255,.3);gap:20px;flex-wrap:wrap;}
+.footer-bottom a{color:rgba(255,255,255,.4);text-decoration:none;margin-left:16px;}
+
+@media(max-width:1100px){
+  .hero-inner{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr 1fr;}
+  .docs-grid{grid-template-columns:repeat(3,1fr);}
+  .trust-grid{grid-template-columns:1fr 1fr;}
+  .founder-grid{grid-template-columns:1fr;}
+  .founder-photo{max-width:240px;}
+}
+@media(max-width:800px){
+  nav{padding:0 20px;}.nav-links li:not(:last-child){display:none;}
+  section{padding:56px 20px;}
+  .hero{padding:110px 20px 56px;}
+  .services-grid,.docs-grid,.trust-grid,.ex-grid,.process-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Accueil</a></li>
+    <li><a href="consulting.html">Consulting</a></li>
+    <li><a href="#services">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://wa.me/44XXXXXXXXXX" class="nav-wa"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Nous écrire sur WhatsApp</a></li>
+  </ul>
+</nav>
+
+<a href="https://wa.me/44XXXXXXXXXX" class="wa-float" aria-label="WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-dots"></div><div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Développement international</div>
+      <h1>Nous aidons les entreprises africaines<br>à remporter les <span>marchés financés<br>par les bailleurs</span></h1>
+      <p class="hero-sub">ICONGRP aide les entreprises, ONG et consultants à préparer des manifestations d'intérêt, propositions techniques et dossiers gagnants pour les opportunités financées par la Banque mondiale, le PNUD, l'UNICEF, le PAM, la BAD et le FCDO.</p>
+      <p class="hero-fr">Nous travaillons aussi en anglais.</p>
+      <div class="hero-btns">
+        <a href="#review" class="btn-white">Analyse d'offre gratuite</a>
+        <a href="https://wa.me/44XXXXXXXXXX" class="btn-wa"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Nous écrire sur WhatsApp</a>
+        <a href="#services" class="btn-outline">Voir les tarifs</a>
+      </div>
+      <div class="hero-logos">
+        <div class="hero-logos-label">Nous préparons des offres pour des marchés financés par</div>
+        <div class="hero-logos-row">
+          <span class="funder-chip">World Bank</span>
+          <span class="funder-chip">UNDP</span>
+          <span class="funder-chip">UNICEF</span>
+          <span class="funder-chip">WFP</span>
+          <span class="funder-chip">Banque africaine de développement</span>
+          <span class="funder-chip">FCDO</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREE REVIEW CARD -->
+    <div class="hero-card" id="review">
+      <div class="hero-card-glow"></div>
+      <div class="hc-badge">Free · No Obligation</div>
+      <div class="hc-title">Not sure whether to bid?<br>Envoyez-nous l'avis.</div>
+      <div class="hc-desc">Before you spend a single dollar, we will review the opportunity honestly and tell you whether it is worth pursuing.</div>
+      <div class="hc-check"><div class="hc-check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#7FDBFF" stroke-width="2" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div><div class="hc-check-text">Eligibility and qualification requirements</div></div>
+      <div class="hc-check"><div class="hc-check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#7FDBFF" stroke-width="2" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div><div class="hc-check-text">Deadline, format and submission method</div></div>
+      <div class="hc-check"><div class="hc-check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#7FDBFF" stroke-width="2" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div><div class="hc-check-text">Documents you will need to produce</div></div>
+      <div class="hc-check"><div class="hc-check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#7FDBFF" stroke-width="2" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg></div><div class="hc-check-text">An honest view on your chance of shortlisting</div></div>
+      <a href="https://wa.me/44XXXXXXXXXX" class="hc-cta"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Send Tender by WhatsApp</a>
+      <div class="hc-note">Or email bids@icongrp.co.uk · Reviewed within 24 hours</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER / PROOF -->
+<section class="founder">
+  <div class="max-w">
+    <span class="eyebrow">Who You Are Working With</span>
+    <h2 class="section-title">A Real UK Company. A Named Team.</h2>
+    <div class="divider"></div>
+    <p class="section-desc" style="margin-bottom:48px;">We think you should know exactly who is writing your bid before you pay anything.</p>
+    <div class="founder-grid">
+      <div class="founder-photo">[ Founder photo<br>to be added ]</div>
+      <div>
+        <div class="founder-name">Joel Mbala</div>
+        <div class="founder-role">Founder &amp; Managing Director, ICONGRP</div>
+        <p class="founder-bio">ICONGRP is a UK-registered integrated services group based in Milton Keynes. Our consulting division has supported organisations to secure over &pound;2m in contracts across healthcare, workforce, housing and public sector procurement. Our international donor desk applies the same discipline to World Bank, UN and AfDB-funded opportunities across Africa.</p>
+        <p class="founder-bio" style="margin-bottom:0;">We are transparent about where we are, who we are and how we work. If you would like to speak to someone before committing to anything, call us or message us on WhatsApp.</p>
+        <div class="founder-meta">
+          <div class="founder-meta-item"><div class="founder-meta-label">Registered Company</div><div class="founder-meta-val">Icon Group T/A Icon Medical Ltd · No. 15214942</div></div>
+          <div class="founder-meta-item"><div class="founder-meta-label">Based In</div><div class="founder-meta-val">United Kingdom</div></div>
+          <div class="founder-meta-item"><div class="founder-meta-label">LinkedIn</div><div class="founder-meta-val"><a href="#">View profile &#8599;</a></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY TRUST -->
+<section class="trust">
+  <div class="max-w">
+    <span class="eyebrow">Pourquoi les entreprises nous font confiance</span>
+    <h2 class="section-title">Conçu pour des clients qui ne nous ont jamais rencontrés</h2>
+    <div class="divider"></div>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5V11c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+        <div><h4>Équipe d'offres basée au Royaume-Uni</h4><p>Préparé par des consultants britanniques expérimentés en marchés publics et appels d'offres, pas par des rédacteurs délocalisés.</p></div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2h6v4H9zM9 11h6M9 15h6"/></svg></div>
+        <div><h4>Maîtrise des marchés des bailleurs</h4><p>Accompagnement sur les procédures de la Banque mondiale, d'UNGM, de la BAD, du FCDO et des agences des Nations Unies.</p></div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v12M15.5 8.5c-.8-1-2-1.5-3.5-1.5-2 0-3.5 1-3.5 2.5s1.3 2.2 3.5 2.5 3.5 1 3.5 2.5-1.5 2.5-3.5 2.5c-1.5 0-2.7-.5-3.5-1.5"/></svg></div>
+        <div><h4>Honoraires fixes en USD</h4><p>Vous recevez un devis écrit clair avant tout démarrage. Pas de facturation horaire, aucune surprise.</p></div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <div><h4>Confidentialité stricte</h4><p>Vos documents d'appel d'offres, CV, données financières et informations d'entreprise restent confidentiels. Accord de confidentialité sur demande.</p></div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div><h4>Délais de livraison clairs</h4><p>Manifestations d'intérêt livrées en 3 à 5 jours ouvrés. Service express 48 heures sur demande.</p></div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
+        <div><h4>La conformité d'abord</h4><p>Chaque dossier est vérifié au regard de l'éligibilité, du format, des délais et des critères de notation publiés.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="max-w">
+    <span class="eyebrow">Services &amp; tarifs</span>
+    <h2 class="section-title">Commencez petit. Prouvez. Montez en puissance.</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Honoraires fixes en USD, payés d'avance, annoncés avant tout démarrage. Commencez par l'inscription et les manifestations d'intérêt, puis passez aux propositions complètes à mesure que vos présélections s'accumulent.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5V11c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/></svg></div>
+        <h3>Inscription aux portails</h3>
+        <div class="service-price">À partir de 300 $</div>
+        <p>Inscription complète et correcte sur les portails où sont publiés les marchés des bailleurs.</p>
+        <ul class="service-list">
+          <li>Inscription UNGM</li>
+          <li>Profil fournisseur Banque mondiale</li>
+          <li>Création BAD et dgMarket</li>
+          <li>Optimisation du profil</li>
+        </ul>
+      </div>
+      <div class="service-card featured">
+        <div><span class="badge-pop">Le plus demandé</span></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg></div>
+        <h3>Rédaction de manifestations d'intérêt</h3>
+        <div class="service-price">À partir de 300 $</div>
+        <p>Des manifestations d'intérêt précises et conformes, rédigées pour vous faire présélectionner.</p>
+        <ul class="service-list">
+          <li>Rédigées selon les critères publiés</li>
+          <li>Déclaration de capacité incluse</li>
+          <li>Livraison en 3 à 5 jours ouvrés</li>
+          <li>Express 48 h disponible</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <h3>Proposition technique complète</h3>
+        <div class="service-price">À partir de 3 000 $</div>
+        <p>Élaboration complète de la proposition technique et financière pour les offres présélectionnées.</p>
+        <ul class="service-list">
+          <li>Méthodologie technique complète</li>
+          <li>CV de l'équipe au format bailleur</li>
+          <li>Appui à la proposition financière</li>
+          <li>Deux séries de révisions</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+        <h3>Appui mensuel aux offres</h3>
+        <div class="service-price">À partir de 750 $<span>/mois</span></div>
+        <p>Appui continu pour les entreprises qui soumissionnent régulièrement plutôt qu'occasionnellement.</p>
+        <ul class="service-list">
+          <li>Veille hebdomadaire des opportunités</li>
+          <li>Vérification de l'éligibilité</li>
+          <li>Une manifestation d'intérêt incluse par mois</li>
+          <li>Traitement prioritaire</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-note">
+      <div class="pricing-note-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div>
+      <p><strong>Comment payer :</strong> Tous les honoraires sont annoncés et facturés en USD. Nous acceptons le virement bancaire international, le paiement par carte et Wise. Le paiement est réglé d'avance, avant tout démarrage, sur la base d'un devis et d'un périmètre écrits.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section class="docs">
+  <div class="max-w">
+    <span class="eyebrow">Ce que nous produisons</span>
+    <h2 class="section-title">Les documents que nous préparons</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Quel que soit le document exigé par le bailleur, nous le produisons au format et à la norme requis.</p>
+    <div class="docs-grid">
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l4 4v16H6z"/><path d="M14 2v5h5"/></svg></div><span>Manifestations d'intérêt</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></div><span>Propositions techniques</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h13"/></svg></div><span>Notes méthodologiques</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18"/><path d="M8 7h8M8 11h8M8 15h4"/></svg></div><span>Profils d'entreprise</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg></div><span>Mise en forme des CV</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 15h3"/></svg></div><span>Plans de travail</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v12M15 9c-.7-.8-1.8-1.2-3-1.2-1.8 0-3 .9-3 2.2s1.2 2 3 2.2 3 .9 3 2.2-1.2 2.2-3 2.2c-1.2 0-2.3-.4-3-1.2"/></svg></div><span>Propositions financières</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><span>Profils sur les portails bailleurs</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/></svg></div><span>Déclarations de capacité</span></div>
+      <div class="doc-chip"><div class="doc-chip-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l4-4 3 3M3 12l4-4M12 10l4 4 5-5"/></svg></div><span>Appui aux offres en groupement</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="dark">
+  <div class="max-w">
+    <span class="eyebrow">Comment ça marche</span>
+    <h2 class="section-title">D'abord l'analyse. Puis le devis. Enfin la rédaction.</h2>
+    <p class="section-desc">Un processus simple et honnête, conçu pour que vous ne payiez jamais une offre que vous aviez peu de chances de remporter.</p>
+    <div class="process-grid">
+      <div class="process-step"><div class="process-num">01</div><h3>Envoyez-nous l'avis</h3><p>Transmettez l'avis de marché ou les termes de référence par WhatsApp ou e-mail. Gratuit, sans engagement.</p></div>
+      <div class="process-step"><div class="process-num">02</div><h3>Analyse d'offre gratuite</h3><p>Sous 24 heures, nous vous disons honnêtement si l'opportunité mérite d'être poursuivie, et pourquoi.</p></div>
+      <div class="process-step"><div class="process-num">03</div><h3>Devis fixe, payé d'avance</h3><p>Si vous décidez de poursuivre, vous recevez un honoraire fixe écrit et une date de livraison. Pas de facturation horaire.</p></div>
+      <div class="process-step"><div class="process-num">04</div><h3>Nous rédigeons, vous soumettez</h3><p>Nous rédigeons selon les critères publiés et livrons avec de la marge. Vous restez le soumissionnaire d'un bout à l'autre.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section>
+  <div class="max-w">
+    <span class="eyebrow">Ce que nous accompagnons</span>
+    <h2 class="section-title">Missions types</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Illustrations du type de travail que notre pôle appels d'offres est en mesure de traiter.</p>
+    <div class="ex-grid">
+      <div class="ex-card"><div class="ex-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></div><p>Un <strong>cabinet de conseil en construction</strong> soumissionnant pour un contrat de supervision financé par la Banque mondiale.</p></div>
+      <div class="ex-card"><div class="ex-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 16.5 3 13 3 9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 4-4 7.5-9 12z"/></svg></div><p>Un <strong>NGO</strong> préparant une proposition de mise en œuvre de programme pour le PNUD.</p></div>
+      <div class="ex-card"><div class="ex-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/></svg></div><p>Un <strong>organisme de formation</strong> soumettant une manifestation d'intérêt pour un projet de renforcement des capacités financé par la BAD.</p></div>
+      <div class="ex-card"><div class="ex-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v8H1zM14 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div><p>Un <strong>entreprise de logistique</strong> finalisant son inscription fournisseur et ses profils sur les portails bailleurs.</p></div>
+      <div class="ex-card"><div class="ex-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div><p>Un <strong>cabinet de conseil</strong> préparant les CV, la méthodologie et le plan de travail pour un contrat d'assistance technique.</p></div>
+      <div class="ex-card"><div class="ex-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l4-4 3 3M3 12l4-4M12 10l4 4 5-5"/></svg></div><p>Deux entreprises constituant un <strong>groupement</strong> pour soumissionner ensemble à un grand programme du FCDO.</p></div>
+    </div>
+    <p class="ex-disclaimer">Ce sont des illustrations de notre périmètre de service, non des références de contrats réalisés.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="max-w">
+    <span class="eyebrow">Questions</span>
+    <h2 class="section-title">Questions fréquentes</h2>
+    <div class="divider"></div>
+    <div class="faq-list">
+      <details class="faq-item"><summary class="faq-q">Pouvez-vous garantir que nous gagnerons ?</summary><div class="faq-a">Non. Personne ne le peut honnêtement, et méfiez-vous de quiconque prétend le contraire. Les évaluations des bailleurs dépendent de votre expérience, de votre équipe, de votre prix et de la concurrence. Ce que nous garantissons, c'est un dossier conforme, bien structuré, rédigé selon les critères publiés et livré à temps. C'est ce qui vous met en position de gagner.</div></details>
+      <details class="faq-item"><summary class="faq-q">Soumettez-vous l'offre à notre place ?</summary><div class="faq-a">Non. Vous restez le soumissionnaire d'un bout à l'autre. Nous préparons les documents ; vous les vérifiez, les approuvez et les soumettez sur le portail du bailleur en votre nom. Nous ne soumissionnons jamais contre nos clients et ne concourons jamais pour les marchés que nous rédigeons.</div></details>
+      <details class="faq-item"><summary class="faq-q">En combien de temps rédigez-vous une manifestation d'intérêt ?</summary><div class="faq-a">La livraison standard est de 3 à 5 jours ouvrés à compter de la réception de vos informations. Un service express de 48 heures est disponible lorsque le délai l'exige, selon nos disponibilités et moyennant un supplément.</div></details>
+      <details class="faq-item"><summary class="faq-q">Travaillez-vous avec des non-anglophones ?</summary><div class="faq-a">Oui, et c'est le cas de la plupart de nos clients. Vous nous transmettez les informations sur votre entreprise, votre équipe et votre expérience sous la forme la plus simple pour vous, y compris en français. Nous les transformons en un anglais professionnel conforme aux normes des bailleurs.</div></details>
+      <details class="faq-item"><summary class="faq-q">De quoi avez-vous besoin pour commencer ?</summary><div class="faq-a">L'avis de marché ou les termes de référence, le profil de votre entreprise, l'expérience pertinente sur des projets, et les CV de l'équipe proposée. Si vous ne disposez pas de ces éléments dans un format exploitable, cela fait partie de ce que nous vous aidons à constituer.</div></details>
+      <details class="faq-item"><summary class="faq-q">Nos informations restent-elles confidentielles ?</summary><div class="faq-a">Oui. Les documents d'appel d'offres, les CV, les informations financières et les données d'entreprise sont traités de façon confidentielle et partagés uniquement avec les consultants travaillant sur votre offre. Nous signons un accord de confidentialité sur demande avant tout envoi de votre part.</div></details>
+      <details class="faq-item"><summary class="faq-q">Comment payer, et pourquoi d'avance ?</summary><div class="faq-a">Nous facturons en USD et acceptons le virement bancaire international, le paiement par carte et Wise. Le paiement est réglé d'avance sur la base d'un devis écrit et d'un périmètre défini. C'est la norme pour les services professionnels à distance et c'est ce qui nous permet d'offrir des honoraires fixes plutôt qu'une facturation horaire sans plafond.</div></details>
+      <details class="faq-item"><summary class="faq-q">Pouvez-vous nous aider à trouver des opportunités, pas seulement à les rédiger ?</summary><div class="faq-a">Oui. Notre forfait Appui mensuel aux offres comprend une veille hebdomadaire des avis de marché des bailleurs correspondant à votre secteur et à votre éligibilité, un tri des opportunités à poursuivre, et une manifestation d'intérêt incluse chaque mois.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="max-w" style="position:relative;">
+    <span class="eyebrow" style="color:#7FDBFF;">Pour commencer</span>
+    <h2>Envoyez-nous votre avis d'appel d'offres. Nous vous dirons honnêtement s'il vaut la peine d'y répondre.</h2>
+    <p>Analyse gratuite, sans engagement, réponse sous 24 heures.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/44XXXXXXXXXX" class="cta-wa"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Envoyer par WhatsApp</a>
+      <a href="mailto:bids@icongrp.co.uk" class="cta-white">E-mail bids@icongrp.co.uk</a>
+      <a href="../contact.html" class="cta-outline">Formulaire de contact</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="../index.html" class="footer-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
+      <p>Appui aux appels d'offres multilatéraux. Nous aidons les entreprises, ONG et consultants across Africa win World Bank, UN and AfDB-funded contracts.</p>
+      <p class="footer-reg">Icon Group T/A Icon Medical Ltd<br>Enregistrée en Angleterre et au Pays de Galles, n° 15214942<br>Unit A11 Harben House, Newport Pagnell,<br>Milton Keynes MK16 9EY, United Kingdom</p>
+    </div>
+    <div class="footer-col"><h4>Services</h4><ul>
+      <li><a href="#review">Analyse d'offre gratuite</a></li>
+      <li><a href="#services">Inscription aux portails</a></li>
+      <li><a href="#services">Rédaction de manifestations d'intérêt</a></li>
+      <li><a href="#services">Propositions techniques</a></li>
+      <li><a href="#services">Appui mensuel aux offres</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>ICONGRP</h4><ul>
+      <li><a href="consulting.html">Consulting Solutions</a></li>
+      <!-- SA hidden -->
+      <li><a href="../index.html">icongrp.co.uk</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:9px;">bids@icongrp.co.uk</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:9px;">WhatsApp: +44 XXXX XXXXXX</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);">Nous travaillons aussi en anglais</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#169; 2026 ICONGRP. Tous droits réservés.</span>
+    <span><a href="#">Politique de confidentialité</a><a href="#">Conditions d'utilisation</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
