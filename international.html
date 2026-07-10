@@ -143,14 +143,31 @@ footer{background:var(--navy);padding:60px 56px 28px;}
     display:none;position:static;box-shadow:none;border:none;
     background:var(--bg);border-radius:8px;margin:2px 0 6px;padding:4px 0;min-width:0;
   }
-  .has-dropdown.open .dropdown{display:block;}
-  .has-dropdown:hover .dropdown{display:none;}
-  .has-dropdown.open .dropdown{display:block;}
+  .has-dropdown.open 
+  
+  .has-dropdown.open 
   .dropdown a{padding:11px 20px;font-size:15px;}
   .nav-cta{text-align:center!important;margin-top:8px;}
 }
 
 .lang-switch:hover{border-color:var(--blue-light)!important;color:var(--blue-light)!important;}
+
+/* NAV DROPDOWN (injected full-menu support) */
+.nav-links > li.has-dropdown{position:relative;}
+.nav-drop-toggle{cursor:pointer;background:none;border:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);padding:0;transition:color .2s;}
+.nav-drop-toggle:hover{color:var(--navy);}
+.dropdown{display:none;position:absolute;top:100%;left:-16px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px 0;min-width:230px;box-shadow:0 12px 40px rgba(12,36,97,.12);z-index:300;list-style:none;margin-top:8px;}
+.has-dropdown:hover .dropdown{display:block;}
+.dropdown li{list-style:none;}
+.dropdown a{display:block;padding:10px 20px;font-size:14px;color:var(--text);font-weight:500;transition:background .15s,color .15s;}
+.dropdown a:hover{background:var(--bg);color:var(--navy);}
+@media(max-width:800px){
+  .nav-links > li.has-dropdown{width:100%;}
+  .dropdown{display:none;position:static;box-shadow:none;border:none;background:var(--bg);border-radius:8px;margin:2px 0 6px;padding:4px 0;min-width:0;}
+  .has-dropdown:hover .dropdown{display:none;}
+  .has-dropdown.open .dropdown{display:block;}
+  .dropdown a{padding:11px 20px;font-size:15px;}
+}
 </style>
 </head>
 <body>
@@ -158,10 +175,28 @@ footer{background:var(--navy);padding:60px 56px 28px;}
 <nav>
   <a href="index.html" class="nav-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
   <ul class="nav-links" id="navlinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="consulting.html">Consulting</a></li>
+    <li class="has-dropdown">
+      <button class="nav-drop-toggle">Divisions &#9660;</button>
+      <ul class="dropdown">
+        <li><a href="care.html">Care &amp; Community</a></li>
+        <li><a href="logistics.html">Operations &amp; Logistics</a></li>
+        <li><a href="workforce.html">Workforce Solutions</a></li>
+        <li><a href="facilities.html">Facilities &amp; Cleaning</a></li>
+        <li><a href="consulting.html">Consulting Solutions</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <button class="nav-drop-toggle">International &#9660;</button>
+      <ul class="dropdown">
+        <li><a href="international.html">International Overview</a></li>
+        <li><a href="compliance.html">Compliance &amp; Sourcing</a></li>
+        <li><a href="donor-bids.html">Multilateral Bids</a></li>
+        <li><a href="drc.html">Democratic Republic of Congo</a></li>
+      </ul>
+    </li>
     <li><a href="about.html">About</a></li>
     <li><a href="leadership.html">Leadership</a></li>
+    <li><a href="careers.html">Careers</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="tel:01268203010" class="nav-cta">01268 20 30 10</a></li>
   </ul>
