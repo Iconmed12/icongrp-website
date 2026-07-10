@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Conformité &amp; Approvisionnement Responsable – ICONGRP</title>
+<meta name="description" content="Conformité des chaînes d'approvisionnement et approvisionnement responsable. Devoir de vigilance, traçabilité, préparation aux audits et dossiers alignés sur le Règlement Batteries UE, le RDUE, les principes de l'OCDE et la CSDDD.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#0C2461;--navy-mid:#1A3A7A;--blue:#1E56B0;--blue-light:#2E72D2;--bg:#EEF3FB;--bg-mid:#E2EAF6;--white:#fff;--text:#0C1A35;--muted:#4E6490;--border:rgba(14,65,180,.12);--gold:#F59E0B;--green:#25D366;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;}
+svg{display:block;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-weight:800;font-size:22px;letter-spacing:.03em;text-decoration:none;}
+.nav-logo .i{color:var(--navy);}.nav-logo .g{color:var(--blue-light);}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;transition:color .2s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-cta{background:var(--blue-light)!important;color:#fff!important;padding:10px 22px;border-radius:8px;font-weight:700!important;}
+.nav-cta:hover{background:var(--navy)!important;}
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:var(--green);width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:transform .2s;}
+.wa-float:hover{transform:scale(1.08);}
+
+/* HERO */
+.hero{background:linear-gradient(150deg,#0C2461 0%,#1A3A7A 45%,#1E56B0 100%);padding:134px 56px 0;position:relative;overflow:hidden;}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:32px 32px;}
+.hero-glow{position:absolute;bottom:-70px;right:6%;width:500px;height:500px;background:radial-gradient(circle,rgba(14,165,233,.18) 0%,transparent 65%);filter:blur(70px);}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;text-align:center;padding-bottom:56px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:6px 16px;font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#7FDBFF;margin-bottom:24px;}
+.hero h1{font-weight:800;font-size:clamp(36px,5vw,66px);line-height:1.05;letter-spacing:-.025em;color:#fff;margin-bottom:20px;}
+.hero h1 span{color:#7FDBFF;}
+.hero-sub{color:rgba(255,255,255,.72);font-size:18px;max-width:700px;margin:0 auto 32px;line-height:1.72;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:26px;}
+.btn-white{background:#fff;color:var(--navy);padding:15px 30px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:transform .2s;}
+.btn-white:hover{transform:translateY(-2px);}
+.btn-outline{border:2px solid rgba(255,255,255,.3);color:#fff;padding:15px 30px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;background:rgba(255,255,255,.07);}
+.hero-micro{font-size:13px;color:rgba(255,255,255,.45);font-weight:500;}
+.hero-micro span{color:rgba(255,255,255,.25);margin:0 10px;}
+
+/* TRUST BAR */
+.trustbar{background:var(--white);border-bottom:1px solid var(--border);padding:24px 56px;}
+.trustbar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;}
+.tb-item{display:flex;align-items:center;gap:10px;padding:0 30px;border-right:1px solid var(--border);}
+.tb-item:last-child{border-right:none;}
+.tb-item svg{color:var(--blue-light);flex-shrink:0;}
+.tb-item span{font-size:13.5px;font-weight:600;color:var(--navy);white-space:nowrap;}
+
+.max-w{max-width:1200px;margin:0 auto;}
+section{padding:88px 56px;}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light);margin-bottom:14px;display:block;}
+.section-title{font-weight:800;font-size:clamp(27px,3.3vw,43px);line-height:1.13;letter-spacing:-.02em;color:var(--navy);}
+.section-desc{color:var(--muted);font-size:17px;max-width:600px;margin-top:14px;line-height:1.75;}
+.divider{width:48px;height:3px;background:var(--blue-light);margin:18px 0;border-radius:2px;}
+
+/* PROBLEM */
+.problem{background:var(--white);}
+.problem-grid{display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:center;}
+.problem p{font-size:16.5px;color:var(--muted);line-height:1.85;margin-bottom:16px;}
+.problem strong{color:var(--navy);font-weight:700;}
+.stat-panel{background:linear-gradient(145deg,var(--navy),var(--blue));border-radius:20px;padding:36px;box-shadow:0 24px 64px rgba(12,36,97,.22);position:relative;overflow:hidden;}
+.sp-glow{position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:radial-gradient(circle,rgba(14,165,233,.25) 0%,transparent 65%);filter:blur(34px);}
+.sp-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:22px;position:relative;}
+.sp-big{position:relative;margin-bottom:22px;}
+.sp-num{font-weight:800;font-size:48px;color:#7FDBFF;line-height:1;letter-spacing:-.02em;}
+.sp-lbl{font-size:13.5px;color:rgba(255,255,255,.62);margin-top:6px;line-height:1.55;}
+.sp-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;}
+.sp-row:last-of-type{border-bottom:none;}
+.sp-k{font-size:13px;color:rgba(255,255,255,.55);}
+.sp-v{font-size:13.5px;color:#fff;font-weight:700;}
+.sp-badge{position:relative;margin-top:20px;background:rgba(245,158,11,.13);border:1px solid rgba(245,158,11,.3);border-radius:9px;padding:12px 15px;display:flex;align-items:center;gap:10px;}
+.sp-badge span{font-size:12.5px;color:#FBBF24;font-weight:700;line-height:1.45;}
+
+/* WHAT WE DO — 6 cards */
+.cards6{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:30px 26px;position:relative;overflow:hidden;transition:box-shadow .3s,transform .3s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue-light));transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.card:hover::before{transform:scaleX(1);}
+.card:hover{box-shadow:0 12px 40px rgba(12,36,97,.1);transform:translateY(-4px);}
+.card-icon{width:46px;height:46px;border-radius:11px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--blue-light);}
+.card h3{font-weight:700;font-size:16.5px;color:var(--navy);margin-bottom:8px;}
+.card p{font-size:13.5px;color:var(--muted);line-height:1.7;}
+
+/* STANDARDS */
+.standards{background:var(--bg-mid);}
+.std-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px;}
+.std-chip{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px 24px;flex:1 1 200px;transition:transform .2s,box-shadow .2s;}
+.std-chip:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(12,36,97,.08);}
+.std-name{font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;}
+.std-desc{font-size:12.5px;color:var(--muted);line-height:1.55;}
+
+/* WHY US */
+.why{background:var(--white);}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
+.why-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:30px 24px;}
+.why-icon{width:48px;height:48px;border-radius:50%;background:rgba(14,165,233,.12);display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--blue-light);}
+.why-card h3{font-weight:700;font-size:16px;color:var(--navy);margin-bottom:8px;}
+.why-card p{font-size:13.5px;color:var(--muted);line-height:1.7;}
+
+
+/* WHERE WE WORK */
+.where{background:var(--white);}
+.where-grid{display:grid;grid-template-columns:1fr 440px;gap:64px;align-items:center;}
+.where-tag{display:inline-flex;align-items:center;gap:8px;background:#D1FAE5;border:1px solid rgba(4,120,87,.2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#047857;margin-bottom:16px;}
+.where p{font-size:16.5px;color:var(--muted);line-height:1.85;margin-bottom:16px;}
+.where strong{color:var(--navy);font-weight:700;}
+.where-panel{background:linear-gradient(145deg,var(--navy),var(--blue));border-radius:20px;padding:36px;box-shadow:0 24px 64px rgba(12,36,97,.2);position:relative;overflow:hidden;}
+.wp-glow{position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:radial-gradient(circle,rgba(14,165,233,.25) 0%,transparent 65%);filter:blur(34px);}
+.wp-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px;position:relative;}
+.wp-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;}
+.wp-row:last-of-type{border-bottom:none;}
+.wp-k{font-size:13px;color:rgba(255,255,255,.55);}
+.wp-v{font-size:13.5px;color:#fff;font-weight:700;text-align:right;}
+.wp-v.hl{color:#7FDBFF;}
+.wp-note{position:relative;margin-top:20px;background:rgba(127,219,255,.1);border:1px solid rgba(127,219,255,.28);border-radius:9px;padding:13px 15px;}
+.wp-note span{font-size:12.5px;color:#7FDBFF;font-weight:600;line-height:1.55;}
+@media(max-width:1100px){.where-grid{grid-template-columns:1fr;gap:44px;}}
+
+/* WHO WE HELP */
+.who{background:var(--bg-mid);}
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
+.who-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px 24px;}
+.who-icon{width:44px;height:44px;border-radius:11px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--blue-light);}
+.who-card h3{font-weight:700;font-size:15.5px;color:var(--navy);margin-bottom:7px;}
+.who-card p{font-size:13px;color:var(--muted);line-height:1.68;}
+
+/* HOW IT WORKS */
+.dark{background:var(--navy);}
+.dark .eyebrow{color:#7FDBFF;}
+.dark .section-title{color:#fff;}
+.dark .section-desc{color:rgba(255,255,255,.6);}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.07);border-radius:14px;overflow:hidden;margin-top:52px;}
+.step{background:var(--navy-mid);padding:36px 26px;transition:background .2s;}
+.step:hover{background:#1E4A9A;}
+.step-num{font-weight:800;font-size:44px;color:rgba(127,219,255,.15);line-height:1;margin-bottom:14px;}
+.step h3{font-weight:700;font-size:16px;color:#fff;margin-bottom:8px;}
+.step p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.68;}
+
+/* CTA */
+.cta{text-align:center;background:linear-gradient(160deg,#0C2461 0%,#1E56B0 100%);position:relative;overflow:hidden;}
+.cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(14,165,233,.2) 0%,transparent 70%);}
+.cta h2{font-weight:800;font-size:clamp(28px,3.8vw,48px);line-height:1.14;letter-spacing:-.02em;color:#fff;max-width:700px;margin:0 auto 16px;position:relative;}
+.cta p{color:rgba(255,255,255,.65);font-size:17px;max-width:520px;margin:0 auto 34px;position:relative;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.cta-white{background:#fff;color:var(--navy);padding:16px 32px;border-radius:8px;font-weight:700;font-size:15.5px;text-decoration:none;}
+.cta-wa{background:var(--green);color:#fff;padding:16px 30px;border-radius:8px;font-weight:700;font-size:15.5px;text-decoration:none;display:flex;align-items:center;gap:9px;}
+
+/* CONTACT */
+.contact{background:var(--white);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue-light);}
+.form-textarea{resize:vertical;min-height:110px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-btn{width:100%;background:var(--navy);color:#fff;padding:15px;border-radius:8px;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:inherit;transition:background .2s;margin-top:6px;}
+.form-btn:hover{background:var(--blue);}
+.form-success{display:none;margin-top:14px;background:#D1FAE5;border:1px solid #34D399;border-radius:8px;padding:14px 18px;font-size:14px;color:#065F46;font-weight:600;}
+.contact-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;align-items:center;gap:16px;margin-bottom:14px;text-decoration:none;transition:box-shadow .2s,transform .2s;}
+.contact-card:hover{box-shadow:0 8px 28px rgba(12,36,97,.09);transform:translateY(-3px);}
+.cc-icon{width:46px;height:46px;border-radius:11px;background:rgba(14,165,233,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue-light);}
+.cc-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.cc-val{font-size:16px;font-weight:700;color:var(--navy);}
+.contact-wa{background:var(--green);border-color:var(--green);}
+.contact-wa .cc-icon{background:rgba(255,255,255,.2);color:#fff;}
+.contact-wa .cc-label{color:rgba(255,255,255,.75);}
+.contact-wa .cc-val{color:#fff;}
+
+footer{background:var(--navy);padding:60px 56px 28px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;max-width:1200px;margin:0 auto;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-logo{font-weight:800;font-size:22px;text-decoration:none;}
+.footer-logo .i{color:#fff;}.footer-logo .g{color:#7FDBFF;}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,.5);margin-top:14px;line-height:1.7;max-width:290px;}
+.footer-reg{font-size:12px;color:rgba(255,255,255,.35);margin-top:14px;line-height:1.7;}
+.footer-col h4{font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:15px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:9px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;}
+.footer-col a:hover{color:#7FDBFF;}
+.footer-bottom{display:flex;justify-content:space-between;max-width:1200px;margin:24px auto 0;font-size:12px;color:rgba(255,255,255,.3);gap:20px;flex-wrap:wrap;}
+.footer-bottom a{color:rgba(255,255,255,.4);text-decoration:none;margin-left:16px;}
+
+@media(max-width:1100px){
+  .cards6,.why-grid,.who-grid{grid-template-columns:1fr 1fr;}
+  .problem-grid,.contact-grid{grid-template-columns:1fr;gap:44px;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .tb-item{padding:8px 20px;border-right:none;}
+}
+@media(max-width:800px){
+  nav{padding:0 20px;}.nav-links li:not(:last-child){display:none;}
+  section{padding:56px 20px;}
+  .hero{padding:110px 20px 0;}
+  .trustbar{padding:20px;}
+  .cards6,.why-grid,.who-grid,.steps{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Accueil</a></li>
+    <li><a href="international.html">International</a></li>
+    <li><a href="#standards">Normes</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="../compliance.html" style="color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;">EN</a></li>
+    <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
+  </ul>
+</nav>
+
+<a href="https://wa.me/44XXXXXXXXXX" class="wa-float" aria-label="WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-dots"></div><div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Conformité &amp; Approvisionnement Responsable</div>
+    <h1>Prouvez que votre chaîne<br>d'approvisionnement est <span>propre.</span></h1>
+    <p class="hero-sub">La réglementation européenne impose désormais aux entreprises de prouver l'origine de leurs matières et leurs conditions de production. Nous recueillons les preuves, les vérifions et constituons le dossier exigé par vos acheteurs et auditeurs. Nous ne négocions pas les marchandises que nous vérifions. Nous les attestons.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-white">Demander une évaluation</a>
+      <a href="#how" class="btn-outline">Comment ça marche</a>
+    </div>
+    <p class="hero-micro">Indépendants<span>&middot;</span>Alignés sur les principes de l'OCDE<span>&middot;</span>Anglais &amp; français<span>&middot;</span>Tarifs fixes</p>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trustbar">
+  <div class="trustbar-inner">
+    <div class="tb-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <span>Indépendants par principe</span>
+    </div>
+    <div class="tb-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5V11c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+      <span>Collecte de preuves sur le terrain</span>
+    </div>
+    <div class="tb-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2h6v4H9zM9 15l2 2 4-4"/></svg>
+      <span>Alignés sur le Guide OCDE sur le devoir de vigilance</span>
+    </div>
+    <div class="tb-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+      <span>Équipes locales, langues locales</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="max-w">
+    <div class="problem-grid">
+      <div>
+        <span class="eyebrow">Pourquoi c'est essentiel</span>
+        <h2 class="section-title">La réglementation a déplacé la charge<br>de la preuve vers l'acheteur.</h2>
+        <div class="divider"></div>
+        <p>Il y a dix ans, une entreprise européenne pouvait acheter à un fournisseur et le croire sur parole. Cette époque est révolue.</p>
+        <p>En vertu du <strong>Règlement Batteries de l'UE</strong>, du <strong>Règlement européen sur la déforestation</strong> et de la future <strong>directive sur le devoir de vigilance des entreprises (CSDDD)</strong>, l'entreprise qui met des marchandises sur le marché européen a l'obligation légale de prouver qu'elles sont traçables, produites légalement et exemptes d'atteintes aux droits humains. À défaut, elle perd l'accès au marché.</p>
+        <p>Cette preuve ne peut être constituée depuis un bureau en Europe. Elle doit être recueillie à la source, par des personnes capables de se rendre sur les sites, de parler les langues et d'être reconnues par les communautés. <strong>C'est précisément là que nous intervenons.</strong></p>
+      </div>
+      <div class="stat-panel">
+        <div class="sp-glow"></div>
+        <div class="sp-title">Les régimes que nous couvrons</div>
+        <div class="sp-row"><span class="sp-k">Règlement Batteries UE</span><span class="sp-v hl">Août 2027</span></div>
+        <div class="sp-row"><span class="sp-k">Règlement UE déforestation</span><span class="sp-v">Déc. 2026</span></div>
+        <div class="sp-row"><span class="sp-k">Guide OCDE devoir de vigilance</span><span class="sp-v">En vigueur</span></div>
+        <div class="sp-row"><span class="sp-k">Minerais de conflit (3TG)</span><span class="sp-v">En vigueur</span></div>
+        <div class="sp-row"><span class="sp-k">CSDDD</span><span class="sp-v">Entrée progressive</span></div>
+        <div class="sp-badge">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.4 17a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+          <span>La responsabilité incombe à l'entreprise qui met les marchandises sur le marché de l'UE</span>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section>
+  <div class="max-w">
+    <span class="eyebrow">Ce que nous faisons</span>
+    <h2 class="section-title">L'attestation, pas l'extraction</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Six expertises qui transforment une chaîne d'approvisionnement non documentée en une position de conformité défendable.</p>
+    <div class="cards6">
+      <div class="card">
+        <div class="card-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></div>
+        <h3>Surveillance des sites</h3>
+        <p>Contrôles indépendants des conditions, de la sécurité et des risques en matière de droits humains au point de production, avec photographies, données structurées et rapports honnêtes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4M8 4h12v12"/><circle cx="6" cy="18" r="2"/></svg></div>
+        <h3>Traçabilité à la source</h3>
+        <p>Nous suivons les matières depuis leur origine tout au long de la chaîne, en tant que maillon de terrain des plateformes internationales de traçabilité et de chaîne de contrôle.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-.5a6.5 6.5 0 0 1 13 0v.5M16 8.5a3.5 3.5 0 0 0 0-6.9"/></svg></div>
+        <h3>Formalisation des producteurs</h3>
+        <p>Nous aidons les coopératives et petits producteurs à satisfaire aux normes reconnues d'approvisionnement responsable par l'enregistrement, la formation et la tenue de registres.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2h6v4H9zM9 14l2 2 4-4"/></svg></div>
+        <h3>Préparation aux audits</h3>
+        <p>Nous préparons producteurs et transformateurs aux audits tiers alignés sur l'OCDE et aux certifications, puis comblons les écarts constatés.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l4 4v16H6z"/><path d="M14 2v5h5M9 13h6M9 17h4"/></svg></div>
+        <h3>Dossiers de devoir de vigilance</h3>
+        <p>Nous constituons les preuves dont les acheteurs internationaux ont besoin pour satisfaire à leurs obligations légales, dans le format attendu par leurs régulateurs et auditeurs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg></div>
+        <h3>Recours &amp; dialogue avec les communautés</h3>
+        <p>Systèmes de plainte et de réparation en langue locale, conçus et gérés conformément aux exigences de la réglementation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STANDARDS -->
+<section class="standards" id="standards">
+  <div class="max-w">
+    <span class="eyebrow">Normes</span>
+    <h2 class="section-title">Alignés sur les normes qui comptent</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Nous n'inventons pas de référentiels. Nous vous aidons à satisfaire à ceux que vos acheteurs, régulateurs et auditeurs utilisent déjà.</p>
+    <div class="std-row">
+      <div class="std-chip"><div class="std-name">Guide OCDE sur le devoir de vigilance</div><div class="std-desc">Le socle mondial sur lequel reposent tous les autres référentiels.</div></div>
+      <div class="std-chip"><div class="std-name">Règlement Batteries UE</div><div class="std-desc">Règlement (UE) 2023/1542. Applicable à partir d'août 2027.</div></div>
+      <div class="std-chip"><div class="std-name">Règlement UE déforestation</div><div class="std-desc">Traçabilité et légalité pour les matières concernées.</div></div>
+      <div class="std-chip"><div class="std-name">CIRAF, Copper Mark &amp; Cobalt Mark</div><div class="std-desc">Dispositifs d'attestation de production responsable au niveau des sites.</div></div>
+      <div class="std-chip"><div class="std-name">Responsible Minerals Initiative</div><div class="std-desc">Programme d'audit sectoriel et modèles de reporting.</div></div>
+      <div class="std-chip"><div class="std-name">CSDDD</div><div class="std-desc">Directive européenne sur le devoir de vigilance des entreprises.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="max-w">
+    <span class="eyebrow">Pourquoi ICONGRP</span>
+    <h2 class="section-title">Pourquoi les acheteurs font confiance à nos données</h2>
+    <div class="divider"></div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+        <h3>La preuve à la source</h3>
+        <p>Nous recrutons sur les marchés que nous servons. Nos équipes de terrain travaillent au plus près des producteurs, en français et en langues locales, là où se trouvent réellement les preuves.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5V11c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+        <h3>Indépendants</h3>
+        <p>Nous n'achetons, ne vendons ni ne négocions les marchandises que nous vérifions. Nous n'avons aucun intérêt commercial dans le résultat. C'est pourquoi nos données sont dignes de confiance.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <h3>Expertise en conformité</h3>
+        <p>Nous savons précisément ce qu'exigent les régulateurs, acheteurs et auditeurs européens, et comment le produire à leurs normes.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Rapports honnêtes</h3>
+        <p>Le travail des enfants et les abus sont au cœur du problème. Nous n'exagérons jamais nos constats. L'exactitude est le cœur du produit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COBALT FOCUS -->
+<section class="where">
+  <div class="max-w">
+    <div class="where-grid">
+      <div>
+        <span class="eyebrow">Là où la pression est la plus forte</span>
+        <h2 class="section-title">Le cobalt est le premier visé par cette réglementation.</h2>
+        <div class="divider"></div>
+        <div class="where-tag">Secteur prioritaire</div>
+        <p>Environ <strong>70 % du cobalt mondial</strong> provient de la République Démocratique du Congo. Il équipe chaque véhicule électrique, téléphone et ordinateur portable vendu en Europe.</p>
+        <p>En vertu du <strong>Règlement Batteries de l'UE</strong>, toute entreprise mettant des batteries sur le marché européen doit prouver que le cobalt est issu d'un approvisionnement responsable, traçable et exempt d'atteintes aux droits humains. L'obligation pèse sur l'importateur. Mais la preuve se trouve chez le producteur, à des milliers de kilomètres, dans une langue qu'il ne parle pas.</p>
+        <p>Cet écart est tout le problème. <strong>Le combler est tout notre service.</strong></p>
+        <p style="font-size:15px;padding-top:8px;">Nous accompagnons les deux côtés : les exportateurs congolais qui doivent produire la preuve, et les acheteurs européens qui doivent la détenir. ICONGRP dispose d'une opération établie à Kinshasa et d'une équipe conformité au Royaume-Uni qui sait ce que les régulateurs accepteront.</p>
+      </div>
+      <div class="where-panel">
+        <div class="wp-glow"></div>
+        <div class="wp-title">Qui est concerné</div>
+        <div class="wp-row"><span class="wp-k">Fabricants de batteries</span><span class="wp-v hl">Assujettis</span></div>
+        <div class="wp-row"><span class="wp-k">Marques VE et électronique</span><span class="wp-v hl">Assujetties</span></div>
+        <div class="wp-row"><span class="wp-k">Exportateurs de cobalt</span><span class="wp-v">Doivent fournir la preuve</span></div>
+        <div class="wp-row"><span class="wp-k">Raffineurs et négociants</span><span class="wp-v">Doivent fournir la preuve</span></div>
+        <div class="wp-row"><span class="wp-k">Applicable à partir de</span><span class="wp-v">Août 2027</span></div>
+        <div class="wp-note"><span>Notre opération en RDC est basée à Kinshasa. Nous n'intervenons pas dans les provinces de l'est touchées par les conflits.</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:64px;padding-top:56px;border-top:1px solid var(--border);">
+      <span class="eyebrow">Au-delà du cobalt</span>
+      <h2 class="section-title" style="font-size:clamp(22px,2.4vw,32px);max-width:760px;">Le même modèle s'applique partout où la charge de la preuve dépasse les preuves disponibles.</h2>
+      <p style="color:var(--muted);font-size:16px;line-height:1.8;max-width:760px;margin-top:16px;">Le cobalt, sous le Règlement Batteries, est aujourd'hui le plus exposé. Le Règlement européen sur la déforestation impose des obligations identiques au bois, au cacao, au café, au caoutchouc, au soja, à l'huile de palme et au bétail. La CSDDD étend le principe à l'ensemble des chaînes d'approvisionnement des entreprises. À mesure que les obligations de nos clients s'élargissent, notre activité s'élargit aussi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE HELP -->
+<section class="who">
+  <div class="max-w">
+    <span class="eyebrow">Qui nous accompagnons</span>
+    <h2 class="section-title">Quatre types de clients</h2>
+    <div class="divider"></div>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v8H1zM14 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
+        <h3>Importateurs &amp; marques</h3>
+        <p>Fabricants de batteries, constructeurs de véhicules électriques et marques d'électronique mettant des produits sur le marché de l'UE, soumis à l'obligation légale de prouver un approvisionnement responsable.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 13h2M13 13h2M9 17h2M13 17h2"/></svg></div>
+        <h3>Producteurs, exportateurs &amp; raffineurs</h3>
+        <p>Sociétés minières, exportateurs et raffineurs devant fournir des preuves à leurs acheteurs pour continuer à vendre sur les marchés européens.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-.5a6.5 6.5 0 0 1 13 0v.5M16 8.5a3.5 3.5 0 0 0 0-6.9M21.5 20v-.5a6.5 6.5 0 0 0-4.5-6.2"/></svg></div>
+        <h3>Coopératives</h3>
+        <p>Groupements de producteurs artisanaux et à petite échelle formalisant leurs activités pour satisfaire aux normes reconnues d'approvisionnement responsable.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l4-4 3 3M3 12l4-4M12 10l4 4 5-5"/></svg></div>
+        <h3>Sociétés d'attestation &amp; de traçabilité</h3>
+        <p>Prestataires internationaux ayant besoin d'un partenaire de terrain fiable sur les marchés qu'ils ne peuvent atteindre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="dark" id="how">
+  <div class="max-w">
+    <span class="eyebrow">Comment ça marche</span>
+    <h2 class="section-title">Commencez par un seul site</h2>
+    <p class="section-desc">Un pilote sur un seul site vous situe avant tout engagement plus important.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3>Parlez-nous</h3><p>Indiquez-nous le site ou la filière que vous devez garantir. Nous vous dirons ce que la réglementation exige de vous.</p></div>
+      <div class="step"><div class="step-num">02</div><h3>Pilote</h3><p>Nous menons une visite de surveillance ou une évaluation des écarts sur un site, et vous montrons exactement ce que nous constatons.</p></div>
+      <div class="step"><div class="step-num">03</div><h3>Livraison</h3><p>Nous recueillons et vérifions les données, puis vous remettons un rapport prêt pour l'audit ou un dossier complet de devoir de vigilance.</p></div>
+      <div class="step"><div class="step-num">04</div><h3>Suivi</h3><p>Surveillance et reporting continus qui maintiennent votre conformité à jour à mesure que les règles évoluent.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="max-w" style="position:relative;">
+    <span class="eyebrow" style="color:#7FDBFF;">Pour commencer</span>
+    <h2>Devez-vous prouver que votre chaîne d'approvisionnement est responsable ?</h2>
+    <p>Commencez par un pilote sur un seul site. Nous vous montrerons nos constats et ce qu'il faut pour être prêt à l'audit.</p>
+    <div class="cta-btns">
+      <a href="#contact" class="cta-white">Demander un pilote</a>
+      <a href="https://wa.me/44XXXXXXXXXX" class="cta-wa">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Nous écrire sur WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="max-w">
+    <div class="contact-grid">
+      <div>
+        <span class="eyebrow">Demander un pilote</span>
+        <h2 class="section-title">Parlez-nous de votre chaîne d'approvisionnement</h2>
+        <div class="divider"></div>
+        <p style="color:var(--muted);font-size:15.5px;line-height:1.75;margin-bottom:28px;">Nous répondons sous un jour ouvré avec une évaluation honnête de ce que la réglementation exige de vous et de ce qu'impliquerait un pilote.</p>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" placeholder="Votre nom complet" required></div>
+            <div class="form-group"><label class="form-label">Entreprise</label><input type="text" class="form-input" placeholder="Votre organisation" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Fonction</label><input type="text" class="form-input" placeholder="Votre intitulé de poste" required></div>
+            <div class="form-group"><label class="form-label">Je suis...</label>
+              <select class="form-select" required>
+                <option value="">Sélectionnez...</option>
+                <option>Importateur ou marque</option>
+                <option>Producteur ou transformateur</option>
+                <option>Coopérative</option>
+                <option>Société d'attestation ou de traçabilité</option>
+                <option>Autre</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">E-mail</label><input type="email" class="form-input" placeholder="your@company.com" required></div>
+          <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Décrivez le site ou la filière que vous devez garantir..."></textarea></div>
+          <button type="submit" class="form-btn">Demander une évaluation</button>
+          <div id="form-success" class="form-success">Merci. Nous avons bien reçu votre demande et répondrons sous un jour ouvré.</div>
+        </form>
+        <script>function handleSubmit(e){e.preventDefault();document.getElementById('form-success').style.display='block';e.target.reset();}</script>
+      </div>
+      <div>
+        <span class="eyebrow">Nous joindre directement</span>
+        <h2 class="section-title">Contacter le pôle conformité</h2>
+        <div class="divider"></div>
+        <div style="margin-top:28px;">
+          <a href="https://wa.me/44XXXXXXXXXX" class="contact-card contact-wa">
+            <div class="cc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></div>
+            <div><div class="cc-label">WhatsApp</div><div class="cc-val">+44 XXXX XXXXXX</div></div>
+          </a>
+          <a href="mailto:compliance@icongrp.co.uk" class="contact-card">
+            <div class="cc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+            <div><div class="cc-label">E-mail</div><div class="cc-val">compliance@icongrp.co.uk</div></div>
+          </a>
+          <a href="tel:01268203010" class="contact-card">
+            <div class="cc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></div>
+            <div><div class="cc-label">Téléphone</div><div class="cc-val">+44 1268 20 30 10</div></div>
+          </a>
+          <a href="#" class="contact-card">
+            <div class="cc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+            <div><div class="cc-label">Opération RDC</div><div class="cc-val">Kinshasa, RD Congo</div></div>
+          </a>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:20px;font-style:italic;">Nous travaillons aussi en anglais.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
+      <p>ICONGRP Conformité &amp; Approvisionnement Responsable. Assurance de terrain des chaînes d'approvisionnement, alignée sur le Règlement Batteries UE, le RDUE, les principes de l'OCDE et la CSDDD.</p>
+      <p class="footer-reg">Opération RDC : Kinshasa<br>Icon Group T/A Icon Medical Ltd<br>Enregistrée en Angleterre et au Pays de Galles, n° 15214942<br>Milton Keynes, Royaume-Uni</p>
+    </div>
+    <div class="footer-col"><h4>Conformité</h4><ul>
+      <li><a href="#contact">Demander un pilote</a></li>
+      <li><a href="#">Surveillance des sites</a></li>
+      <li><a href="#">Préparation aux audits</a></li>
+      <li><a href="#">Dossiers de devoir de vigilance</a></li>
+      <li><a href="#standards">Normes</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>ICONGRP</h4><ul>
+      <li><a href="international.html">International</a></li>
+      <li><a href="donor-bids.html">Multilateral Bids</a></li>
+      <!-- SA hidden -->
+      <li><a href="../index.html">icongrp.co.uk</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:9px;">compliance@icongrp.co.uk</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:9px;">WhatsApp : +44 XXXX XXXXXX</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);">Nous travaillons aussi en anglais</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#169; 2026 ICONGRP. Tous droits réservés.</span>
+    <span><a href="#">Politique de confidentialité</a><a href="#">Conditions d'utilisation</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
