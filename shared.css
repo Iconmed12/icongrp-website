@@ -78,7 +78,7 @@ section{padding:96px 56px;}
 .cta-btn-outline{border:2px solid rgba(255,255,255,.35);color:#fff;padding:15px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;background:rgba(255,255,255,.08);transition:background .2s;}
 .cta-btn-outline:hover{background:rgba(255,255,255,.15);}
 footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding:64px 56px 32px;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1200px;margin:0 auto;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:32px;max-width:1200px;margin:0 auto;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.08);}
 .footer-logo{font-weight:800;font-size:22px;letter-spacing:.03em;color:#fff;text-decoration:none;}
 .footer-logo span{color:#7FDBFF;}
 .footer-brand p{font-size:14px;color:rgba(255,255,255,.5);margin-top:14px;line-height:1.7;max-width:300px;}
@@ -89,7 +89,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .footer-col a:hover{color:#7FDBFF;}
 .footer-contact-link{display:flex;align-items:center;gap:8px;font-size:14px;color:rgba(255,255,255,.5);text-decoration:none;margin-bottom:10px;transition:color .2s;}
 .footer-contact-link:hover{color:#7FDBFF;}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:28px auto 0;font-size:13px;color:rgba(255,255,255,.35);}
+.footer-bottom{display:flex;justify-content:space-between;max-width:1200px;margin:16px auto 0;font-size:12px;color:rgba(255,255,255,.3);gap:20px;flex-wrap:wrap;}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease;}
 .reveal.visible{opacity:1;transform:none;}
 @media(max-width:900px){nav{padding:0 24px;}.nav-links{display:none;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#fff;padding:24px;gap:16px;border-bottom:1px solid var(--border);z-index:199;}.nav-links.open{display:flex;}.nav-burger{display:block;}.breadcrumb{padding:14px 24px;}.page-hero{padding:60px 24px;}.dark-section{padding:64px 24px;}.cta-banner{padding:64px 24px;}section{padding:64px 24px;}footer{padding:48px 24px 24px;}.footer-grid{grid-template-columns:1fr 1fr;gap:32px;}.impact-grid{grid-template-columns:1fr 1fr;}.dropdown{position:static;box-shadow:none;border:none;padding:0 0 0 16px;}.has-dropdown:hover .dropdown{display:none;}.has-dropdown.open .dropdown{display:block;}}
