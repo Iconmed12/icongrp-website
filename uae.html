@@ -138,7 +138,7 @@ section{padding:88px 56px;}
 .cc-val{font-size:16px;font-weight:700;color:var(--navy);}
 
 footer{background:var(--navy);padding:60px 56px 28px;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;max-width:1200px;margin:0 auto;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:32px;max-width:1200px;margin:0 auto;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.08);}
 .footer-logo{font-weight:800;font-size:22px;text-decoration:none;}
 .footer-logo .i{color:#fff;}.footer-logo .g{color:#7FDBFF;}
 .footer-brand p{font-size:13.5px;color:rgba(255,255,255,.5);margin-top:14px;line-height:1.7;max-width:290px;}
@@ -148,7 +148,7 @@ footer{background:var(--navy);padding:60px 56px 28px;}
 .footer-col li{margin-bottom:9px;}
 .footer-col a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;}
 .footer-col a:hover{color:#7FDBFF;}
-.footer-bottom{display:flex;justify-content:space-between;max-width:1200px;margin:24px auto 0;font-size:12px;color:rgba(255,255,255,.3);gap:20px;flex-wrap:wrap;}
+.footer-bottom{display:flex;justify-content:space-between;max-width:1200px;margin:16px auto 0;font-size:12px;color:rgba(255,255,255,.3);gap:20px;flex-wrap:wrap;}
 .footer-bottom a{color:rgba(255,255,255,.4);text-decoration:none;margin-left:16px;}
 
 @media(max-width:1100px){
@@ -249,7 +249,7 @@ footer{background:var(--navy);padding:60px 56px 28px;}
 </section>
 
 <!-- PRACTICE ONE -->
-<section>
+<section id="bid-management">
   <div class="max-w">
     <div class="center">
       <span class="eyebrow">Practice One</span>
@@ -320,7 +320,7 @@ footer{background:var(--navy);padding:60px 56px 28px;}
 </section>
 
 <!-- PRACTICE TWO -->
-<section class="problem">
+<section class="problem" id="ai-automation">
   <div class="max-w">
     <div class="center">
       <span class="eyebrow">Practice Two</span>
@@ -485,29 +485,14 @@ footer{background:var(--navy);padding:60px 56px 28px;}
     <div class="footer-brand">
       <a href="index.html" class="footer-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
       <p>An integrated services group operating across the United Kingdom, Africa and the European Union. One group. Every solution.</p>
-      <p class="footer-reg"><span style="display:block;color:#2E72D2;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px;">United Kingdom</span>Icon Group T/A Icon Medical Ltd<br>Registered in England &amp; Wales, No. 15214942<br>Newport Pagnell, Milton Keynes, United Kingdom</p>
-      <p class="footer-reg" style="margin-top:16px;"><span style="display:block;color:#2E72D2;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px;">United Arab Emirates</span>Icon Global Consulting F.Z.E<br>C1 Building, Ajman Free Zone<br>Ajman, United Arab Emirates<br>Licence No. 56891<br><a href="tel:+971588324525" style="color:inherit;text-decoration:none;">+971 58 832 4525</a><br><a href="mailto:uae@icongrp.co.uk" style="color:inherit;text-decoration:none;">uae@icongrp.co.uk</a></p>
     </div>
-    <div class="footer-col"><h4>International</h4><ul>
-      <!-- Intl Overview hidden: <li><a href="international.html">International Overview</a></li> -->
-      <li><a href="compliance.html">Compliance &amp; Sourcing</a></li>
-      <li><a href="donor-bids.html">Multilateral Bids</a></li>
-      <li><a href="drc.html">DR Congo</a></li>
-      <li><a href="uae.html">United Arab Emirates</a></li>
-    </ul></div>
-    <div class="footer-col"><h4>Group</h4><ul>
-      <li><a href="about.html">About</a></li>
-      <li><a href="careers.html">Careers</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul></div>
-    <div class="footer-col"><h4>Enquiries</h4>
-      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:9px;">info@icongrp.co.uk</p>
-    </div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About ICONGRP</a></li><li><a href="leadership.html">Leadership</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>DR Congo</h4><ul><li><a href="drc.html#practices">Construction</a></li><li><a href="drc.html#practices">Training</a></li><li><a href="compliance.html">Compliance</a></li></ul></div>
+    <div class="footer-col"><h4>United Arab Emirates</h4><ul><li><a href="uae.html#bid-management">Bid Management</a></li><li><a href="uae.html#ai-automation">AI Automation</a></li></ul></div>
+    <div class="footer-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><li><a href="consulting.html">Consulting Solutions</a></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <span>&#169; 2026 ICONGRP. All rights reserved.</span>
-    <span><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></span>
-  </div>
+  <div style="font-size:11.5px;color:rgba(255,255,255,.3);line-height:1.8;max-width:1200px;margin:22px auto 0;">Icon Group T/A Icon Medical Ltd, registered in England and Wales No. 15214942. Registered office: Unit A11 Harben House, Tickford Street, Newport Pagnell, Milton Keynes MK16 9EY. UAE operations: Icon Global Consulting F.Z.E, Ajman Free Zone, Licence No. 56891. DR Congo operations: Kinshasa.</div>
+  <div class="footer-bottom"><span>&#169; 2026 ICONGRP. All rights reserved.</span><span><a href="tel:01268203010" style="color:inherit;text-decoration:none;">+44 1268 20 30 10</a> &#183; <a href="tel:+971588324525" style="color:inherit;text-decoration:none;">+971 58 832 4525</a></span></div>
 </footer>
 
 <script>
