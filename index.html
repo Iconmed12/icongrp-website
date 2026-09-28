@@ -32,16 +32,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:72px;d
 .nav-cta:hover{background:var(--blue)!important;}
 .nav-burger{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--navy);}
 /* HERO */
-.hero{position:relative;margin:0;padding:72px 0 0;width:100%;background:#020C1F;}
-.hero-img{width:100%;height:auto;display:block;margin:0;padding:0;border:0;}
-.hero-cta{background:#020C1F;padding:24px 0 46px;margin-top:-2px;display:flex;gap:16px;padding-left:5%;flex-wrap:wrap;}
+
+
+
 .hbtn{text-decoration:none;display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:100px;font-weight:700;font-size:16px;font-family:inherit;transition:transform .15s,box-shadow .15s;}
 .hbtn svg{width:18px;height:18px;}
 .hbtn-primary{background:#22E6E6;color:#04121f;box-shadow:0 6px 24px rgba(34,230,230,.3);}
 .hbtn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(34,230,230,.42);}
 .hbtn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5);}
 .hbtn-outline:hover{border-color:#22E6E6;color:#22E6E6;}
-@media(max-width:600px){.hero-cta{padding-left:20px;padding-right:20px;gap:12px;}.hbtn{padding:13px 24px;font-size:14.5px;flex:1;justify-content:center;}}
+@media(max-width:600px){.hbtn{padding:13px 24px;font-size:14.5px;flex:1;justify-content:center;}}
 .hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;}
 .hero-glow{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(14,165,233,.25) 0%,transparent 65%);filter:blur(60px);pointer-events:none;animation:glow 7s ease-in-out infinite;}
 @keyframes glow{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
@@ -152,6 +152,26 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .why-badge-icon svg,.te-feature-icon svg,.hc-step-num svg{color:#7FDBFF;width:20px;height:20px;}
 .footer-contact-link svg,.hero-card-feature svg{color:currentColor;display:inline-block;vertical-align:middle;margin-right:4px;}
 .service-icon{display:flex;align-items:center;}
+
+.hero{position:relative;min-height:82vh;display:flex;align-items:flex-end;padding:72px 0 0;background:url('images/hero-home.jpg') center top/cover no-repeat;background-color:#020C1F;overflow:hidden;}
+.hero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,12,31,.68) 0%,rgba(2,12,31,.32) 34%,rgba(2,12,31,0) 56%),linear-gradient(0deg,rgba(2,12,31,.92) 0%,rgba(2,12,31,0) 46%);}
+.hero-content{position:relative;z-index:3;max-width:1200px;margin:0 auto;width:100%;padding:0 56px 64px;}
+.hero-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#22E6E6;margin-bottom:16px;}
+.hero-h1{font-size:clamp(40px,5.6vw,72px);font-weight:800;line-height:1.02;letter-spacing:-.03em;color:#fff;margin:0 0 18px;}
+.hero-h1 .accent{color:#22E6E6;}
+.hero-sub{font-size:clamp(15px,1.6vw,18px);color:rgba(255,255,255,.82);max-width:560px;line-height:1.6;margin:0 0 30px;}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;}
+.hbtn{text-decoration:none;display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:100px;font-weight:700;font-size:16px;font-family:inherit;transition:transform .15s,box-shadow .15s;}
+.hbtn svg{width:18px;height:18px;}
+.hbtn-primary{background:#22E6E6;color:#04121f;box-shadow:0 6px 24px rgba(34,230,230,.3);}
+.hbtn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(34,230,230,.42);}
+.hbtn-outline{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.5);}
+.hbtn-outline:hover{border-color:#22E6E6;color:#22E6E6;}
+@media(max-width:640px){
+  .hero{min-height:70vh;}
+  .hero-content{padding:0 20px 40px;}
+  .hbtn{padding:13px 22px;font-size:14.5px;flex:1;justify-content:center;}
+}
 </style>
 </head>
 <body>
@@ -190,10 +210,14 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 </nav>
 
 <section class="hero">
-  <img class="hero-img" src="images/hero-home.jpg" alt="ICONGRP - One Group. Every Solution. Integrated services across the United Kingdom, Democratic Republic of Congo and United Arab Emirates">
-  <div class="hero-cta">
-    <a href="about.html" class="hbtn hbtn-primary">Explore Our Group <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <a href="contact.html" class="hbtn hbtn-outline">Work With Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <h1 class="hero-h1">One Group.<br><span class="accent">Every Solution.</span></h1>
+    <p class="hero-sub">Integrated services, operational delivery and professional expertise across the United Kingdom, Africa and the Middle East.</p>
+    <div class="hero-cta">
+      <a href="about.html" class="hbtn hbtn-primary">Explore Our Group <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="contact.html" class="hbtn hbtn-outline">Work With Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
   </div>
 </section>
 
