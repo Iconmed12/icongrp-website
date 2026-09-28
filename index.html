@@ -32,9 +32,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:72px;d
 .nav-cta:hover{background:var(--blue)!important;}
 .nav-burger{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--navy);}
 /* HERO */
-.hero{position:relative;line-height:0;font-size:0;margin:0;padding:0;width:100%;background:#0A1F4D;}
+.hero{position:relative;margin:0;padding:0;width:100%;background:#020C1F;}
 .hero-img{width:100%;height:auto;display:block;margin:0;padding:0;border:0;}
-.hero-link{position:absolute;display:block;z-index:5;}
+.hero-cta{background:#020C1F;padding:0 0 46px;margin-top:-4px;display:flex;gap:16px;padding-left:5%;flex-wrap:wrap;}
+.hbtn{text-decoration:none;display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:100px;font-weight:700;font-size:16px;font-family:inherit;transition:transform .15s,box-shadow .15s;}
+.hbtn svg{width:18px;height:18px;}
+.hbtn-primary{background:#22E6E6;color:#04121f;box-shadow:0 6px 24px rgba(34,230,230,.3);}
+.hbtn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(34,230,230,.42);}
+.hbtn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5);}
+.hbtn-outline:hover{border-color:#22E6E6;color:#22E6E6;}
+@media(max-width:600px){.hero-cta{padding-left:20px;padding-right:20px;gap:12px;}.hbtn{padding:13px 24px;font-size:14.5px;flex:1;justify-content:center;}}
 .hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;}
 .hero-glow{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(14,165,233,.25) 0%,transparent 65%);filter:blur(60px);pointer-events:none;animation:glow 7s ease-in-out infinite;}
 @keyframes glow{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
@@ -184,8 +191,10 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 
 <section class="hero">
   <img class="hero-img" src="images/hero-home.jpg" alt="ICONGRP - One Group. Every Solution. Integrated services across the United Kingdom, Democratic Republic of Congo and United Arab Emirates">
-  <a href="about.html" class="hero-link" aria-label="Explore Our Group" style="left:6.5%;bottom:17.5%;width:14%;height:6.5%;"></a>
-  <a href="contact.html" class="hero-link" aria-label="Work With Us" style="left:22.5%;bottom:17.5%;width:11.5%;height:6.5%;"></a>
+  <div class="hero-cta">
+    <a href="about.html" class="hbtn hbtn-primary">Explore Our Group <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="contact.html" class="hbtn hbtn-outline">Work With Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
 </section>
 
 <!-- CANA HERO CARD — hidden until launch
