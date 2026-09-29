@@ -194,6 +194,117 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 @media(max-width:980px){.svc-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:640px){.svc-grid{grid-template-columns:1fr;}}
 
+
+/* APPROACH DIVISIONS (rebrand) */
+.approach{background:linear-gradient(180deg,#FBFCFE 0%,#F1F4F9 100%);padding:96px 0;}
+.approach-in{max-width:1200px;margin:0 auto;padding:0 40px;}
+.approach-head{text-align:center;max-width:820px;margin:0 auto 56px;}
+.approach-eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-light);margin-bottom:18px;display:block;}
+.approach-head h2{font-size:clamp(32px,4.2vw,50px);font-weight:800;letter-spacing:-.025em;color:var(--navy);line-height:1.06;margin-bottom:22px;}
+.approach-head p{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:32px;}
+.approach-btn{display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:#fff;padding:14px 30px;border-radius:100px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s,box-shadow .15s;}
+.approach-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(12,36,97,.22);}
+.approach-btn svg{width:16px;height:16px;}
+.approach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:start;}
+.appr-card{display:flex;flex-direction:column;}
+.appr-photo{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:5/4;background:linear-gradient(135deg,#1A3A7A,#0C2461);display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
+.appr-photo>svg{width:44px;height:44px;color:rgba(255,255,255,.28);}
+.appr-photo .ph-label{position:absolute;bottom:12px;left:14px;font-size:10px;font-weight:600;letter-spacing:.05em;color:rgba(255,255,255,.5);text-transform:uppercase;background:rgba(0,0,0,.3);padding:3px 9px;border-radius:5px;}
+.appr-badge{position:absolute;left:20px;bottom:-26px;width:56px;height:56px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(12,36,97,.28);z-index:3;border:3px solid #fff;}
+.appr-badge svg{width:24px;height:24px;color:#fff;}
+.appr-body h3{font-size:23px;font-weight:800;color:var(--navy);letter-spacing:-.01em;margin-bottom:12px;}
+.appr-body p{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.appr-link{display:inline-flex;align-items:center;gap:7px;color:var(--blue);font-weight:700;font-size:14.5px;text-decoration:none;}
+.appr-card:hover .appr-link{gap:11px;}
+.appr-link svg{width:15px;height:15px;}
+@media(max-width:900px){.approach-grid{grid-template-columns:1fr;gap:56px;}.approach{padding:64px 0;}.approach-in{padding:0 20px;}}
+
+/* REGIONS (rebrand) */
+.regions{background:#fff;padding:90px 0;}
+.regions-in{max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:0.85fr 2fr;gap:52px;align-items:start;}
+.regions-eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-light);margin-bottom:16px;display:block;}
+.regions-intro h2{font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-.025em;color:var(--navy);line-height:1.05;margin-bottom:18px;}
+.regions-intro h2 .accent{color:var(--blue-light);}
+.regions-intro p{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:26px;}
+.regions-btn{display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:#fff;padding:13px 26px;border-radius:9px;font-weight:700;font-size:14.5px;text-decoration:none;transition:transform .15s,box-shadow .15s;}
+.regions-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(12,36,97,.22);}
+.regions-btn svg{width:15px;height:15px;}
+.regions-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.region-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(12,36,97,.04);transition:transform .2s,box-shadow .2s;}
+.region-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(12,36,97,.1);}
+.region-photo{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#1A3A7A,#0C2461);}
+
+.region-photo{overflow:visible;}
+.region-flag-badge{position:absolute;left:16px;bottom:-18px;width:42px;height:42px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(12,36,97,.2);border:2px solid #fff;z-index:4;overflow:hidden;}
+.region-flag-badge img{width:100%;height:100%;object-fit:cover;display:block;}
+.region-body{padding-top:26px;}
+.region-photo .ph-label{position:absolute;bottom:10px;left:12px;font-size:10px;font-weight:600;letter-spacing:.05em;color:rgba(255,255,255,.55);text-transform:uppercase;background:rgba(0,0,0,.3);padding:3px 8px;border-radius:5px;}
+.region-body{padding:20px 22px 24px;}
+.region-name{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.region-flag{font-size:22px;line-height:1;}
+.region-name h3{font-size:17px;font-weight:800;color:var(--navy);}
+.region-body p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.region-link{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:700;font-size:13.5px;text-decoration:none;}
+.region-card:hover .region-link{gap:10px;}
+.region-link svg{width:14px;height:14px;}
+@media(max-width:1000px){.regions-in{grid-template-columns:1fr;gap:36px;}.regions-cards{grid-template-columns:1fr;}.regions{padding:64px 0;}.regions-in{padding:0 20px;}}
+
+/* IMPACT MARKETS (rebrand) */
+.impact{background:#fff;padding:0;}
+.impact .max-w{padding-top:90px;border-top:1px solid var(--border);}
+.impact{padding-bottom:90px;}
+.impact-head{max-width:820px;margin-bottom:52px;}
+.impact-eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-light);margin-bottom:14px;display:block;}
+.impact-head h2{font-size:clamp(38px,5vw,62px);font-weight:800;letter-spacing:-.025em;color:var(--navy);line-height:1.04;margin-bottom:18px;}
+.impact-head h2 .accent{color:var(--blue);}
+.impact-head p{font-size:17px;color:var(--muted);line-height:1.7;}
+.markets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;}
+.market-head{display:flex;align-items:flex-start;gap:18px;padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+.market-map{width:72px;height:82px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.market-map img{max-width:100%;max-height:100%;object-fit:contain;opacity:.85;}
+.market-head h3{font-size:22px;font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:9px;}
+.market-tags{font-size:15px;color:var(--muted);font-weight:600;line-height:1.5;}
+.market-stats{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.mstat{display:flex;flex-direction:column;}
+.mstat:first-child{padding-right:24px;border-right:1px solid var(--border);}
+.mstat-num{font-size:48px;font-weight:800;color:var(--blue);letter-spacing:-.02em;line-height:1;margin-bottom:10px;}
+.mstat-label{font-size:15px;color:var(--muted);line-height:1.45;}
+@media(max-width:900px){.markets-grid{grid-template-columns:1fr;gap:40px;}.impact{padding:64px 0;}}
+
+/* COLLAGE STRIP (rebrand) */
+.collage{width:100%;background:#0C2461;}
+.collage-strip{display:grid;grid-template-columns:repeat(10,1fr);grid-auto-rows:1fr;gap:0;width:100%;}
+.collage-tile{position:relative;aspect-ratio:1/1;background:linear-gradient(135deg,#1A3A7A,#0C2461);background-size:cover;background-position:center;overflow:hidden;}
+.ct-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.04em;text-transform:uppercase;}
+@media(max-width:900px){.collage-strip{grid-template-columns:repeat(5,1fr);}}
+@media(max-width:520px){.collage-strip{grid-template-columns:repeat(4,1fr);}}
+
+/* COMPLIANCE BAND (rebrand) */
+.compliance-band{position:relative;background:#FFFFFF;overflow:hidden;min-height:440px;display:flex;align-items:center;}
+.cb-inner{max-width:1200px;margin:0 auto;padding:0 40px;width:100%;position:relative;z-index:3;}
+.cb-text{margin-left:0;}
+.cb-text{max-width:760px;padding:52px 0;padding-right:60px;}
+.cb-eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1A7FB0;margin-bottom:24px;display:block;}
+.cb-text h2{font-size:clamp(34px,4vw,52px);font-weight:800;letter-spacing:-.03em;color:var(--navy);line-height:1.05;margin-bottom:22px;white-space:nowrap;}
+.cb-text h2 .accent{color:var(--blue);}
+.cb-text p{font-size:19px;color:var(--muted);line-height:1.55;margin-bottom:32px;max-width:560px;}
+.cb-tags{display:flex;align-items:center;gap:14px;flex-wrap:nowrap;white-space:nowrap;margin-bottom:24px;}
+.cb-tags span{font-size:15px;font-weight:600;color:var(--navy);white-space:nowrap;}
+.cb-tags .cb-div{color:var(--border);font-weight:400;}
+.cb-sub{font-size:16px!important;color:var(--muted)!important;margin-bottom:36px!important;}
+.cb-btn{display:inline-flex;align-items:center;gap:11px;background:var(--navy);color:#fff;padding:17px 38px;border-radius:9px;font-weight:700;font-size:17px;text-decoration:none;transition:transform .15s,box-shadow .15s;}
+.cb-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(12,36,97,.24);}
+.cb-btn svg{width:17px;height:17px;}
+.cb-photo{position:absolute;top:0;right:0;bottom:0;width:47%;background:#0C2461 url('images/compliance-photo.jpg') center top/cover no-repeat;z-index:1;}
+.cb-ph-label{position:absolute;top:50%;left:58%;transform:translate(-50%,-50%);font-size:11px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:.05em;text-transform:uppercase;}
+@media(max-width:900px){
+  .compliance-band{flex-direction:column;min-height:0;}
+  .cb-text h2{white-space:normal;font-size:34px;}
+  .cb-tags{flex-wrap:wrap;white-space:normal;}
+  .cb-photo{position:relative;width:100%;height:280px;clip-path:none;order:-1;}
+  .cb-text{padding:48px 0;max-width:100%;}
+  .cb-ph-label{left:50%;}
+}
 </style>
 </head>
 <body>
@@ -254,51 +365,38 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
   <div class="stat-item"><span class="stat-number" data-count="100" data-suffix="+">0</span><span class="stat-label">Clients Served</span></div>
 </div>
 
-<section id="divisions">
-  <div class="max-w">
-    <div class="divisions-header reveal">
-      <div>
-        <span class="section-eyebrow">What We Do</span>
-        <h2 class="section-title">Our Divisions</h2>
-      </div>
-      <p class="section-desc">Connected capabilities, built to work independently or together across your entire operational remit.</p>
+<section id="divisions" class="approach">
+  <div class="approach-in">
+    <div class="approach-head reveal">
+      <span class="approach-eyebrow">Our Divisions</span>
+      <h2>Creating value across every sector</h2>
+      <p>Across care, workforce, logistics and consulting, ICONGRP connects people and places with people who deliver, high standards and intelligent solutions.</p>
+      <a href="about.html" class="approach-btn">Explore Our Group <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
-    <div class="svc-grid">
-      <a href="care.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 9v6M9 12h6"/></svg></div>
-        <h3>Care &amp; Community</h3>
-        <p>Domiciliary and residential care operations tailored to individual needs, delivered with compassion and compliance at every level.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="logistics.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h11l-2-3M3 12l2 3M14 8h3l3 4v3h-6"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></div>
-        <h3>Operations &amp; Logistics</h3>
-        <p>Safe, reliable transport and logistics management across care pathways and commercial supply chains.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="workforce.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="8" r="3.2"/><path d="M17 4a3.2 3.2 0 0 1 0 6.2M21 20v-2a4 4 0 0 0-3-3.8"/></svg></div>
-        <h3>Workforce Solutions</h3>
-        <p>End-to-end recruitment, staffing and workforce management that closes gaps and keeps your operations running at full capacity.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="tender-writing.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div>
-        <h3>Tender Writing &amp; Bid Support</h3>
-        <p>Bid strategy, tender writing and submission management for organisations competing for public and private sector contracts.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="translation.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div>
-        <h3>Language &amp; Translation</h3>
-        <p>Professional translation and interpreting, including document translation for submissions, compliance and international work.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <div class="svc-card svc-cta reveal">
-        <span class="svc-eyebrow">Connected Services</span>
-        <h3>One Group.<br>Every Answer.</h3>
-        <p>Need multiple divisions working together? ICONGRP coordinates across all our divisions as a single integrated partner.</p>
-        <a href="contact.html" class="svc-cta-btn">Get in Touch</a>
+    <div class="approach-grid">
+      <div class="appr-card reveal">
+        <div class="appr-photo" style="background:url('images/div-people.jpg') center/cover no-repeat;">
+        </div>
+        <div class="appr-body">
+          <h3>People Who Deliver</h3>
+          <p>Every ICONGRP professional represents the standards of our Group: skilled, supported and committed to delivering quality wherever we operate. Across our services and markets, our people bring expertise, accountability and a human approach to every client, project and community we support. We invest in our teams through clear standards, ongoing development and strong operational support, ensuring they have the knowledge, confidence and resources needed to deliver consistently and represent ICONGRP with professionalism at every level.</p>
+        </div>
+      </div>
+      <div class="appr-card reveal">
+        <div class="appr-photo" style="background:url('images/div-standards.jpg') center/cover no-repeat;">
+        </div>
+        <div class="appr-body">
+          <h3>High Standards</h3>
+          <p>We operate to high professional standards across every ICONGRP service and market, with a strong focus on quality, compliance and accountability. Our teams work in line with client requirements, industry expectations and regulatory obligations to deliver services that are consistent, dependable and built to perform. Through robust processes, regular oversight and continuous improvement, we work to maintain strong governance, reduce operational risk and ensure our clients can rely on the same level of professionalism and quality wherever we operate.</p>
+        </div>
+      </div>
+      <div class="appr-card reveal">
+        <div class="appr-photo" style="background:url('images/div-solutions.jpg') center/cover no-repeat;">
+        </div>
+        <div class="appr-body">
+          <h3>Intelligent Solutions</h3>
+          <p>We help organisations navigate complex requirements with practical consultancy, robust compliance support and solutions built around how their business actually operates. From reviewing policies, procedures and regulatory obligations to strengthening governance, procurement, risk management and operational controls, we work with clients to identify gaps, improve processes and build stronger, more resilient organisations.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -308,62 +406,9 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 <div class="cana-hero-card">...</div>
 -->
 
-<div class="stats-bar">
-  <div class="stat-item"><span class="stat-number" data-count="15" data-suffix="+">0</span><span class="stat-label">Years of Experience</span></div>
-  <div class="stat-item"><span class="stat-number" data-count="5000" data-suffix="+">0</span><span class="stat-label">Staff Deployed</span></div>
-  <div class="stat-item"><span class="stat-number">24/7</span><span class="stat-label">Support Available</span></div>
-  <div class="stat-item"><span class="stat-number" data-count="100" data-suffix="+">0</span><span class="stat-label">Clients Served</span></div>
-</div>
 
-<section id="divisions">
-  <div class="max-w">
-    <div class="divisions-header reveal">
-      <div>
-        <span class="section-eyebrow">What We Do</span>
-        <h2 class="section-title">Our Divisions</h2>
-      </div>
-      <p class="section-desc">Connected capabilities, built to work independently or together across your entire operational remit.</p>
-    </div>
-    <div class="svc-grid">
-      <a href="care.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 9v6M9 12h6"/></svg></div>
-        <h3>Care &amp; Community</h3>
-        <p>Domiciliary and residential care operations tailored to individual needs, delivered with compassion and compliance at every level.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="logistics.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h11l-2-3M3 12l2 3M14 8h3l3 4v3h-6"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></div>
-        <h3>Operations &amp; Logistics</h3>
-        <p>Safe, reliable transport and logistics management across care pathways and commercial supply chains.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="workforce.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="8" r="3.2"/><path d="M17 4a3.2 3.2 0 0 1 0 6.2M21 20v-2a4 4 0 0 0-3-3.8"/></svg></div>
-        <h3>Workforce Solutions</h3>
-        <p>End-to-end recruitment, staffing and workforce management that closes gaps and keeps your operations running at full capacity.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="tender-writing.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div>
-        <h3>Tender Writing &amp; Bid Support</h3>
-        <p>Bid strategy, tender writing and submission management for organisations competing for public and private sector contracts.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a href="translation.html" class="svc-card reveal">
-        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div>
-        <h3>Language &amp; Translation</h3>
-        <p>Professional translation and interpreting, including document translation for submissions, compliance and international work.</p>
-        <span class="svc-link">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <div class="svc-card svc-cta reveal">
-        <span class="svc-eyebrow">Connected Services</span>
-        <h3>One Group.<br>Every Answer.</h3>
-        <p>Need multiple divisions working together? ICONGRP coordinates across all our divisions as a single integrated partner.</p>
-        <a href="contact.html" class="svc-cta-btn">Get in Touch</a>
-      </div>
-    </div>
-  </div>
-</section>
+
+
 
 <!-- CANA SECTION — hidden until launch
 <section id="cana" style="background:var(--navy);padding:96px 56px;">
@@ -438,48 +483,133 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 </section>
 -->
 
-<section class="impact">
-  <div class="max-w">
-    <div class="reveal">
-      <span class="section-eyebrow">Measurable Results</span>
-      <h2 class="section-title">Impact Across Every Division</h2>
+<section class="compliance-band">
+  <div class="cb-inner">
+    <div class="cb-text reveal">
+      <span class="cb-eyebrow">Compliance &amp; Responsible Sourcing</span>
+      <h2>Prove your<br><span class="accent">supply chain is clean.</span></h2>
+      <p>We collect evidence at source, verify it and turn it into audit-ready proof for buyers, regulators and supply-chain partners.</p>
+      <div class="cb-tags">
+        <span>Site Monitoring</span><span class="cb-div">|</span>
+        <span>Traceability</span><span class="cb-div">|</span>
+        <span>Audit Readiness</span><span class="cb-div">|</span>
+        <span>Due-Diligence Dossiers</span>
+      </div>
+      <p class="cb-sub">Independent &#183; OECD-aligned &#183; English &amp; French</p>
+      <a href="compliance.html" class="cb-btn">Explore Compliance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
-    <div class="impact-grid reveal">
-      <div class="impact-item"><div class="impact-number">120+</div><div class="impact-division">Care &amp; Community</div><div class="impact-desc">Service users supported across domiciliary and residential care programmes</div></div>
-      <div class="impact-item"><div class="impact-number">85+</div><div class="impact-division">Medical Services</div><div class="impact-desc">Healthcare roles filled across NHS and private sector clients</div></div>
-      <div class="impact-item"><div class="impact-number">40%</div><div class="impact-division">Workforce Solutions</div><div class="impact-desc">Average reduction in staffing gaps for clients within 90 days</div></div>
-      <div class="impact-item"><div class="impact-number">&#163;2M+</div><div class="impact-division">Consulting</div><div class="impact-desc">In contracts supported, bid-written and secured on behalf of clients</div></div>
-      <div class="impact-item"><div class="impact-number">300+</div><div class="impact-division">Transport</div><div class="impact-desc">Journeys completed safely across care and logistics networks</div></div>
-      <div class="impact-item"><div class="impact-number">99.8%</div><div class="impact-division">Payroll</div><div class="impact-desc">Accuracy in payroll processing across all workforce divisions</div></div>
+  </div>
+  <div class="cb-photo" style="background:url('images/compliance-photo.jpg') center/cover no-repeat;"></div>
+</section>
+
+<section class="regions">
+  <div class="regions-in">
+    <div class="regions-intro reveal">
+      <span class="regions-eyebrow">Our Regions</span>
+      <h2>Global Reach.<br><span class="accent">Local Impact.</span></h2>
+      <p>We work across the United Kingdom, Africa and the United Arab Emirates, delivering solutions that meet local needs and create lasting value.</p>
+      <a href="about.html" class="regions-btn">Explore Our Regions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="regions-cards">
+      <div class="region-card reveal">
+        <div class="region-photo" style="background:url('images/region-uk.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="images/flag-uk.png" alt="UK flag"></span></div>
+        <div class="region-body">
+          <div class="region-name"><h3>United Kingdom</h3></div>
+          <p>Delivering care, workforce, consulting and language solutions across public and private sectors.</p>
+          <a href="index.html" class="region-link">View UK Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="region-card reveal">
+        <div class="region-photo" style="background:url('images/region-congo.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="images/flag-drc.png" alt="DR Congo flag"></span></div>
+        <div class="region-body">
+          <div class="region-name"><h3>Africa</h3></div>
+          <p>Supporting growth through workforce development, consulting, compliance and language solutions.</p>
+          <a href="drc.html" class="region-link">View Africa Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="region-card reveal">
+        <div class="region-photo" style="background:url('images/region-uae.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="images/flag-uae.png" alt="UAE flag"></span></div>
+        <div class="region-body">
+          <div class="region-name"><h3>United Arab Emirates</h3></div>
+          <p>Providing workforce, consulting and language solutions to support a dynamic economy and global businesses.</p>
+          <a href="uae.html" class="region-link">View UAE Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="why">
+<section class="impact">
   <div class="max-w">
-    <div class="why-grid">
-      <div class="reveal">
-        <span class="section-eyebrow">Why ICONGRP</span>
-        <h2 class="section-title">Built to Work at Every Scale</h2>
-        <div class="divider"></div>
-        <div class="why-points">
-          <div class="why-point"><span class="why-point-num">01</span><div class="why-point-content"><h4>Integrated Across Divisions</h4><p>Our five divisions share infrastructure, compliance frameworks and leadership, so you always get connected expertise rather than isolated services.</p></div></div>
-          <div class="why-point"><span class="why-point-num">02</span><div class="why-point-content"><h4>Deep Sector Knowledge</h4><p>Over 15 years working inside care, NHS, local authority, housing and commercial sectors means we understand the procurement, compliance and operational realities.</p></div></div>
-          <div class="why-point"><span class="why-point-num">03</span><div class="why-point-content"><h4>UK-Wide Delivery</h4><p>With a base in Milton Keynes and active operations across London, Lancashire, the South West and beyond, we scale where you need us.</p></div></div>
+    <div class="impact-head reveal">
+      <span class="impact-eyebrow">Measurable Results</span>
+      <h2>Impact Across <span class="accent">Our Markets</span></h2>
+      <p>We deliver practical solutions that create real value for people, organisations and communities across the United Kingdom, Africa and the United Arab Emirates.</p>
+    </div>
+    <div class="markets-grid">
+
+      <div class="market reveal">
+        <div class="market-head">
+          <div class="market-map"><img src="images/map-uk.png" alt="United Kingdom map"></div>
+          <div>
+            <h3>United Kingdom</h3>
+            <p class="market-tags">Care &#183; Workforce &#183; Consulting &#183; Language</p>
+          </div>
+        </div>
+        <div class="market-stats">
+          <div class="mstat"><span class="mstat-num">120+</span><span class="mstat-label">People supported</span></div>
+          <div class="mstat"><span class="mstat-num">85+</span><span class="mstat-label">Healthcare roles filled</span></div>
         </div>
       </div>
-      <div class="why-visual reveal">
-        <div class="why-visual-orb"></div>
-        <div class="why-badge-stack">
-          <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M12 2l8 3.5V11c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><div><div class="why-badge-text">Fully Compliant</div><div class="why-badge-sub">CQC, ISO, GDPR aligned</div></div></div>
-          <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><div><div class="why-badge-text">Nationwide Coverage</div><div class="why-badge-sub">Active across England &amp; Wales</div></div></div>
-          <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></div><div><div class="why-badge-text">24/7 Operations</div><div class="why-badge-sub">Always available when it matters</div></div></div>
-          <div class="why-badge"><div class="why-badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M7 11l4-4 3 3M3 12l4-4M12 10l4 4 5-5M8 15l3 3M11 18l2 2"/></svg></div><div><div class="why-badge-text">Framework Ready</div><div class="why-badge-sub">Experienced on public sector tenders</div></div></div>
+
+      <div class="market reveal">
+        <div class="market-head">
+          <div class="market-map"><img src="images/map-drc.png" alt="DR Congo map"></div>
+          <div>
+            <h3>Democratic Republic of Congo</h3>
+            <p class="market-tags">Compliance &#183; Construction &#183; Training</p>
+          </div>
+        </div>
+        <div class="market-stats">
+          <div class="mstat"><span class="mstat-num">45+</span><span class="mstat-label">Projects delivered</span></div>
+          <div class="mstat"><span class="mstat-num">1,000+</span><span class="mstat-label">People trained and supported</span></div>
         </div>
       </div>
+
+      <div class="market reveal">
+        <div class="market-head">
+          <div class="market-map"><img src="images/map-uae.png" alt="UAE map"></div>
+          <div>
+            <h3>United Arab Emirates</h3>
+            <p class="market-tags">Bid Management &#183; Business Automation</p>
+          </div>
+        </div>
+        <div class="market-stats">
+          <div class="mstat"><span class="mstat-num">&pound;2M+</span><span class="mstat-label">Bid value supported</span></div>
+          <div class="mstat"><span class="mstat-num">10+</span><span class="mstat-label">Automation projects delivered</span></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<section class="collage">
+  <div class="collage-strip">
+    <div class="collage-tile" style="background:url('images/collage-1.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-2.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-3.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-4.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-5.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-6.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-7.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-8.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-9.jpg') center/cover no-repeat;"></div>
+    <div class="collage-tile" style="background:url('images/collage-10.jpg') center/cover no-repeat;"></div>
+  </div>
+</section>
+
+
 
 <section class="cta-section">
   <div class="max-w reveal">
