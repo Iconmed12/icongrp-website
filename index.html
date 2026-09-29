@@ -194,7 +194,6 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 @media(max-width:980px){.svc-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:640px){.svc-grid{grid-template-columns:1fr;}}
 
-
 /* APPROACH DIVISIONS (rebrand) */
 .approach{background:linear-gradient(180deg,#FBFCFE 0%,#F1F4F9 100%);padding:96px 0;}
 .approach-in{max-width:1200px;margin:0 auto;padding:0 40px;}
@@ -408,8 +407,6 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 
 
 
-
-
 <!-- CANA SECTION — hidden until launch
 <section id="cana" style="background:var(--navy);padding:96px 56px;">
   <div class="max-w">
@@ -594,49 +591,100 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
 </section>
 
-<section class="collage">
-  <div class="collage-strip">
-    <div class="collage-tile" style="background:url('images/collage-1.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-2.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-3.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-4.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-5.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-6.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-7.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-8.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-9.jpg') center/cover no-repeat;"></div>
-    <div class="collage-tile" style="background:url('images/collage-10.jpg') center/cover no-repeat;"></div>
+
+<!-- FOOTER -->
+<style>
+.nf-cta{position:relative;overflow:hidden;background:#EAF1FA;padding:22px 56px;}
+.nf-cta::before,.nf-cta::after{content:"";position:absolute;top:0;bottom:0;width:22%;background:linear-gradient(120deg,rgba(30,86,176,.18),rgba(30,86,176,0) 70%);clip-path:polygon(0 0,60% 0,100% 100%,0 100%);}
+.nf-cta::before{left:0;}
+.nf-cta::after{right:0;transform:scaleX(-1);}
+.nf-cta-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.nf-cta-bar{display:none;}
+.nf-cta h2{font-size:clamp(22px,2.2vw,28px);font-weight:800;letter-spacing:-.02em;color:#0C2461;line-height:1.1;margin:0 0 4px;}
+.nf-cta h2 span{color:#1E56B0;}
+.nf-cta p{font-size:13.5px;color:#2B3E66;margin:0;}
+.nf-cta-btn{display:inline-flex;align-items:center;gap:16px;background:#0C2461;color:#fff;font-weight:700;font-size:14px;text-decoration:none;padding:11px 20px;border-radius:6px;transition:transform .15s;white-space:nowrap;}
+.nf-cta-btn:hover{transform:translateY(-2px);}
+.nf-cta-btn svg{width:20px;height:20px;}
+.nf{position:relative;overflow:hidden;background:#0C2461;color:#fff;padding:28px 56px 18px;border-top:0;font-family:'Plus Jakarta Sans',sans-serif;}
+.nf::before{content:"";position:absolute;right:-10%;top:0;bottom:0;width:38%;background:linear-gradient(120deg,rgba(255,255,255,0),rgba(30,86,176,.35));clip-path:polygon(35% 0,100% 0,100% 100%,0 100%);pointer-events:none;}
+.nf *{box-sizing:border-box;}
+.nf-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
+.nf-grid{display:grid;grid-template-columns:1.5fr 1fr 1.2fr 1fr 1fr;gap:0;}
+.nf-col{padding:0 24px;border-left:1px solid rgba(255,255,255,.15);}
+.nf-col:first-child{padding-left:0;border-left:0;}
+.nf .nf-col a.nf-logo{display:inline-block;font-size:22px;font-weight:800;letter-spacing:.02em;color:#fff;text-decoration:none;line-height:1;padding-bottom:6px;border-bottom:2px solid #2E9BD6;margin-bottom:10px;}
+.nf-logo .g{font-weight:400;}
+.nf-brand p{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.7);margin:0 0 12px;max-width:300px;}
+.nf-social{display:flex;gap:8px;}
+.nf-social a{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s,border-color .2s;}
+.nf-social a:hover{background:#2E9BD6;border-color:#2E9BD6;}
+.nf-social svg{width:13px;height:13px;fill:currentColor;}
+.nf-col h4{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin:0 0 8px;padding-bottom:8px;white-space:nowrap;position:relative;}
+.nf-col h4::after{content:"";position:absolute;left:0;bottom:0;width:32px;height:2px;background:#2E9BD6;}
+.nf-col ul{list-style:none;margin:8px 0 0;padding:0;}
+.nf-col li{margin:0 0 4px;}
+.nf-col ul a{color:rgba(255,255,255,.85);text-decoration:none;font-size:12.5px;transition:color .2s;}
+.nf-col ul a:hover{color:#7FDBFF;}
+.nf-phones{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;padding:9px 0;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15);}
+.nf-phone{padding:0 24px;border-left:1px solid rgba(255,255,255,.15);}
+.nf-phone:first-child{border-left:0;}
+.nf-phone span{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7FDBFF;margin-right:12px;}
+.nf-phone a{color:#fff;font-size:13px;font-weight:600;text-decoration:none;}
+.nf-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:10px;font-size:11px;color:rgba(255,255,255,.75);}
+.nf-bottom p{margin:0;line-height:1.75;}
+.nf-legal{display:flex;gap:0;flex-wrap:wrap;}
+.nf-legal a{color:rgba(255,255,255,.85);text-decoration:none;padding:0 14px;border-left:1px solid rgba(255,255,255,.2);}
+.nf-legal a:first-child{border-left:0;padding-left:0;}
+.nf-legal a:hover{color:#7FDBFF;}
+.nf-reg{font-size:10px;color:rgba(255,255,255,.3);line-height:1.5;margin:6px 0 0;}
+@media(max-width:1100px){.nf-grid{grid-template-columns:1fr 1fr 1fr;} .nf-col:first-child{grid-column:1/-1;border:0;padding:0 0 32px;} .nf-col:nth-child(2){border-left:0;padding-left:0;}}
+@media(max-width:760px){.nf{padding:48px 24px 32px;} .nf-cta{padding:48px 24px;} .nf-grid{grid-template-columns:1fr;} .nf-col{border-left:0;padding:0 0 28px;} .nf-phones{grid-template-columns:1fr;gap:16px;} .nf-phone{padding:0;border-left:0;} .nf-bottom{flex-direction:column;align-items:flex-start;} .nf-legal a{padding:0 14px;} .nf-legal a:first-child{padding-left:0;}}
+</style>
+<section class="nf-cta">
+  <div class="nf-cta-in">
+    <div>
+      <div class="nf-cta-bar"></div>
+      <h2>One Group. <span>Every Solution.</span></h2>
+      <p>An integrated services group operating across the United Kingdom, Africa and the Middle East.</p>
+    </div>
+    <a href="contact.html" class="nf-cta-btn">Get in Touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
-
-
-
-<section class="cta-section">
-  <div class="max-w reveal">
-    <span class="section-eyebrow">Get Started</span>
-    <h2>Ready to Work With a Group That Delivers?</h2>
-    <p>Tell us what you need. We will respond within one business day with a clear plan and transparent pricing.</p>
-    <div class="cta-actions">
-      <a href="tel:01268203010" class="cta-btn-white">Call 01268 20 30 10</a>
-      <a href="contact.html" class="cta-btn-outline">Send Us a Message</a>
+<footer class="nf">
+  <div class="nf-in">
+    <div class="nf-grid">
+      <div class="nf-col nf-brand">
+        <a href="index.html" class="nf-logo">ICON<span class="g">GRP</span></a>
+        <p>An integrated services group operating across the United Kingdom, Africa and the Middle East. One group. Every solution.</p>
+        <div class="nf-social">
+          <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a>
+        </div>
+      </div>
+      <div class="nf-col"><h4>Company</h4><ul><li><a href="about.html">About ICONGRP</a></li><li><a href="leadership.html">Leadership</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="nf-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><li><a href="tender-writing.html">Tender Writing &amp; Bid Support</a></li><li><a href="translation.html">Language &amp; Translation</a></li></ul></div>
+      <div class="nf-col"><h4>DR Congo</h4><ul><li><a href="drc.html#practices">Construction</a></li><li><a href="drc.html#practices">Training</a></li><li><a href="compliance.html">Compliance</a></li></ul></div>
+      <div class="nf-col"><h4>United Arab Emirates</h4><ul><li><a href="uae.html#bid-management">Bid Management</a></li><li><a href="uae.html#ai-automation">AI Automation</a></li></ul></div>
     </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="index.html" class="footer-logo"><span class="i">ICON</span><span class="g">GRP</span></a>
-      <p>An integrated services group operating across the United Kingdom, Africa and the Middle East. One group. Every solution.</p>
+    <div class="nf-phones">
+      <div class="nf-phone"><span>United Kingdom</span><a href="tel:+441268203010">+44 1268 20 30 10</a></div>
+      <div class="nf-phone"><span>DR Congo</span><a href="tel:+243818585154">+243 818 585 154</a></div>
+      <div class="nf-phone"><span>United Arab Emirates</span><a href="tel:+971588324525">+971 58 832 4525</a></div>
     </div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About ICONGRP</a></li><li><a href="leadership.html">Leadership</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>DR Congo</h4><ul><li><a href="drc.html#practices">Construction</a></li><li><a href="drc.html#practices">Training</a></li><li><a href="compliance.html">Compliance</a></li></ul></div>
-    <div class="footer-col"><h4>United Arab Emirates</h4><ul><li><a href="uae.html#bid-management">Bid Management</a></li><li><a href="uae.html#ai-automation">AI Automation</a></li></ul></div>
-    <div class="footer-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><li><a href="tender-writing.html">Tender Writing &amp; Bid Support</a></li><li><a href="translation.html">Language &amp; Translation</a></li></ul></div>
+    <div class="nf-bottom">
+      <p>&#169; 2026 ICONGRP. All rights reserved. Icon Group T/A Icon Medical Ltd, registered in England and Wales No. 15214942.</p>
+      <div class="nf-legal"><a href="contact.html">Privacy Policy</a><a href="contact.html">Cookie Policy</a><a href="contact.html">Terms &amp; Conditions</a></div>
+    </div>
+    <p class="nf-reg">Registered office: Unit A11 Harben House, Tickford Street, Newport Pagnell, Milton Keynes MK16 9EY. UAE operations: Icon Global Consulting F.Z.E, Ajman Free Zone, Licence No. 56891. DR Congo operations: ICONGRP SARL, Kinshasa, RCCM CD/KNM/RCCM/26-B-02577, National ID 01-S9502-N01362E.</p>
   </div>
-  <div style="font-size:11.5px;color:rgba(255,255,255,.3);line-height:1.8;max-width:1200px;margin:22px auto 0;">Icon Group T/A Icon Medical Ltd, registered in England and Wales No. 15214942. Registered office: Unit A11 Harben House, Tickford Street, Newport Pagnell, Milton Keynes MK16 9EY. UAE operations: Icon Global Consulting F.Z.E, Ajman Free Zone, Licence No. 56891. DR Congo operations: ICONGRP SARL, Kinshasa, RCCM CD/KNM/RCCM/26-B-02577, National ID 01-S9502-N01362E.</div>
-  <div class="footer-bottom"><span>&#169; 2026 ICONGRP. All rights reserved.</span><span><a href="tel:01268203010" style="color:inherit;text-decoration:none;">+44 1268 20 30 10</a> &#183; <a href="tel:+971588324525" style="color:inherit;text-decoration:none;">+971 58 832 4525</a> &#183; <a href="tel:+243818585154" style="color:inherit;text-decoration:none;">+243 818 585 154</a></span></div>
 </footer>
+
+
+
+
 
 <script>
 document.getElementById('navburger').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
