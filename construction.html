@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Construction – ICONGRP</title>
+<meta name="description" content="ICONGRP provides a complete construction solution in the Democratic Republic of Congo, from design and planning through to delivery, supervision and final handover.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+:root{--co-navy:#0C2461;--co-blue:#1E56B0;--co-blue-light:#2E72D2;--co-accent:#2E9BD6;--co-muted:#4E6490;--co-border:rgba(14,65,180,.12);--co-grey:#F4F7FB;}
+.co-page{padding-top:72px;font-family:'Plus Jakarta Sans',sans-serif;color:#0C1A35;}
+.co-page *,.co-page *::before,.co-page *::after{box-sizing:border-box;}
+.co-page h1,.co-page h2,.co-page h3,.co-page p,.co-page ul{margin:0;padding:0;}
+.co-page svg,.co-page img{display:block;}
+.co-page section{padding:0;}
+.co-wrap{max-width:1200px;margin:0 auto;padding:0 40px;}
+.co-eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--co-accent);margin-bottom:18px;}
+.co-eyebrow::after{content:"";width:40px;height:2px;background:var(--co-accent);}
+.co-h2{font-size:clamp(28px,3.4vw,42px);font-weight:800;letter-spacing:-.02em;color:var(--co-navy);line-height:1.1;margin-bottom:16px;}
+.co-h2 .a{color:var(--co-blue);}
+.co-lead{font-size:16px;color:var(--co-muted);line-height:1.7;}
+.co-btn{display:inline-flex;align-items:center;gap:9px;background:var(--co-navy);color:#fff;padding:14px 26px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s;}
+.co-btn:hover{transform:translateY(-2px);}
+.co-btn svg{width:16px;height:16px;}
+.co-btn-accent{background:var(--co-accent);color:#fff;}
+.co-btn-wa{background:#25D366;color:#fff;}
+.co-btn-wa svg{width:18px;height:18px;}
+.co-cta-btns{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* HERO */
+.co-hero{position:relative;overflow:hidden;width:100%;height:clamp(400px,50vw,640px);display:flex;align-items:center;background:#fff url('images/con-hero.jpg') right center/cover no-repeat;}
+.co-hero-content{padding:40px 40px 40px clamp(40px,4.5vw,90px);display:flex;flex-direction:column;justify-content:center;max-width:560px;}
+.co-hero h1{font-size:clamp(30px,3.4vw,50px);font-weight:800;line-height:1.06;letter-spacing:-.02em;color:var(--co-navy);margin-bottom:18px;}
+.co-hero h1 .a{color:var(--co-blue);}
+.co-hero p{font-size:clamp(14px,1.15vw,16px);color:var(--co-muted);line-height:1.6;margin-bottom:24px;max-width:460px;}
+
+/* INTRO */
+.co-page .co-intro{padding:56px 0;background:var(--co-grey);}
+.co-intro-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;}
+.co-intro .co-h2{margin-bottom:0;}
+.co-intro .co-lead{max-width:420px;}
+
+/* SERVICE SPLITS */
+.co-split{display:grid;grid-template-columns:1fr 1fr;background:#fff;}
+.co-split.alt{background:var(--co-grey);}
+.co-split-photo{position:relative;min-height:540px;overflow:hidden;background:#0C2461;}
+.co-split-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.co-split:not(.rev) .co-split-photo{background:#fff;-webkit-mask-image:linear-gradient(283deg,transparent 0%,transparent 18%,rgba(0,0,0,.5) 25%,#000 34%);mask-image:linear-gradient(283deg,transparent 0%,transparent 18%,rgba(0,0,0,.5) 25%,#000 34%);}
+.co-split.alt + .co-split:not(.rev) .co-split-photo{background:#fff;}
+.co-split.rev .co-split-photo{background:var(--co-grey);-webkit-mask-image:linear-gradient(77deg,transparent 0%,transparent 18%,rgba(0,0,0,.5) 25%,#000 34%);mask-image:linear-gradient(77deg,transparent 0%,transparent 18%,rgba(0,0,0,.5) 25%,#000 34%);}
+.co-split-content{padding:56px clamp(40px,4.5vw,90px) 56px 48px;display:flex;flex-direction:column;justify-content:center;}
+.co-split.rev .co-split-content{padding:56px 48px 56px clamp(40px,4.5vw,90px);}
+.co-num{display:inline-flex;align-items:center;gap:12px;font-size:13px;font-weight:700;color:var(--co-accent);margin-bottom:14px;}
+.co-num::after{content:"";width:40px;height:2px;background:var(--co-accent);}
+.co-split h2{font-size:clamp(24px,2.6vw,32px);font-weight:800;letter-spacing:-.02em;color:var(--co-navy);line-height:1.15;margin-bottom:14px;}
+.co-split p{font-size:15.5px;color:var(--co-muted);line-height:1.65;margin-bottom:20px;max-width:520px;}
+.co-list{list-style:none;}
+.co-list li{display:flex;align-items:center;gap:12px;padding:5px 0;font-size:14.5px;font-weight:600;color:var(--co-navy);}
+.co-list li svg{width:22px;height:22px;color:var(--co-accent);flex-shrink:0;}
+
+/* PROJECTS */
+.co-page .co-projects{padding:72px 0;background:#fff;}
+.co-proj-head{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;margin-bottom:36px;}
+.co-proj-head .co-h2{margin-bottom:0;}
+.co-proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.co-proj{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#E6EEF9,#D3E0F3);border:1px solid var(--co-border);display:flex;align-items:center;justify-content:center;}
+.co-proj img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.co-proj:hover img{transform:scale(1.05);}
+.co-proj-ph{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--co-blue);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.co-proj-ph svg{width:40px;height:40px;opacity:.7;}
+.co-proj-label{position:absolute;left:0;right:70px;bottom:0;padding:50px 20px 18px;color:#fff;background:linear-gradient(0deg,rgba(12,36,97,.9),rgba(12,36,97,0));}
+.co-proj-label strong{display:block;font-size:17px;font-weight:800;margin-bottom:4px;}
+.co-proj-label span{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:rgba(255,255,255,.85);}
+.co-proj-label span svg{width:14px;height:14px;}
+.co-proj-arrow{position:absolute;right:16px;bottom:16px;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s;}
+.co-proj-arrow svg{width:16px;height:16px;}
+.co-proj:hover .co-proj-arrow{background:var(--co-accent);border-color:var(--co-accent);}
+.co-proj::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(0deg,rgba(12,36,97,.7),rgba(12,36,97,0));pointer-events:none;}
+.co-proj-label,.co-proj-arrow{z-index:1;}
+.co-proj-label{background:none;}
+@media(max-width:1000px){.co-proj-head{grid-template-columns:1fr;} .co-proj-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.co-proj-grid{grid-template-columns:1fr;}}
+
+/* CTA */
+.co-cta{position:relative;overflow:hidden;background:linear-gradient(120deg,#0C2461 0%,#132C63 100%);color:#fff;}
+.co-cta::after{content:"";position:absolute;right:-8%;top:0;bottom:0;width:36%;background:linear-gradient(120deg,rgba(255,255,255,0),rgba(30,86,176,.5));clip-path:polygon(35% 0,100% 0,100% 100%,0 100%);pointer-events:none;}
+.co-cta-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:64px 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.co-cta .co-eyebrow{color:#7FDBFF;}
+.co-cta .co-eyebrow::after{background:#7FDBFF;}
+.co-cta h2{font-size:clamp(30px,3.6vw,48px);font-weight:800;letter-spacing:-.02em;line-height:1.05;}
+.co-cta h2 .a{color:#2E9BD6;}
+.co-cta-right{padding-left:48px;border-left:1px solid rgba(255,255,255,.2);}
+.co-cta p{font-size:15.5px;color:rgba(255,255,255,.85);line-height:1.65;margin-bottom:22px;max-width:420px;}
+
+@media(max-width:1000px){
+  .co-hero,.co-intro-grid,.co-split,.co-cta-in{grid-template-columns:1fr;}
+  .co-hero{height:auto;min-height:480px;background-position:70% center;}
+  .co-hero::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.72);}
+  .co-hero-content{position:relative;}
+  .co-hero-content,.co-split-content,.co-split.rev .co-split-content{padding:40px;}
+  .co-split-photo,.co-split:not(.rev) .co-split-photo,.co-split.rev .co-split-photo{min-height:280px;clip-path:none;-webkit-mask-image:none;mask-image:none;}
+  .co-split.rev .co-split-photo{order:-1;}
+  .co-cta-right{padding-left:0;border-left:0;}
+}
+@media(max-width:600px){
+  .co-wrap,.co-cta-in{padding-left:20px;padding-right:20px;}
+  .co-hero-content,.co-split-content,.co-split.rev .co-split-content{padding:36px 20px;}
+}
+</style>
+</head>
+<body>
+<nav><a href="index.html" class="nav-logo">ICON<span>GRP</span></a><ul class="nav-links" id="navlinks">
+    <li><a href="about.html">About</a></li>
+    <li class="has-dropdown"><button class="nav-drop-toggle">UK &#9660;</button><ul class="dropdown"><li><a href="care.html">Care &amp; Community</a></li><!-- Facilities hidden: <li><a href="facilities.html">Facilities &amp; Cleaning</a></li> --><li><a href="consultancy.html">Consultancy</a></li></ul></li>
+    <li class="has-dropdown">
+      <button class="nav-drop-toggle">International &#9660;</button>
+      <ul class="dropdown">
+        <!-- Intl Overview hidden: <li><a href="international.html">International Overview</a></li> -->
+        <li><a href="compliance.html">Compliance &amp; Sourcing</a></li>
+        <li><a href="donor-bids.html">Multilateral Bids</a></li>
+        <li><a href="drc.html">Democratic Republic of Congo</a></li>
+        <li><a href="uae.html">United Arab Emirates</a></li>
+        <!-- SA hidden: <li><a href="south-africa.html">South Africa Desk</a></li> -->
+      </ul>
+    </li>
+    <li><a href="careers.html">Careers</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="tel:01268203010" class="nav-cta">01268 20 30 10</a></li>
+  </ul><button class="nav-burger" id="navburger">&#9776;</button></nav>
+<div class="co-page">
+
+<!-- HERO -->
+<section class="co-hero">
+  <div class="co-hero-content">
+    <span class="co-eyebrow">Construction</span>
+    <h1>From concept<br>to <span class="a">completion.</span></h1>
+    <p>ICONGRP provides a complete construction solution, from initial design and planning through to delivery, supervision and final handover.</p>
+    <a href="contact.html" class="co-btn" style="align-self:flex-start;">Get in touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="co-intro">
+  <div class="co-wrap co-intro-grid">
+    <div>
+      <span class="co-eyebrow">Our Construction Services</span>
+      <h2 class="co-h2">Three integrated services.<br><span class="a">One complete solution.</span></h2>
+    </div>
+    <p class="co-lead">We design, build and manage high-quality buildings and infrastructure, delivering projects that make a real difference.</p>
+  </div>
+</section>
+
+<!-- 01 DESIGN -->
+<section class="co-split" id="design">
+  <div class="co-split-photo"><img src="images/con-design.jpg" alt="Architectural design" style="object-position:center;"></div>
+  <div class="co-split-content">
+    <span class="co-num">01</span>
+    <h2>Architectural Design<br>&amp; Technical Studies</h2>
+    <p>We turn your vision into detailed, buildable plans through expert design and technical studies.</p>
+    <ul class="co-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Site analysis and feasibility</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Architectural design (2D / 3D)</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Structural, electrical and plumbing studies</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Detailed cost estimates</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Planning and building permit support</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 02 DELIVERY -->
+<section class="co-split rev alt" id="delivery">
+  <div class="co-split-content">
+    <span class="co-num">02</span>
+    <h2>Construction<br>&amp; Delivery</h2>
+    <p>We bring plans to life, delivering high-quality buildings through skilled people, reliable resources and effective project delivery.</p>
+    <ul class="co-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>New build construction (residential, commercial, offices)</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Renovation and refurbishment</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Structural and finishing works</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Procurement and material management</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Skilled labour and site management</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>On time, on budget and to the highest standards</li>
+    </ul>
+  </div>
+  <div class="co-split-photo"><img src="images/con-delivery.jpg" alt="Construction and delivery" style="object-position:30% center;"></div>
+</section>
+
+<!-- 03 SUPERVISION -->
+<section class="co-split" id="supervision">
+  <div class="co-split-photo"><img src="images/con-supervision.jpg" alt="Supervision and quality control" style="object-position:35% center;"></div>
+  <div class="co-split-content">
+    <span class="co-num">03</span>
+    <h2>Supervision, Quality Control<br>&amp; Project Management</h2>
+    <p>We oversee and coordinate every stage, ensuring work is delivered in line with plans, on time, to budget and to the highest standards.</p>
+    <ul class="co-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Daily site monitoring and inspections</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Project management and coordination</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Quality control of materials and workmanship</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Programme and cost management</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Health and safety and compliance</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>Final inspection and handover</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="co-projects" id="projects">
+  <div class="co-wrap">
+    <div class="co-proj-head">
+      <div>
+        <span class="co-eyebrow">Our Projects</span>
+        <h2 class="co-h2">From design to <span class="a">delivery.</span></h2>
+      </div>
+      <p class="co-lead">Explore a selection of projects developed, designed and delivered by ICONGRP SARL.</p>
+    </div>
+    <div class="co-proj-grid">
+      <div class="co-proj"><img src="images/proj-1.jpg" alt="Residential Development"><div class="co-proj-label"><strong>Residential Development</strong><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Kinshasa, DRC</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-2.jpg" alt="Architectural Design"><div class="co-proj-label"><strong>Architectural Design</strong><span>Residential Scheme</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-3.jpg" alt="Residential Project"><div class="co-proj-label"><strong>Residential Project</strong><span>Design &amp; Development</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-4.jpg" alt="Residential Development"><div class="co-proj-label"><strong>Residential Development</strong><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Kinshasa, DRC</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-5.jpg" alt="Construction in Progress" style="object-position:center 35%;"><div class="co-proj-label"><strong>Construction in Progress</strong><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Kinshasa, DRC</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-6.jpg" alt="Design Concept"><div class="co-proj-label"><strong>Design Concept</strong><span>Residential Development</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="co-cta">
+  <div class="co-cta-in">
+    <div>
+      <span class="co-eyebrow">ICONGRP SARL</span>
+      <h2>Your construction<br><span class="a">partner.</span></h2>
+    </div>
+    <div class="co-cta-right">
+      <p>From concept and design to construction, supervision and final handover, we provide a complete, reliable and professional service.</p>
+      <div class="co-cta-btns"><a href="contact.html" class="co-btn co-btn-accent">Get in touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="https://wa.me/243818585154" target="_blank" rel="noopener" class="co-btn co-btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12 0-3.2-1.3-6.2-3.5-8.4zM12 21.9c-1.8 0-3.5-.5-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 0 1 2 12C2 6.5 6.5 2 12 2c2.7 0 5.2 1 7.1 2.9A9.9 9.9 0 0 1 22 12c0 5.5-4.5 9.9-10 9.9zm5.4-7.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1l-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>WhatsApp</a></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<!-- FOOTER -->
+<style>
+.nf-cta{position:relative;overflow:hidden;background:#EAF1FA;padding:22px 56px;}
+.nf-cta::before,.nf-cta::after{content:"";position:absolute;top:0;bottom:0;width:22%;background:linear-gradient(120deg,rgba(30,86,176,.18),rgba(30,86,176,0) 70%);clip-path:polygon(0 0,60% 0,100% 100%,0 100%);}
+.nf-cta::before{left:0;}
+.nf-cta::after{right:0;transform:scaleX(-1);}
+.nf-cta-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.nf-cta-bar{display:none;}
+.nf-cta h2{font-size:clamp(22px,2.2vw,28px);font-weight:800;letter-spacing:-.02em;color:#0C2461;line-height:1.1;margin:0 0 4px;}
+.nf-cta h2 span{color:#1E56B0;}
+.nf-cta p{font-size:13.5px;color:#2B3E66;margin:0;}
+.nf-cta-btn{display:inline-flex;align-items:center;gap:16px;background:#0C2461;color:#fff;font-weight:700;font-size:14px;text-decoration:none;padding:11px 20px;border-radius:6px;transition:transform .15s;white-space:nowrap;}
+.nf-cta-btn:hover{transform:translateY(-2px);}
+.nf-cta-btn svg{width:20px;height:20px;}
+.nf{position:relative;overflow:hidden;background:#0C2461;color:#fff;padding:28px 56px 18px;border-top:0;font-family:'Plus Jakarta Sans',sans-serif;}
+.nf::before{content:"";position:absolute;right:-10%;top:0;bottom:0;width:38%;background:linear-gradient(120deg,rgba(255,255,255,0),rgba(30,86,176,.35));clip-path:polygon(35% 0,100% 0,100% 100%,0 100%);pointer-events:none;}
+.nf *{box-sizing:border-box;}
+.nf-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
+.nf-grid{display:grid;grid-template-columns:1.5fr 1fr 1.2fr 1fr 1fr;gap:0;}
+.nf-col{padding:0 24px;border-left:1px solid rgba(255,255,255,.15);}
+.nf-col:first-child{padding-left:0;border-left:0;}
+.nf .nf-col a.nf-logo{display:inline-block;font-size:22px;font-weight:800;letter-spacing:.02em;color:#fff;text-decoration:none;line-height:1;padding-bottom:6px;border-bottom:2px solid #2E9BD6;margin-bottom:10px;}
+.nf-logo .g{font-weight:400;}
+.nf-brand p{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.7);margin:0 0 12px;max-width:300px;}
+.nf-social{display:flex;gap:8px;}
+.nf-social a{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s,border-color .2s;}
+.nf-social a:hover{background:#2E9BD6;border-color:#2E9BD6;}
+.nf-social svg{width:13px;height:13px;fill:currentColor;}
+.nf-col h4{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin:0 0 8px;padding-bottom:8px;white-space:nowrap;position:relative;}
+.nf-col h4::after{content:"";position:absolute;left:0;bottom:0;width:32px;height:2px;background:#2E9BD6;}
+.nf-col ul{list-style:none;margin:8px 0 0;padding:0;}
+.nf-col li{margin:0 0 4px;}
+.nf-col ul a{color:rgba(255,255,255,.85);text-decoration:none;font-size:12.5px;transition:color .2s;}
+.nf-col ul a:hover{color:#7FDBFF;}
+.nf-phones{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;padding:9px 0;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15);}
+.nf-phone{padding:0 24px;border-left:1px solid rgba(255,255,255,.15);}
+.nf-phone:first-child{border-left:0;}
+.nf-phone span{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7FDBFF;margin-right:12px;}
+.nf-phone a{color:#fff;font-size:13px;font-weight:600;text-decoration:none;}
+.nf-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:10px;font-size:11px;color:rgba(255,255,255,.75);}
+.nf-bottom p{margin:0;line-height:1.75;}
+.nf-legal{display:flex;gap:0;flex-wrap:wrap;}
+.nf-legal a{color:rgba(255,255,255,.85);text-decoration:none;padding:0 14px;border-left:1px solid rgba(255,255,255,.2);}
+.nf-legal a:first-child{border-left:0;padding-left:0;}
+.nf-legal a:hover{color:#7FDBFF;}
+.nf-reg{font-size:10px;color:rgba(255,255,255,.3);line-height:1.5;margin:6px 0 0;}
+@media(max-width:1100px){.nf-grid{grid-template-columns:1fr 1fr 1fr;} .nf-col:first-child{grid-column:1/-1;border:0;padding:0 0 32px;} .nf-col:nth-child(2){border-left:0;padding-left:0;}}
+@media(max-width:760px){.nf{padding:48px 24px 32px;} .nf-cta{padding:48px 24px;} .nf-grid{grid-template-columns:1fr;} .nf-col{border-left:0;padding:0 0 28px;} .nf-phones{grid-template-columns:1fr;gap:16px;} .nf-phone{padding:0;border-left:0;} .nf-bottom{flex-direction:column;align-items:flex-start;} .nf-legal a{padding:0 14px;} .nf-legal a:first-child{padding-left:0;}}
+</style>
+
+<footer class="nf">
+  <div class="nf-in">
+    <div class="nf-grid">
+      <div class="nf-col nf-brand">
+        <a href="index.html" class="nf-logo">ICON<span class="g">GRP</span></a>
+        <p>An integrated services group operating across the United Kingdom, Africa and the Middle East. One group. Every solution.</p>
+        <div class="nf-social">
+          <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a>
+        </div>
+      </div>
+      <div class="nf-col"><h4>Company</h4><ul><li><a href="about.html">About ICONGRP</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="nf-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="consultancy.html">Consultancy</a></li></ul></div>
+      <div class="nf-col"><h4>DR Congo</h4><ul><li><a href="construction.html">Construction</a></li><li><a href="drc.html#practices">Training</a></li><li><a href="compliance.html">Compliance</a></li></ul></div>
+      <div class="nf-col"><h4>United Arab Emirates</h4><ul><li><a href="uae.html#bid-management">Bid Management</a></li><li><a href="uae.html#ai-automation">AI Automation</a></li></ul></div>
+    </div>
+    <div class="nf-phones">
+      <div class="nf-phone"><span>United Kingdom</span><a href="tel:+441268203010">+44 1268 20 30 10</a></div>
+      <div class="nf-phone"><span>DR Congo</span><a href="tel:+243818585154">+243 818 585 154</a></div>
+      <div class="nf-phone"><span>United Arab Emirates</span><a href="tel:+971588324525">+971 58 832 4525</a></div>
+    </div>
+    <div class="nf-bottom">
+      <p>&#169; 2026 ICONGRP. All rights reserved. Icon Group T/A Icon Medical Ltd, registered in England and Wales No. 15214942.</p>
+      <div class="nf-legal"><a href="contact.html">Privacy Policy</a><a href="contact.html">Cookie Policy</a><a href="contact.html">Terms &amp; Conditions</a></div>
+    </div>
+    <p class="nf-reg">Registered office: Unit A11 Harben House, Tickford Street, Newport Pagnell, Milton Keynes MK16 9EY. UAE operations: Icon Global Consulting F.Z.E, Ajman Free Zone, Licence No. 56891. DR Congo operations: ICONGRP SARL, Kinshasa, RCCM CD/KNM/RCCM/26-B-02577, National ID 01-S9502-N01362E.</p>
+  </div>
+</footer>
+<script>
+(function(){
+  var b=document.getElementById('navburger'),n=document.getElementById('navlinks');
+  if(b&&n){b.addEventListener('click',function(){n.classList.toggle('open');});}
+  document.querySelectorAll('.nav-links .has-dropdown > .nav-drop-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){
+      if(window.innerWidth<=900){e.preventDefault();t.parentElement.classList.toggle('open');}
+    });
+  });
+})();
+</script>
+</body>
+</html>
