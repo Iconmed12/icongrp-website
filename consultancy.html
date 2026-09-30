@@ -75,8 +75,9 @@
 .cs-split-photo{position:relative;min-height:440px;background:#0C2461 center/cover no-repeat;}
 .cs-split-content{padding:64px 56px 64px clamp(40px,4.5vw,90px);display:flex;flex-direction:column;justify-content:center;}
 .cs-split.rev .cs-split-content{padding:64px clamp(40px,4.5vw,90px) 64px 56px;}
-.cs-split:not(.rev) .cs-split-photo{clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);}
-.cs-split.rev .cs-split-photo{clip-path:polygon(0 0,100% 0,86% 100%,0 100%);}
+.cs-split-photo::after{content:"";position:absolute;inset:0;pointer-events:none;}
+.cs-split:not(.rev) .cs-split-photo::after{background:linear-gradient(90deg,var(--cs-grey) 0%,rgba(244,247,251,.6) 12%,rgba(244,247,251,0) 34%);}
+.cs-split.rev .cs-split-photo::after{background:linear-gradient(270deg,#fff 0%,rgba(255,255,255,.6) 12%,rgba(255,255,255,0) 34%);}
 .cs-split.rev{background:#fff;}
 .cs-feat{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:22px;max-width:520px;}
 .cs-feat li{list-style:none;display:flex;align-items:center;gap:12px;font-size:14.5px;font-weight:700;color:var(--cs-navy);}
@@ -114,20 +115,21 @@
 .cs-intl-photo span::before,.cs-intl-photo span::after{content:"";display:inline-block;width:18px;height:1px;background:rgba(255,255,255,.6);vertical-align:middle;margin:0 8px;}
 
 /* CTA */
-.cs-cta{background:var(--cs-navy);color:#fff;}
+.cs-cta{background:linear-gradient(120deg,#EAF1FA 0%,#DCE8F7 100%);color:var(--cs-navy);border-top:1px solid var(--cs-border);}
 .cs-cta-in{max-width:1200px;margin:0 auto;padding:56px 40px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;}
-.cs-cta .cs-eyebrow{color:#7FDBFF;}
-.cs-cta .cs-eyebrow::after{background:#7FDBFF;}
+
 .cs-cta h2{font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.1;}
-.cs-cta h2 .a{color:#2E9BD6;}
-.cs-cta p{font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:20px;max-width:420px;}
+.cs-cta h2 .a{color:var(--cs-blue);}
+.cs-cta p{font-size:15px;color:var(--cs-muted);line-height:1.6;margin-bottom:20px;max-width:420px;}
 
 @media(max-width:1000px){
   .cs-hero-photo{width:100%;clip-path:none;opacity:.35;}
   .cs-hero-photo::after{display:none;}
   .cs-trust-in{grid-template-columns:1fr 1fr;}
   .cs-exp-grid,.cs-split,.cs-intl,.cs-cta-in{grid-template-columns:1fr;}
-  .cs-split-photo,.cs-split.rev .cs-split-photo{min-height:280px;clip-path:none;}
+  .cs-split-photo,.cs-split.rev .cs-split-photo{min-height:280px;}
+  .cs-split:not(.rev) .cs-split-photo::after{background:linear-gradient(180deg,var(--cs-grey) 0%,rgba(244,247,251,0) 30%);}
+  .cs-split.rev .cs-split-photo::after{background:linear-gradient(0deg,#fff 0%,rgba(255,255,255,0) 30%);}
   .cs-split-content,.cs-split.rev .cs-split-content{padding:48px 40px;}
   .cs-split.rev .cs-split-photo{order:-1;}
   .cs-steps{grid-template-columns:1fr 1fr;}
@@ -146,8 +148,7 @@
 <body>
 <nav><a href="index.html" class="nav-logo">ICON<span>GRP</span></a><ul class="nav-links" id="navlinks">
     <li><a href="about.html">About</a></li>
-    <li class="has-dropdown"><button class="nav-drop-toggle">UK &#9660;</button><ul class="dropdown"><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><!-- Facilities hidden: <li><a href="facilities.html">Facilities &amp; Cleaning</a></li> --><li><a href="consultancy.html">Consultancy</a></li>
-<li><a href="tender-writing.html">Tender Writing &amp; Bid Support</a></li></ul></li>
+    <li class="has-dropdown"><button class="nav-drop-toggle">UK &#9660;</button><ul class="dropdown"><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><!-- Facilities hidden: <li><a href="facilities.html">Facilities &amp; Cleaning</a></li> --><li><a href="consultancy.html">Consultancy</a></li></ul></li>
     <li class="has-dropdown">
       <button class="nav-drop-toggle">International &#9660;</button>
       <ul class="dropdown">
@@ -199,13 +200,13 @@
     <h2 class="cs-h2">Our Consultancy <span class="a">Expertise</span></h2>
     <p class="cs-lead">Two specialist service areas. One integrated approach. Supporting organisations to win opportunities, communicate effectively and deliver lasting impact.</p>
     <div class="cs-exp-grid">
-      <a href="#procurement" class="cs-exp-card" style="background-image:url('images/cons-card-bid.jpg');">
+      <a href="tender-writing.html" class="cs-exp-card" style="background-image:url('images/cons-card-bid.jpg');">
         <div class="cs-exp-num">01</div>
         <h3>Procurement &amp; Bid Consultancy</h3>
         <p>Strategic, end-to-end bid support to help organisations identify, prepare and win opportunities in the public and private sectors.</p>
         <div class="cs-exp-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       </a>
-      <a href="#language" class="cs-exp-card light" style="background-image:url('images/cons-card-lang.jpg');">
+      <a href="translation.html" class="cs-exp-card light" style="background-image:url('images/cons-card-lang.jpg');">
         <div class="cs-exp-num">02</div>
         <h3>Language &amp; Communication Services</h3>
         <p>Professional translation, interpreting and communication support to help organisations operate and engage across borders.</p>
@@ -230,12 +231,12 @@
       <li><span class="cs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span>Post-Bid Analysis</li>
     </ul>
   </div>
-  <div class="cs-split-photo" style="background-image:url('images/cons-procurement.jpg');"></div>
+  <div class="cs-split-photo" style="background-image:url('images/cons-procurement.jpg');background-position:70% center;"></div>
 </section>
 
 <!-- LANGUAGE -->
 <section class="cs-split rev" id="language">
-  <div class="cs-split-photo" style="background-image:url('images/cons-language.jpg');"></div>
+  <div class="cs-split-photo" style="background-image:url('images/cons-language.jpg');background-position:30% center;"></div>
   <div class="cs-split-content">
     <span class="cs-eyebrow">Language &amp; Communication Services</span>
     <h2 class="cs-h2">Connecting people<br><span class="a">without boundaries.</span></h2>
@@ -305,7 +306,7 @@
     </div>
     <div>
       <p>Talk to our consultancy team about your organisation, opportunity or communication requirements.</p>
-      <a href="contact.html" class="cs-btn">Request a Consultation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="contact.html" class="cs-btn cs-btn-navy">Request a Consultation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section>
@@ -375,8 +376,7 @@
         </div>
       </div>
       <div class="nf-col"><h4>Company</h4><ul><li><a href="about.html">About ICONGRP</a></li><li><a href="leadership.html">Leadership</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="nf-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><li><a href="consultancy.html">Consultancy</a></li>
-<li><a href="tender-writing.html">Tender Writing &amp; Bid Support</a></li></ul></div>
+      <div class="nf-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="logistics.html">Operations &amp; Logistics</a></li><li><a href="workforce.html">Workforce Solutions</a></li><li><a href="consultancy.html">Consultancy</a></li></ul></div>
       <div class="nf-col"><h4>DR Congo</h4><ul><li><a href="drc.html#practices">Construction</a></li><li><a href="drc.html#practices">Training</a></li><li><a href="compliance.html">Compliance</a></li></ul></div>
       <div class="nf-col"><h4>United Arab Emirates</h4><ul><li><a href="uae.html#bid-management">Bid Management</a></li><li><a href="uae.html#ai-automation">AI Automation</a></li></ul></div>
     </div>
