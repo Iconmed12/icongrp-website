@@ -28,7 +28,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:72px;d
 .nav-burger{display:none;background:none;border:none;font-size:26px;line-height:1;cursor:pointer;color:var(--navy);padding:4px 8px;}
 
 /* NAV DROPDOWN */
-.nav-links > li.has-dropdown{position:relative;padding-bottom:2px;}
+.nav-links > li.has-dropdown{position:relative;}
 .nav-links > li.has-dropdown::after{content:"";position:absolute;top:100%;left:0;right:0;height:14px;}
 .nav-drop-toggle{cursor:pointer;background:none;border:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);padding:0;transition:color .2s;}
 .nav-drop-toggle:hover{color:var(--navy);}
@@ -249,20 +249,20 @@ footer{background:var(--navy);padding:60px 56px 28px;}
 
 /* BID MANAGEMENT */
 .dr-page .ua-bid{display:grid;grid-template-columns:1.25fr 1fr;align-items:center;background:#fff;border-top:1px solid var(--dr-border);}
-.ua-bid-content{order:1;padding:44px 32px 44px max(40px,calc((100vw - 1120px)/2));display:flex;flex-direction:column;justify-content:center;}
+.ua-bid-content{order:1;padding:48px 40px 48px clamp(40px,5vw,96px);display:flex;flex-direction:column;justify-content:center;}
 .ua-bid-photo{order:2;position:relative;aspect-ratio:4/3;}
 .ua-bid-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0% center;}
 .ua-bid .dr-eyebrow{margin-bottom:12px;}
 .dr-page .ua-bid .dr-h2{font-size:clamp(24px,2.3vw,32px);line-height:1.1;margin-bottom:10px;}
 .ua-bid .dr-h2 .a{display:block;color:var(--dr-blue-light);}
-.ua-bid .dr-lead{font-size:14.5px;line-height:1.55;max-width:560px;}
-.ua-bid .ua-svc-grid{gap:10px;margin-top:18px;max-width:660px;}
-.ua-bid .ua-svc{padding:14px 14px 15px;border-radius:10px;display:grid;grid-template-columns:30px 1fr;column-gap:10px;align-items:center;}
+.ua-bid .dr-lead{font-size:14.5px;line-height:1.55;max-width:680px;}
+.ua-bid .ua-svc-grid{gap:12px;margin-top:20px;max-width:none;}
+.ua-bid .ua-svc{padding:16px 16px 17px;border-radius:10px;display:grid;grid-template-columns:30px 1fr;grid-template-rows:36px auto;column-gap:10px;align-items:center;align-content:start;}
 .ua-bid .ua-svc::before{left:14px;width:28px;}
 .ua-bid .ua-svc-icon{width:30px;height:30px;border-radius:7px;margin:0;}
 .ua-bid .ua-svc-icon svg{width:16px;height:16px;}
 .ua-bid .ua-svc h3{font-size:13.5px;margin:0;line-height:1.25;}
-.ua-bid .ua-svc p{grid-column:1/-1;font-size:12.5px;line-height:1.5;margin-top:8px;}
+.ua-bid .ua-svc p{grid-column:1/-1;align-self:start;font-size:12.5px;line-height:1.5;margin-top:10px;}
 .ua-btn-blue{background:var(--dr-blue-light);margin-top:18px;align-self:flex-start;padding:11px 20px;font-size:14px;}
 
 /* AI AUTOMATION */
@@ -411,7 +411,7 @@ footer{background:var(--navy);padding:60px 56px 28px;}
 <!-- FACTS -->
 <div class="ua-facts">
   <div class="ua-facts-in">
-    <div class="ua-fact"><strong><span class="ua-tbc">£[X]m+</span></strong><span>Contract value secured</span></div>
+    <div class="ua-fact"><strong>£2m+</strong><span>Contract value secured</span></div>
     <div class="ua-fact"><strong>2022</strong><span>Group founded in the UK</span></div>
     <div class="ua-fact"><strong>3</strong><span>Countries: UK, DR Congo and UAE</span></div>
     <div class="ua-fact"><strong>1 day</strong><span>Response to every enquiry</span></div>
