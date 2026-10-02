@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ICONGRP</title>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="shared.js"></script>
+<script src="../shared.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#EEF3FB;--bg-mid:#E2EAF6;--navy:#0C2461;--navy-mid:#1A3A7A;--blue:#1E56B0;--blue-light:#2E72D2;--accent:#0EA5E9;--accent-dim:rgba(14,165,233,.12);--white:#FFFFFF;--text:#0C1A35;--muted:#4E6490;--border:rgba(14,65,180,.12);}
@@ -152,7 +152,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .footer-contact-link svg,.hero-card-feature svg{color:currentColor;display:inline-block;vertical-align:middle;margin-right:4px;}
 .service-icon{display:flex;align-items:center;}
 
-.hero{position:relative;width:100%;max-width:100%;aspect-ratio:2.386/1;display:flex;align-items:flex-end;padding:0;background:url('images/hero-home.jpg') top center/cover no-repeat;background-color:#020C1F;overflow:hidden;}
+.hero{position:relative;width:100%;max-width:100%;aspect-ratio:2.386/1;display:flex;align-items:flex-end;padding:0;background:url('../images/hero-home.jpg') top center/cover no-repeat;background-color:#020C1F;overflow:hidden;}
 .hero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,12,31,.68) 0%,rgba(2,12,31,.32) 34%,rgba(2,12,31,0) 56%),linear-gradient(0deg,rgba(2,12,31,.92) 0%,rgba(2,12,31,0) 46%);}
 .hero-content{position:relative;z-index:3;max-width:1200px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 56px 48px;}
 .hero-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#22E6E6;margin-bottom:16px;}
@@ -294,7 +294,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .cb-btn{display:inline-flex;align-items:center;gap:11px;background:var(--navy);color:#fff;padding:17px 38px;border-radius:9px;font-weight:700;font-size:17px;text-decoration:none;transition:transform .15s,box-shadow .15s;}
 .cb-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(12,36,97,.24);}
 .cb-btn svg{width:17px;height:17px;}
-.cb-photo{position:absolute;top:0;right:0;bottom:0;width:47%;background:#0C2461 url('images/compliance-photo.jpg') center top/cover no-repeat;z-index:1;}
+.cb-photo{position:absolute;top:0;right:0;bottom:0;width:47%;background:#0C2461 url('../images/compliance-photo.jpg') center top/cover no-repeat;z-index:1;}
 .cb-ph-label{position:absolute;top:50%;left:58%;transform:translate(-50%,-50%);font-size:11px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:.05em;text-transform:uppercase;}
 @media(max-width:900px){
   .compliance-band{flex-direction:column;min-height:0;}
@@ -305,6 +305,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
   .cb-ph-label{left:50%;}
 }
 </style>
+<style>.nav-links li.lang-switch{display:flex;align-items:center;gap:0;}.nav-links li.lang-switch a{color:var(--muted)!important;padding:4px 3px!important;border-bottom:2px solid transparent;}.nav-links li.lang-switch a.on{color:var(--navy)!important;border-bottom-color:var(--blue);}.nav-links li.lang-switch span{color:#c5cbe0;margin:0 6px;font-weight:400;}.lang-switch{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;}.lang-switch a{color:var(--muted)!important;padding:4px 2px;}.lang-switch a.on{color:var(--navy)!important;border-bottom:2px solid var(--blue);}.lang-switch span{color:var(--border);}</style>
 <link rel="alternate" hreflang="en" href="https://icongrp.co.uk/">
 <link rel="alternate" hreflang="fr" href="https://icongrp.co.uk/fr/">
 <style>.nav-links li.lang-switch{display:flex;align-items:center;gap:0;}.nav-links li.lang-switch a{color:var(--muted)!important;padding:4px 3px!important;border-bottom:2px solid transparent;}.nav-links li.lang-switch a.on{color:var(--navy)!important;border-bottom-color:var(--blue);}.nav-links li.lang-switch span{color:#c5cbe0;margin:0 6px;font-weight:400;}</style>
@@ -314,27 +315,27 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 <nav>
   <a href="index.html" class="nav-logo">ICON<span>GRP</span></a>
   <ul class="nav-links" id="navlinks">
-    <li><a href="about.html">About</a></li>
+    <li><a href="../about.html">À propos</a></li>
     <li class="has-dropdown">
-      <button class="nav-drop-toggle">UK &#9660;</button>
+      <button class="nav-drop-toggle">Royaume-Uni &#9660;</button>
       <ul class="dropdown">
-        <li><a href="care.html">Care &amp; Community</a></li>
-        <!-- Facilities hidden: <li><a href="facilities.html">Facilities &amp; Cleaning</a></li> -->
-        <li><a href="consultancy.html">Consultancy</a></li>
+        <li><a href="../care.html">Soins et accompagnement</a></li>
+        <!-- Facilities hidden: <li><a href="../facilities.html">Services généraux et nettoyage</a></li> -->
+        <li><a href="../consultancy.html">Conseil</a></li>
       </ul>
     </li>
     <li class="has-dropdown">
       <button class="nav-drop-toggle">International &#9660;</button>
       <ul class="dropdown">
-        <!-- Intl Overview hidden: <li><a href="international.html">International Overview</a></li> -->
-        <li><a href="drc.html">Democratic Republic of Congo</a></li>
-        <li><a href="uae.html">United Arab Emirates</a></li>
-        <!-- SA hidden: <li><a href="south-africa.html">South Africa Desk</a></li> -->
+        <!-- Intl Overview hidden: <li><a href="../international.html">International Overview</a></li> -->
+        <li><a href="drc.html">République démocratique du Congo</a></li>
+        <li><a href="../uae.html">Émirats arabes unis</a></li>
+        <!-- SA hidden: <li><a href="../south-africa.html">South Africa Desk</a></li> -->
       </ul>
     </li>
-    <li><a href="careers.html">Careers</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li class="lang-switch"><a href="index.html" hreflang="en" class="on">EN</a><span>|</span><a href="fr/index.html" hreflang="fr">FR</a></li><li><a href="tel:01268203010" class="nav-cta">01268 20 30 10</a></li>
+    <li><a href="../careers.html">Carrières</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+    <li class="lang-switch"><a href="../index.html" hreflang="en">EN</a><span>|</span><a href="index.html" hreflang="fr" class="on">FR</a></li><li><a href="tel:01268203010" class="nav-cta">01268 20 30 10</a></li>
   </ul>
   <button class="nav-burger" id="navburger">&#9776;</button>
 </nav>
@@ -342,11 +343,11 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 <section class="hero">
   <div class="hero-scrim"></div>
   <div class="hero-content">
-    <h1 class="hero-h1">One Group.<br><span class="accent">Every Solution.</span></h1>
-    <p class="hero-sub">Integrated services, operational delivery and professional expertise across the United Kingdom, Africa and the Middle East.</p>
+    <h1 class="hero-h1">Un seul groupe.<br><span class="accent">Toutes les solutions.</span></h1>
+    <p class="hero-sub">Des services intégrés, une exécution opérationnelle et une expertise professionnelle au Royaume-Uni, en Afrique et au Moyen-Orient.</p>
     <div class="hero-cta">
-      <a href="about.html" class="hbtn hbtn-primary">Explore Our Group <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <a href="contact.html" class="hbtn hbtn-outline">Work With Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="../about.html" class="hbtn hbtn-primary">Découvrir le groupe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="../contact.html" class="hbtn hbtn-outline">Travailler avec nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section>
@@ -356,43 +357,43 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 -->
 
 <div class="stats-bar">
-  <div class="stat-item"><span class="stat-number" data-count="15" data-suffix="+">0</span><span class="stat-label">Years of Experience</span></div>
-  <div class="stat-item"><span class="stat-number" data-count="5000" data-suffix="+">0</span><span class="stat-label">Staff Deployed</span></div>
-  <div class="stat-item"><span class="stat-number">24/7</span><span class="stat-label">Support Available</span></div>
-  <div class="stat-item"><span class="stat-number" data-count="100" data-suffix="+">0</span><span class="stat-label">Clients Served</span></div>
+  <div class="stat-item"><span class="stat-number" data-count="15" data-suffix="+">0</span><span class="stat-label">Années d'expérience</span></div>
+  <div class="stat-item"><span class="stat-number" data-count="5000" data-suffix="+">0</span><span class="stat-label">Collaborateurs déployés</span></div>
+  <div class="stat-item"><span class="stat-number">24/7</span><span class="stat-label">Assistance disponible</span></div>
+  <div class="stat-item"><span class="stat-number" data-count="100" data-suffix="+">0</span><span class="stat-label">Clients accompagnés</span></div>
 </div>
 
 <section id="divisions" class="approach">
   <div class="approach-in">
     <div class="approach-head reveal">
-      <span class="approach-eyebrow">Our Divisions</span>
-      <h2>Creating value across every sector</h2>
-      <p>Across care, workforce, logistics and consulting, ICONGRP connects people and places with people who deliver, high standards and intelligent solutions.</p>
-      <a href="about.html" class="approach-btn">Explore Our Group <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <span class="approach-eyebrow">Nos activités</span>
+      <h2>Créer de la valeur dans chaque secteur</h2>
+      <p>Dans les soins, le recrutement, la logistique et le conseil, ICONGRP met les personnes et les territoires en relation avec des équipes fiables, des standards élevés et des solutions intelligentes.</p>
+      <a href="../about.html" class="approach-btn">Découvrir le groupe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="approach-grid">
       <div class="appr-card reveal">
-        <div class="appr-photo" style="background:url('images/div-people.jpg') center/cover no-repeat;">
+        <div class="appr-photo" style="background:url('../images/div-people.jpg') center/cover no-repeat;">
         </div>
         <div class="appr-body">
-          <h3>People Who Deliver</h3>
-          <p>Every ICONGRP professional represents the standards of our Group: skilled, supported and committed to delivering quality wherever we operate. Across our services and markets, our people bring expertise, accountability and a human approach to every client, project and community we support. We invest in our teams through clear standards, ongoing development and strong operational support, ensuring they have the knowledge, confidence and resources needed to deliver consistently and represent ICONGRP with professionalism at every level.</p>
+          <h3>Des équipes fiables</h3>
+          <p>Chaque professionnel d'ICONGRP incarne les standards de notre groupe&nbsp;: compétent, accompagné et engagé à offrir un service de qualité partout où nous intervenons. Dans l'ensemble de nos services et de nos marchés, nos équipes apportent expertise, responsabilité et une approche humaine à chaque client, projet et communauté que nous accompagnons. Nous investissons dans nos équipes grâce à des standards clairs, une formation continue et un solide soutien opérationnel, afin qu'elles disposent des connaissances, de l'assurance et des moyens nécessaires pour travailler avec constance et représenter ICONGRP avec professionnalisme à tous les niveaux.</p>
         </div>
       </div>
       <div class="appr-card reveal">
-        <div class="appr-photo" style="background:url('images/div-standards.jpg') center/cover no-repeat;">
+        <div class="appr-photo" style="background:url('../images/div-standards.jpg') center/cover no-repeat;">
         </div>
         <div class="appr-body">
-          <h3>High Standards</h3>
-          <p>We operate to high professional standards across every ICONGRP service and market, with a strong focus on quality, compliance and accountability. Our teams work in line with client requirements, industry expectations and regulatory obligations to deliver services that are consistent, dependable and built to perform. Through robust processes, regular oversight and continuous improvement, we work to maintain strong governance, reduce operational risk and ensure our clients can rely on the same level of professionalism and quality wherever we operate.</p>
+          <h3>Des standards élevés</h3>
+          <p>Nous appliquons des standards professionnels élevés à chaque service et sur chaque marché d'ICONGRP, avec une attention particulière portée à la qualité, à la conformité et à la responsabilité. Nos équipes respectent les exigences des clients, les attentes du secteur et les obligations réglementaires afin de fournir des services constants, fiables et performants. Grâce à des processus rigoureux, un suivi régulier et une amélioration continue, nous maintenons une gouvernance solide, réduisons les risques opérationnels et garantissons à nos clients le même niveau de professionnalisme et de qualité partout où nous intervenons.</p>
         </div>
       </div>
       <div class="appr-card reveal">
-        <div class="appr-photo" style="background:url('images/div-solutions.jpg') center/cover no-repeat;">
+        <div class="appr-photo" style="background:url('../images/div-solutions.jpg') center/cover no-repeat;">
         </div>
         <div class="appr-body">
-          <h3>Intelligent Solutions</h3>
-          <p>We help organisations navigate complex requirements with practical consultancy, robust compliance support and solutions built around how their business actually operates. From reviewing policies, procedures and regulatory obligations to strengthening governance, procurement, risk management and operational controls, we work with clients to identify gaps, improve processes and build stronger, more resilient organisations.</p>
+          <h3>Des solutions intelligentes</h3>
+          <p>Nous aidons les organisations à répondre à des exigences complexes grâce à un conseil pragmatique, un accompagnement solide en matière de conformité et des solutions adaptées à leur fonctionnement réel. De la revue des politiques, des procédures et des obligations réglementaires au renforcement de la gouvernance, des achats, de la gestion des risques et des contrôles opérationnels, nous travaillons avec nos clients pour identifier les lacunes, améliorer les processus et bâtir des organisations plus solides et plus résilientes.</p>
         </div>
       </div>
     </div>
@@ -431,8 +432,8 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
           </div>
         </div>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <a href="consultancy.html" style="background:#fff;color:var(--navy);padding:14px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:opacity .2s;">Our Consulting Services</a>
-          <a href="consultancy.html" style="border:2px solid rgba(255,255,255,.3);color:#fff;padding:14px 28px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;background:rgba(255,255,255,.07);transition:background .2s;">Tender Writing &amp; Bid Support</a>
+          <a href="../consultancy.html" style="background:#fff;color:var(--navy);padding:14px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:opacity .2s;">Our Consulting Services</a>
+          <a href="../consultancy.html" style="border:2px solid rgba(255,255,255,.3);color:#fff;padding:14px 28px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;background:rgba(255,255,255,.07);transition:background .2s;">Tender Writing &amp; Bid Support</a>
         </div>
       </div>
 
@@ -481,53 +482,53 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 <section class="compliance-band">
   <div class="cb-inner">
     <div class="cb-text reveal">
-      <span class="cb-eyebrow">Compliance &amp; Responsible Sourcing</span>
-      <h2>Prove your<br><span class="accent">supply chain is clean.</span></h2>
-      <p>We collect evidence at source, verify it and turn it into audit-ready proof for buyers, regulators and supply-chain partners.</p>
+      <span class="cb-eyebrow">Conformité et approvisionnement responsable</span>
+      <h2>Prouvez la fiabilité<br><span class="accent">de votre filière.</span></h2>
+      <p>Nous collectons les preuves à la source, les vérifions et les transformons en éléments prêts pour l'audit, à destination des acheteurs, des régulateurs et des partenaires de la chaîne d'approvisionnement.</p>
       <div class="cb-tags">
-        <span>Site Monitoring</span><span class="cb-div">|</span>
-        <span>Traceability</span><span class="cb-div">|</span>
-        <span>Audit Readiness</span><span class="cb-div">|</span>
-        <span>Due-Diligence Dossiers</span>
+        <span>Suivi des sites</span><span class="cb-div">|</span>
+        <span>Traçabilité</span><span class="cb-div">|</span>
+        <span>Préparation aux audits</span><span class="cb-div">|</span>
+        <span>Diligence raisonnable</span>
       </div>
-      <p class="cb-sub">Independent &#183; OECD-aligned &#183; English &amp; French</p>
-      <a href="compliance.html" class="cb-btn">Explore Compliance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <p class="cb-sub">Indépendant &#183; Conforme à l'OCDE &#183; Anglais et français</p>
+      <a href="../compliance.html" class="cb-btn">Découvrir la conformité <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
-  <div class="cb-photo" style="background:url('images/compliance-photo.jpg') center/cover no-repeat;"></div>
+  <div class="cb-photo" style="background:url('../images/compliance-photo.jpg') center/cover no-repeat;"></div>
 </section>
 
 <section class="regions">
   <div class="regions-in">
     <div class="regions-intro reveal">
-      <span class="regions-eyebrow">Our Regions</span>
-      <h2>Global Reach.<br><span class="accent">Local Impact.</span></h2>
-      <p>We work across the United Kingdom, Africa and the United Arab Emirates, delivering solutions that meet local needs and create lasting value.</p>
-      <a href="about.html" class="regions-btn">Explore Our Regions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <span class="regions-eyebrow">Nos régions</span>
+      <h2>Une présence mondiale.<br><span class="accent">Un impact local.</span></h2>
+      <p>Nous intervenons au Royaume-Uni, en Afrique et aux Émirats arabes unis, avec des solutions qui répondent aux besoins locaux et créent une valeur durable.</p>
+      <a href="../about.html" class="regions-btn">Découvrir nos régions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="regions-cards">
       <div class="region-card reveal">
-        <div class="region-photo" style="background:url('images/region-uk.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="images/flag-uk.png" alt="UK flag"></span></div>
+        <div class="region-photo" style="background:url('../images/region-uk.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="../images/flag-uk.png" alt="Drapeau du Royaume-Uni"></span></div>
         <div class="region-body">
-          <div class="region-name"><h3>United Kingdom</h3></div>
-          <p>Delivering care, workforce, consulting and language solutions across public and private sectors.</p>
-          <a href="index.html" class="region-link">View UK Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="region-name"><h3>Royaume-Uni</h3></div>
+          <p>Des solutions de soins, de recrutement, de conseil et de services linguistiques pour les secteurs public et privé.</p>
+          <a href="index.html" class="region-link">Services au Royaume-Uni <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
       <div class="region-card reveal">
-        <div class="region-photo" style="background:url('images/region-congo.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="images/flag-drc.png" alt="DR Congo flag"></span></div>
+        <div class="region-photo" style="background:url('../images/region-congo.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="../images/flag-drc.png" alt="Drapeau de la RD Congo"></span></div>
         <div class="region-body">
-          <div class="region-name"><h3>Africa</h3></div>
-          <p>Supporting growth through workforce development, consulting, compliance and language solutions.</p>
-          <a href="drc.html" class="region-link">View Africa Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="region-name"><h3>Afrique</h3></div>
+          <p>Soutenir la croissance par le développement des compétences, le conseil, la conformité et les services linguistiques.</p>
+          <a href="drc.html" class="region-link">Services en Afrique <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
       <div class="region-card reveal">
-        <div class="region-photo" style="background:url('images/region-uae.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="images/flag-uae.png" alt="UAE flag"></span></div>
+        <div class="region-photo" style="background:url('../images/region-uae.jpg') center/cover no-repeat;"><span class="region-flag-badge"><img src="../images/flag-uae.png" alt="Drapeau des Émirats arabes unis"></span></div>
         <div class="region-body">
-          <div class="region-name"><h3>United Arab Emirates</h3></div>
-          <p>Providing workforce, consulting and language solutions to support a dynamic economy and global businesses.</p>
-          <a href="uae.html" class="region-link">View UAE Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="region-name"><h3>Émirats arabes unis</h3></div>
+          <p>Des solutions de recrutement, de conseil et de services linguistiques au service d'une économie dynamique et d'entreprises internationales.</p>
+          <a href="../uae.html" class="region-link">Services aux Émirats <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
     </div>
@@ -537,51 +538,51 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 <section class="impact">
   <div class="max-w">
     <div class="impact-head reveal">
-      <span class="impact-eyebrow">Measurable Results</span>
-      <h2>Impact Across <span class="accent">Our Markets</span></h2>
-      <p>We deliver practical solutions that create real value for people, organisations and communities across the United Kingdom, Africa and the United Arab Emirates.</p>
+      <span class="impact-eyebrow">Des résultats mesurables</span>
+      <h2>Notre impact sur <span class="accent">nos marchés</span></h2>
+      <p>Nous apportons des solutions concrètes qui créent une réelle valeur pour les personnes, les organisations et les communautés au Royaume-Uni, en Afrique et aux Émirats arabes unis.</p>
     </div>
     <div class="markets-grid">
 
       <div class="market reveal">
         <div class="market-head">
-          <div class="market-map"><img src="images/map-uk.png" alt="United Kingdom map"></div>
+          <div class="market-map"><img src="../images/map-uk.png" alt="Carte du Royaume-Uni"></div>
           <div>
-            <h3>United Kingdom</h3>
-            <p class="market-tags">Care &#183; Workforce &#183; Consulting &#183; Language</p>
+            <h3>Royaume-Uni</h3>
+            <p class="market-tags">Soins &#183; Recrutement &#183; Conseil &#183; Langues</p>
           </div>
         </div>
         <div class="market-stats">
-          <div class="mstat"><span class="mstat-num">120+</span><span class="mstat-label">People supported</span></div>
-          <div class="mstat"><span class="mstat-num">85+</span><span class="mstat-label">Healthcare roles filled</span></div>
+          <div class="mstat"><span class="mstat-num">120+</span><span class="mstat-label">Personnes accompagnées</span></div>
+          <div class="mstat"><span class="mstat-num">85+</span><span class="mstat-label">Postes de santé pourvus</span></div>
         </div>
       </div>
 
       <div class="market reveal">
         <div class="market-head">
-          <div class="market-map"><img src="images/map-drc.png" alt="DR Congo map"></div>
+          <div class="market-map"><img src="../images/map-drc.png" alt="Carte de la RD Congo"></div>
           <div>
-            <h3>Democratic Republic of Congo</h3>
-            <p class="market-tags">Compliance &#183; Construction &#183; Training</p>
+            <h3>République démocratique du Congo</h3>
+            <p class="market-tags">Conformité &#183; Construction &#183; Formation</p>
           </div>
         </div>
         <div class="market-stats">
-          <div class="mstat"><span class="mstat-num">45+</span><span class="mstat-label">Projects delivered</span></div>
-          <div class="mstat"><span class="mstat-num">1,000+</span><span class="mstat-label">People trained and supported</span></div>
+          <div class="mstat"><span class="mstat-num">45+</span><span class="mstat-label">Projets réalisés</span></div>
+          <div class="mstat"><span class="mstat-num">1,000+</span><span class="mstat-label">Personnes formées et accompagnées</span></div>
         </div>
       </div>
 
       <div class="market reveal">
         <div class="market-head">
-          <div class="market-map"><img src="images/map-uae.png" alt="UAE map"></div>
+          <div class="market-map"><img src="../images/map-uae.png" alt="Carte des Émirats arabes unis"></div>
           <div>
-            <h3>United Arab Emirates</h3>
-            <p class="market-tags">Bid Management &#183; Business Automation</p>
+            <h3>Émirats arabes unis</h3>
+            <p class="market-tags">Gestion des appels d'offres &#183; Automatisation des processus</p>
           </div>
         </div>
         <div class="market-stats">
-          <div class="mstat"><span class="mstat-num">&pound;2M+</span><span class="mstat-label">Bid value supported</span></div>
-          <div class="mstat"><span class="mstat-num">10+</span><span class="mstat-label">Automation projects delivered</span></div>
+          <div class="mstat"><span class="mstat-num">2 M&pound;+</span><span class="mstat-label">Valeur des offres accompagnées</span></div>
+          <div class="mstat"><span class="mstat-num">10+</span><span class="mstat-label">Projets d'automatisation réalisés</span></div>
         </div>
       </div>
 
@@ -643,10 +644,10 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
   <div class="nf-cta-in">
     <div>
       <div class="nf-cta-bar"></div>
-      <h2>One Group. <span>Every Solution.</span></h2>
-      <p>An integrated services group operating across the United Kingdom, Africa and the Middle East.</p>
+      <h2>Un seul groupe. <span>Toutes les solutions.</span></h2>
+      <p>Un groupe de services intégrés présent au Royaume-Uni, en Afrique et au Moyen-Orient.</p>
     </div>
-    <a href="contact.html" class="nf-cta-btn">Get in Touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="../contact.html" class="nf-cta-btn">Nous contacter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
 <footer class="nf">
@@ -654,7 +655,7 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
     <div class="nf-grid">
       <div class="nf-col nf-brand">
         <a href="index.html" class="nf-logo">ICON<span class="g">GRP</span></a>
-        <p>An integrated services group operating across the United Kingdom, Africa and the Middle East. One group. Every solution.</p>
+        <p>Un groupe de services intégrés présent au Royaume-Uni, en Afrique et au Moyen-Orient. Un seul groupe. Toutes les solutions.</p>
         <div class="nf-social">
           <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
           <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z"/></svg></a>
@@ -662,21 +663,21 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
           <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a>
         </div>
       </div>
-      <div class="nf-col"><h4>Company</h4><ul><li><a href="about.html">About ICONGRP</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="nf-col"><h4>United Kingdom</h4><ul><li><a href="care.html">Care &amp; Community</a></li><li><a href="consultancy.html">Consultancy</a></li></ul></div>
-      <div class="nf-col"><h4>DR Congo</h4><ul><li><a href="construction.html">Construction</a></li><li><a href="drc.html#practices">Training</a></li><li><a href="compliance.html">Compliance</a></li></ul></div>
-      <div class="nf-col"><h4>United Arab Emirates</h4><ul><li><a href="uae.html#bid-management">Bid Management</a></li><li><a href="uae.html#ai-automation">AI Automation</a></li></ul></div>
+      <div class="nf-col"><h4>Entreprise</h4><ul><li><a href="../about.html">À propos d'ICONGRP</a></li><li><a href="../careers.html">Carrières</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+      <div class="nf-col"><h4>Royaume-Uni</h4><ul><li><a href="../care.html">Soins et accompagnement</a></li><li><a href="../consultancy.html">Conseil</a></li></ul></div>
+      <div class="nf-col"><h4>RD Congo</h4><ul><li><a href="../construction.html">Construction</a></li><li><a href="drc.html#practices">Formation</a></li><li><a href="../compliance.html">Conformité</a></li></ul></div>
+      <div class="nf-col"><h4>Émirats arabes unis</h4><ul><li><a href="../uae.html#bid-management">Gestion des appels d'offres</a></li><li><a href="../uae.html#ai-automation">Automatisation par l'IA</a></li></ul></div>
     </div>
     <div class="nf-phones">
-      <div class="nf-phone"><span>United Kingdom</span><a href="tel:+441268203010">+44 1268 20 30 10</a></div>
-      <div class="nf-phone"><span>DR Congo</span><a href="tel:+243818585154">+243 818 585 154</a></div>
-      <div class="nf-phone"><span>United Arab Emirates</span><a href="tel:+971588324525">+971 58 832 4525</a></div>
+      <div class="nf-phone"><span>Royaume-Uni</span><a href="tel:+441268203010">+44 1268 20 30 10</a></div>
+      <div class="nf-phone"><span>RD Congo</span><a href="tel:+243818585154">+243 818 585 154</a></div>
+      <div class="nf-phone"><span>Émirats arabes unis</span><a href="tel:+971588324525">+971 58 832 4525</a></div>
     </div>
     <div class="nf-bottom">
-      <p>&#169; 2026 ICONGRP. All rights reserved. Icon Group T/A Icon Medical Ltd, registered in England and Wales No. 15214942.</p>
-      <div class="nf-legal"><a href="contact.html">Privacy Policy</a><a href="contact.html">Cookie Policy</a><a href="contact.html">Terms &amp; Conditions</a></div>
+      <p>&#169; 2026 ICONGRP. Tous droits réservés. Icon Group, exerçant sous le nom d'Icon Medical Ltd, immatriculée en Angleterre et au Pays de Galles sous le n° 15214942.</p>
+      <div class="nf-legal"><a href="../contact.html">Politique de confidentialité</a><a href="../contact.html">Politique relative aux cookies</a><a href="../contact.html">Conditions générales</a></div>
     </div>
-    <p class="nf-reg">Registered office: Unit A11 Harben House, Tickford Street, Newport Pagnell, Milton Keynes MK16 9EY. UAE operations: Icon Global Consulting F.Z.E, Ajman Free Zone, Licence No. 56891. DR Congo operations: ICONGRP SARL, Kinshasa, RCCM CD/KNM/RCCM/26-B-02577, National ID 01-S9502-N01362E.</p>
+    <p class="nf-reg">Siège social&nbsp;: Unit A11 Harben House, Tickford Street, Newport Pagnell, Milton Keynes MK16 9EY, Royaume-Uni. Activités aux Émirats arabes unis&nbsp;: Icon Global Consulting F.Z.E, zone franche d'Ajman, licence n° 56891. Activités en RD Congo&nbsp;: ICONGRP SARL, Kinshasa, RCCM CD/KNM/RCCM/26-B-02577, Id. Nat. 01-S9502-N01362E.</p>
   </div>
 </footer>
 
