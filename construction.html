@@ -67,7 +67,8 @@
 .co-page .co-projects{padding:72px 0;background:#fff;}
 .co-proj-head{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;margin-bottom:36px;}
 .co-proj-head .co-h2{margin-bottom:0;}
-.co-proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.co-proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.co-proj.feat{grid-column:span 2;aspect-ratio:auto;}
 .co-proj{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#E6EEF9,#D3E0F3);border:1px solid var(--co-border);display:flex;align-items:center;justify-content:center;}
 .co-proj img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
 .co-proj:hover img{transform:scale(1.05);}
@@ -83,8 +84,8 @@
 .co-proj::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(0deg,rgba(12,36,97,.7),rgba(12,36,97,0));pointer-events:none;}
 .co-proj-label,.co-proj-arrow{z-index:1;}
 .co-proj-label{background:none;}
-@media(max-width:1000px){.co-proj-head{grid-template-columns:1fr;} .co-proj-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:600px){.co-proj-grid{grid-template-columns:1fr;}}
+@media(max-width:1000px){.co-proj.feat{aspect-ratio:8/3;}.co-proj-head{grid-template-columns:1fr;} .co-proj-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.co-proj.feat{grid-column:auto;aspect-ratio:4/3;}.co-proj-grid{grid-template-columns:1fr;}}
 
 /* CTA */
 .co-cta{position:relative;overflow:hidden;background:linear-gradient(120deg,#0C2461 0%,#132C63 100%);color:#fff;}
@@ -217,6 +218,13 @@
       <p class="co-lead">Explore a selection of projects developed, designed and delivered by ICONGRP SARL.</p>
     </div>
     <div class="co-proj-grid">
+      <div class="co-proj feat"><img src="images/proj-12.jpg" alt="Apartment Residence" style="object-position:center 40%;"><div class="co-proj-label"><strong>Apartment Residence</strong><span>Design Concept</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-9.jpg" alt="Apartment Building"><div class="co-proj-label"><strong>Apartment Building</strong><span>Design &amp; Development</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-10.jpg" alt="Apartment Block"><div class="co-proj-label"><strong>Apartment Block</strong><span>Architectural Design</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-11.jpg" alt="Family Home"><div class="co-proj-label"><strong>Family Home</strong><span>Residential Design</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-7.jpg" alt="Facade &amp; Finishing"><div class="co-proj-label"><strong>Facade &amp; Finishing</strong><span>Residential Building</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-8.jpg" alt="External Works"><div class="co-proj-label"><strong>External Works</strong><span>Residential Building</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+      <div class="co-proj"><img src="images/proj-13.jpg" alt="Construction in Progress" style="object-position:center 40%;"><div class="co-proj-label"><strong>Construction in Progress</strong><span>Finishing Works</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
       <div class="co-proj"><img src="images/proj-2.jpg" alt="Architectural Design"><div class="co-proj-label"><strong>Architectural Design</strong><span>Residential Scheme</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
       <div class="co-proj"><img src="images/proj-3.jpg" alt="Residential Project"><div class="co-proj-label"><strong>Residential Project</strong><span>Design &amp; Development</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
       <div class="co-proj"><img src="images/proj-4.jpg" alt="Residential Development"><div class="co-proj-label"><strong>Residential Development</strong><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4-4.5-7-8-7-11.5a7 7 0 0 1 14 0C19 13 16 16.5 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Kinshasa, DRC</span></div><div class="co-proj-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
