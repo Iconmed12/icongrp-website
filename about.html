@@ -72,13 +72,15 @@
 .ab-page .ab-leaders{padding:80px 0;background:#fff;}
 .ab-leaders-head{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:44px;}
 .ab-founder{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:24px;}
+.ab-director{margin-top:56px;padding-top:56px;border-top:1px solid var(--ab-border);}
+.ab-founder-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
 .ab-founder-photo{border-radius:14px;overflow:hidden;aspect-ratio:3/2;background:linear-gradient(135deg,#0C2461,#1E56B0);display:flex;align-items:center;justify-content:center;color:#fff;font-size:72px;font-weight:800;letter-spacing:.02em;}
 .ab-founder-photo img{width:100%;height:100%;object-fit:cover;}
 .ab-founder h3{font-size:28px;font-weight:800;color:var(--ab-navy);margin-bottom:6px;}
 .ab-role{display:inline-flex;align-items:center;gap:12px;font-size:14px;font-weight:700;color:var(--ab-navy);margin-bottom:18px;}
 .ab-role::after{content:"";width:34px;height:2px;background:var(--ab-accent);}
 .ab-founder p{font-size:15px;color:var(--ab-muted);line-height:1.7;margin-bottom:14px;}
-.ab-team{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.ab-team{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,360px));gap:20px;}
 .ab-member{border:1px solid var(--ab-border);border-radius:12px;overflow:hidden;background:#fff;}
 .ab-avatar{aspect-ratio:4/3;background:linear-gradient(135deg,#0C2461,#1E56B0);display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;font-weight:800;letter-spacing:.02em;}
 .ab-avatar img{width:100%;height:100%;object-fit:cover;}
@@ -222,10 +224,15 @@
         <p>He continues to drive the Group's strategy, partnerships and long-term vision, with a focus on people, quality and sustainable growth.</p>
       </div>
     </div>
-    <div class="ab-team">
-      <div class="ab-member"><div class="ab-avatar">QS</div><div class="ab-member-body"><h4>Queen Sengo</h4><span class="r">Head of Care &amp; Community</span><p>Leads the Group's care and community division and clinical oversight.</p></div></div>
-      <div class="ab-member"><div class="ab-avatar">DS</div><div class="ab-member-body"><h4>Daniella Shogbamimu</h4><span class="r">Director of Delivery</span><p>Accountable for delivery governance across every division of the Group.</p></div></div>
-      <div class="ab-member"><div class="ab-avatar"><img src="images/plamedi-lukubu.jpg" alt="Plamedi Lukubu" style="object-position:center 15%;"></div><div class="ab-member-body"><h4>Plamedi Lukubu</h4><span class="r">Country Director, DR Congo</span><p>Leads our operations and partnerships in the Democratic Republic of Congo.</p></div></div>
+    <div class="ab-founder ab-director">
+      <div class="ab-founder-photo"><img src="images/plamedi-lukubu.jpg" alt="Plamedi Lukubu, Country Director, DR Congo"></div>
+      <div>
+        <h3>Plamedi Lukubu</h3>
+        <span class="ab-role">Country Director, DR Congo</span>
+        <p>Plamedi leads ICONGRP's operations and partnerships in the Democratic Republic of Congo from our base in Kinshasa.</p>
+        <p>He has a background in construction and technical delivery, with practical experience coordinating teams within the country's commercial and infrastructure environment.</p>
+        <p>He is responsible for in-country delivery across construction, training and compliance, working with Congolese leadership and locally hired teams.</p>
+      </div>
     </div>
   </div>
 </section>
