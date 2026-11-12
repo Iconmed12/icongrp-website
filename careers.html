@@ -221,4 +221,26 @@
   }
 })();
 </script>
+<script>
+(function(){
+  var f=document.querySelector('form[data-netlify="true"]');if(!f)return;
+  var ok=document.getElementById("apply-success");
+  if(location.search.indexOf("submitted=true")!==-1){history.replaceState(null,"",location.pathname);}
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var btn=f.querySelector('button[type="submit"]');var label=btn?btn.textContent:"";
+    if(btn){btn.disabled=true;btn.textContent="Sending...";}
+    var fd=new FormData(f);
+    var opts=f.getAttribute("enctype")==="multipart/form-data"?{method:"POST",body:fd}:{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(fd).toString()};
+    fetch("/",opts).then(function(r){
+      if(!r.ok)throw new Error("send failed");
+      f.reset();if(ok){ok.style.display="block";ok.scrollIntoView({behavior:"smooth",block:"center"});}
+      if(btn){btn.disabled=false;btn.textContent=label;}
+    }).catch(function(){
+      if(btn){btn.disabled=false;btn.textContent=label;}
+      alert("Sorry, your request could not be sent. Please try again or email info@icongrp.co.uk.");
+    });
+  });
+})();
+</script>
 </body></html>
