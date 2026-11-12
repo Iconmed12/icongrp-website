@@ -439,17 +439,17 @@
     <span class="cp-eyebrow">Request a Pilot</span>
     <h2 class="cp-h2">Tell us about <span class="a">your supply chain.</span></h2>
     <p>We respond within one working day with an honest assessment of what the regulation requires of you, and what a pilot would involve.</p>
-    <form class="cp-form" onsubmit="event.preventDefault();document.getElementById('cp-success').style.display='block';this.reset();">
+    <form class="cp-form" name="compliance-review" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/compliance.html?submitted=true"><input type="hidden" name="form-name" value="compliance-review"><p style="display:none;"><label>Do not fill this in: <input name="bot-field"></label></p>
       <div class="row">
-        <div><label>Name</label><input type="text" placeholder="Your full name" required></div>
-        <div><label>Company</label><input type="text" placeholder="Your organisation" required></div>
+        <div><label>Name</label><input type="text" name="name" placeholder="Your full name" required></div>
+        <div><label>Company</label><input type="text" name="company" placeholder="Your organisation" required></div>
       </div>
       <div class="row">
-        <div><label>Role</label><input type="text" placeholder="Your job title" required></div>
-        <div><label>I am a...</label><select required><option value="">Select...</option><option>Importer or brand</option><option>Producer or processor</option><option>Cooperative</option><option>Assurance or traceability firm</option><option>Other</option></select></div>
+        <div><label>Role</label><input type="text" name="role" placeholder="Your job title" required></div>
+        <div><label>I am a...</label><select name="type" required><option value="">Select...</option><option>Importer or brand</option><option>Producer or processor</option><option>Cooperative</option><option>Assurance or traceability firm</option><option>Other</option></select></div>
       </div>
-      <label>Email</label><input type="email" placeholder="your@company.com" required>
-      <label>Message</label><textarea placeholder="Tell us about the site or supply line you need to stand behind."></textarea>
+      <label>Email</label><input type="email" name="email" placeholder="your@company.com" required>
+      <label>Message</label><textarea name="message" placeholder="Tell us about the site or supply line you need to stand behind."></textarea>
       <button type="submit" class="cp-btn">Request a Compliance Review <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       <div id="cp-success">Thank you. We have received your enquiry and will respond within one working day.</div>
     </form>
@@ -548,5 +548,6 @@
   });
 })();
 </script>
+<script>if(location.search.indexOf("submitted=true")!==-1){var cs=document.getElementById("cp-success");if(cs){cs.style.display="block";cs.scrollIntoView({behavior:"smooth",block:"center"});}}</script>
 </body>
 </html>
