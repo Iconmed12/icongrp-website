@@ -101,7 +101,7 @@
           <div class="form-group"><label class="form-label">Start Time *</label><input type="time" name="interp_time" class="form-input"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label class="form-label">Expected Duration</label><input type="text" name="interp_duration" class="form-input" placeholder="e.g. 1 hour, half day"></div>
+          <div class="form-group"><label class="form-label">Expected Duration</label><select name="interp_duration" class="form-select"><option value="">Select...</option><option>30 minutes</option><option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>2.5 hours</option><option>3 hours</option><option>4 hours</option><option>Half day (up to 4 hours)</option><option>Full day (up to 8 hours)</option><option>More than one day</option></select></div>
           <div class="form-group"><label class="form-label">Setting</label>
             <select name="interp_setting" class="form-select">
               <option value="">Select...</option>
@@ -121,7 +121,7 @@
         <div class="form-section-title">Translation details</div>
         <div class="form-row">
           <div class="form-group"><label class="form-label">Deadline</label><input type="date" name="deadline" class="form-input"></div>
-          <div class="form-group"><label class="form-label">Approximate Size</label><input type="text" name="size" class="form-input" placeholder="e.g. 12 pages, 3,000 words"></div>
+          <div class="form-group"><label class="form-label">Approximate Size</label><select name="size" class="form-select"><option value="">Select...</option><option>1 to 5 pages</option><option>6 to 20 pages</option><option>21 to 50 pages</option><option>More than 50 pages</option><option>Website or ongoing content</option><option>Audio or video file</option><option>Not sure</option></select></div>
         </div>
       </div>
       <div class="form-group"><label class="form-label">Tell Us About the Request *</label><textarea name="details" class="form-textarea" placeholder="Who the interpreter will be supporting, or what the document is and who it is for. Anything we should know: subject matter, dialect, gender preference, confidentiality." required></textarea>
