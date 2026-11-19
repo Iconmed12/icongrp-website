@@ -210,7 +210,15 @@
         <div class="fld"><label>Duration</label><select id="nrDuration"><option value="">Select...</option><option>30 minutes</option><option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>Half day</option><option>Full day</option><option>More than one day</option></select></div>
         <div class="fld"><label>Setting</label><select id="nrSetting"><option value="">Select...</option><option>Medical or hospital</option><option>Social care or assessment</option><option>Legal, court or tribunal</option><option>Business meeting</option><option>Education or training</option><option>Other</option></select></div>
       </div>
-      <div class="fld full"><label>Location or venue</label><input id="nrLocation" placeholder="Address for in-person, or leave blank for phone/video"></div>
+      <div class="fld full"><label>Location or venue</label>
+        <div class="hint" style="margin:0 0 8px">For in-person bookings. Leave blank for phone or video.</div>
+        <input id="nrAddr1" placeholder="Address line 1" style="margin-bottom:8px">
+        <input id="nrAddr2" placeholder="Address line 2 (optional)" style="margin-bottom:8px">
+        <div class="grid" style="margin-bottom:0">
+          <div class="fld" style="margin-bottom:0"><input id="nrTown" placeholder="Town / city"></div>
+          <div class="fld" style="margin-bottom:0"><input id="nrPostcode" placeholder="Postcode"></div>
+        </div>
+      </div>
     </div>
     <div class="grid">
       <div class="fld"><label>PO number / reference <span class="req">*</span></label><input id="nrPO" placeholder="Your purchase order or reference"><div class="hint">Required so we can invoice correctly.</div></div>
@@ -447,7 +455,7 @@ function nrServiceChange(){ var v=el('nrService').value; el('nrInterp').style.di
 function openNewReq(){
   // prep the form
   fillLangs(el('nrFrom')); fillLangs(el('nrTo'));
-  ['nrService','nrFrom','nrTo','nrDate','nrTime','nrDuration','nrSetting','nrLocation','nrPO','nrOfferP','nrOfferPence','nrDetails'].forEach(function(id){ var e=el(id); if(e) e.value=''; });
+  ['nrService','nrFrom','nrTo','nrDate','nrTime','nrDuration','nrSetting','nrAddr1','nrAddr2','nrTown','nrPostcode','nrPO','nrOfferP','nrOfferPence','nrDetails'].forEach(function(id){ var e=el(id); if(e) e.value=''; });
   el('nrInterp').style.display='none'; clearMsg('nrMsg');
 }
 
@@ -465,7 +473,8 @@ async function submitRequest(){
     customer_id:(CURRENT_CUST&&CURRENT_CUST.id),
     service:service, from_lang:from, to_lang:to,
     booking_date:(el('nrDate').value||null), booking_time:(el('nrTime').value||''),
-    duration:el('nrDuration').value||'', setting:el('nrSetting').value||'', location:el('nrLocation').value.trim(),
+    duration:el('nrDuration').value||'', setting:el('nrSetting').value||'',
+    location:[el('nrAddr1').value.trim(),el('nrAddr2').value.trim(),el('nrTown').value.trim(),el('nrPostcode').value.trim()].filter(Boolean).join(', '),
     details:details, po_number:po, client_offer:offer, rate_status:'pending', status:'requested'
   };
   try{
