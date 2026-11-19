@@ -500,18 +500,20 @@ function downloadInvoice(id){
 function fmtD(d){ if(!d) return ''; var x=new Date(d); if(isNaN(x)) return d; var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return x.getDate()+' '+M[x.getMonth()]; }
 function fmtDT(iso){ if(!iso) return ''; var x=new Date(iso); if(isNaN(x)) return ''; return fmtD(iso); }
 
-var STEP_ORDER=['requested','accepted','booked','completed'];
+var STEP_ORDER=['requested','accepted','finding','booked','completed'];
 function bookingTrack(status){
   if(status==='declined') return '';
-  var labels={requested:'Requested',accepted:'Accepted',booked:'Booked',completed:'Completed'};
-  var idx=STEP_ORDER.indexOf(status); if(idx<0) idx=0;
+  var labels={requested:'Requested',accepted:'Accepted',finding:'Finding interpreter',booked:'Booked',completed:'Completed'};
+  // awaiting_client sits between requested and accepted visually
+  var effective = status==='awaiting_client' ? 'requested' : status;
+  var idx=STEP_ORDER.indexOf(effective); if(idx<0) idx=0;
   return '<div class="track">'+STEP_ORDER.map(function(s,i){
     var cls = i<idx?'step done':(i===idx?'step now':'step');
     return '<div class="'+cls+'"><div class="dot"></div>'+labels[s]+'</div>';
   }).join('')+'</div>';
 }
 function bookingPill(status){
-  var m={requested:['bp-req','Requested'],accepted:['bp-acc','Accepted'],booked:['bp-book','Booked'],completed:['bp-done','Completed'],declined:['bp-dec','Declined']};
+  var m={requested:['bp-req','Requested'],awaiting_client:['bp-req','Your response needed'],accepted:['bp-acc','Accepted'],finding:['bp-acc','Finding interpreter'],booked:['bp-book','Booked'],completed:['bp-done','Completed'],declined:['bp-dec','Declined']};
   var x=m[status]||m.requested; return '<span class="bpill '+x[0]+'">'+x[1]+'</span>';
 }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -527,20 +529,28 @@ async function loadBookings(){
     box.innerHTML=list.map(function(b){
       var langPair=(b.from_lang||b.to_lang)?(esc(b.from_lang||'?')+' → '+esc(b.to_lang||'?')):'';
       var when = b.booking_date ? (' · '+fmtD(b.booking_date)+(b.booking_time?(' '+b.booking_time):'')) : '';
-      // counter-offer the customer can accept
+      // negotiation + status detail the customer sees
       var offerHtml='';
-      if(b.rate_status==='countered' && b.agreed_rate!=null){
-        offerHtml='<div class="offer">We\'ve quoted <b>£'+Number(b.agreed_rate).toLocaleString()+'</b> for this booking.'
-          +'<div class="act"><button class="acc-y" onclick="acceptQuote('+b.id+')">Accept quote</button><button class="acc-n" onclick="declineQuote('+b.id+')">Decline</button></div></div>';
+      var gbp=function(n){return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});};
+      if(b.status==='awaiting_client' && b.agreed_rate!=null){
+        // we countered: client accepts, declines, or counters back
+        offerHtml='<div class="offer">We\'ve quoted <b>'+gbp(b.agreed_rate)+'</b> for this booking.'
+          +'<div class="act"><button class="acc-y" onclick="acceptQuote('+b.id+')">Accept '+gbp(b.agreed_rate)+'</button>'
+          +'<button class="acc-n" onclick="counterBack('+b.id+')" style="color:#9A6008;border-color:#e8cfa0">Counter back</button>'
+          +'<button class="acc-n" onclick="declineQuote('+b.id+')">Decline</button></div></div>';
       } else if(b.rate_status==='accepted' && b.agreed_rate!=null){
-        offerHtml='<div class="offer" style="color:#176A48">Agreed rate: <b style="color:#176A48">£'+Number(b.agreed_rate).toLocaleString()+'</b></div>';
+        offerHtml='<div class="offer" style="color:#176A48">Agreed rate: <b style="color:#176A48">'+gbp(b.agreed_rate)+'</b></div>';
+      } else if(b.rate_status==='countered_client' && b.agreed_rate!=null){
+        offerHtml='<div class="offer" style="color:#9A6008">Your counter of <b>'+gbp(b.agreed_rate)+'</b> is with our team.</div>';
       }
+      var interp = (b.status==='booked'||b.status==='completed') && b.interpreter_name ? ('<div class="bmeta" style="margin-top:6px">Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>') : '';
       return '<div class="bcard">'
         +'<div class="btop"><div><div class="bttl">'+esc(b.service||'Request')+(langPair?(' · '+langPair):'')+'</div>'
         +'<div class="bmeta">Requested '+fmtDT(b.created_at)+when+(b.po_number?(' · PO '+esc(b.po_number)):'')+'</div></div>'
         +bookingPill(b.status)+'</div>'
         +(b.status_note?('<div class="bmeta" style="margin-top:8px">'+esc(b.status_note)+'</div>'):'')
         +bookingTrack(b.status)
+        +interp
         +offerHtml
         +'</div>';
     }).join('');
@@ -548,11 +558,20 @@ async function loadBookings(){
 }
 
 async function acceptQuote(id){
-  try{ await sb.from('portal_bookings').update({rate_status:'accepted'}).eq('id',id); }catch(e){}
+  try{ await sb.from('portal_bookings').update({rate_status:'accepted', status:'accepted', last_offer_by:'client'}).eq('id',id); }catch(e){}
   loadBookings();
 }
 async function declineQuote(id){
+  if(!confirm('Decline this quote and cancel the booking?')) return;
   try{ await sb.from('portal_bookings').update({rate_status:'rejected', status:'declined'}).eq('id',id); }catch(e){}
+  loadBookings();
+}
+async function counterBack(id){
+  var v=prompt('Enter the price you\'d like to propose (£):');
+  if(v===null) return;
+  var amt=parseFloat(v); if(isNaN(amt)||amt<0){ alert('Enter a valid amount.'); return; }
+  // send it back to ICON GRP to accept or counter again
+  try{ await sb.from('portal_bookings').update({agreed_rate:amt, client_offer:amt, rate_status:'countered_client', status:'requested', last_offer_by:'client'}).eq('id',id); }catch(e){}
   loadBookings();
 }
 
