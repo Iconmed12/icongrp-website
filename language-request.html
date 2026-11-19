@@ -247,4 +247,44 @@
   });
 })();
 </script>
+<!-- Send each booking to the ICON Hub (Supabase), in addition to the Netlify email -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  if(!window.supabase) return;
+  var sb=window.supabase.createClient(
+    'https://pdeeknsjiorzevwyejnv.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZWVrbnNqaW9yemV2d3llam52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2MDkyODksImV4cCI6MjA5ODE4NTI4OX0.5vWwc-U_t2Ts0uh9L_qB-dpvZ5QYHlVh2-K_5lerHcY'
+  );
+  var form=document.querySelector('form[name="language-request"]');
+  if(!form) return;
+  function v(n){ var el=form.querySelector('[name="'+n+'"]'); return el?(el.value||'').trim():''; }
+  var sent=false;
+  form.addEventListener('submit', function(e){
+    if(sent) return; // second pass: let Netlify submit normally
+    // hold the normal submit just long enough to record it in the Hub, then continue
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    var extra=[];
+    if(v('interp_date')) extra.push('Date: '+v('interp_date')+(v('interp_time')?(' '+v('interp_time')):''));
+    if(v('interp_duration')) extra.push('Duration: '+v('interp_duration'));
+    if(v('interp_setting')) extra.push('Setting: '+v('interp_setting'));
+    if(v('interp_location')) extra.push('Location: '+v('interp_location'));
+    if(v('deadline')) extra.push('Deadline: '+v('deadline'));
+    if(v('size')) extra.push('Size: '+v('size'));
+    if(v('other_language')) extra.push('Other language: '+v('other_language'));
+    var details=v('details')+(extra.length?('\n\n'+extra.join('\n')):'');
+    function go(){ if(sent) return; sent=true; form.submit(); } // native submit -> Netlify + email
+    var guard=setTimeout(go, 1500); // never hang the user if Supabase is slow/unreachable
+    try{
+      sb.from('language_requests').insert({
+        name:v('name'), organisation:v('organisation'), email:v('email'), phone:v('phone'),
+        service:v('service'), from_lang:v('from_language'), to_lang:v('to_language'),
+        details:details, status:'new', source:'website'
+      }).then(function(r){ if(r&&r.error) console.log('hub insert error:', r.error.message); clearTimeout(guard); go(); },
+              function(){ clearTimeout(guard); go(); });
+    }catch(err){ clearTimeout(guard); go(); }
+  });
+})();
+</script>
 </body></html>
