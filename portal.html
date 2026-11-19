@@ -77,6 +77,23 @@
   .rback{font-size:12.5px;color:var(--muted);text-decoration:none;font-weight:700;cursor:pointer}
   .who{background:#f7f9fc;border:1px solid #e8ecf3;border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:13px;color:#475467}
   .who b{color:#15233b}
+  .cur{background:linear-gradient(135deg,#15356b,#1d4d94);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .cur .l{font-size:12px;color:#bcd0ee;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .cur .big{font-size:30px;font-weight:800;margin-top:2px}
+  .cur .csub{font-size:12.5px;color:#bcd0ee;margin-top:3px}
+  .cur .cnote{font-size:12px;color:#cfe0f5;text-align:right;max-width:240px}
+  .sumrow{display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+  .sum{flex:1;min-width:150px;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .sum .n{font-size:22px;font-weight:800}.sum .sl{font-size:12px;color:var(--muted);margin-top:2px}
+  .sum.due .n{color:#B42318}.sum.paid .n{color:#176A48}
+  .isect{font-size:11px;font-weight:800;color:#8a94a6;letter-spacing:.04em;text-transform:uppercase;margin:6px 0 10px}
+  .itbl{width:100%;border-collapse:collapse}
+  .itbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:#8a94a6;font-weight:800;padding:10px 12px;border-bottom:1px solid #eef1f6}
+  .itbl td{padding:13px 12px;font-size:13.5px;border-bottom:1px solid #f1f4f8}
+  .iamt{font-weight:800}.ist-paid{color:#176A48;font-weight:700}.ist-due{color:#B42318;font-weight:700}
+  .idl{color:var(--brand);font-weight:700;text-decoration:none;font-size:12.5px;cursor:pointer}
+  .ipay{background:#176A48;color:#fff;border:none;border-radius:7px;padding:6px 12px;font-weight:700;font-size:12px;cursor:pointer;margin-left:8px;text-decoration:none;display:inline-block}
+  .imini{font-size:12px;color:#8a94a6}
   @media(max-width:520px){ .grid{grid-template-columns:1fr} .fld.full{grid-column:auto} }
 </style>
 </head>
@@ -172,11 +189,11 @@
         <p class="dlead">Track each request from submitted through to booked and completed.</p>
         <div id="bookingList"><div class="dempty">Loading…</div></div>
       </div>
-      <!-- INVOICES (Stage 3) -->
+      <!-- INVOICES -->
       <div id="paneInvoices" style="display:none">
         <div class="dhead"><h2>My invoices</h2></div>
-        <p class="dlead">What you owe and what's been paid.</p>
-        <div class="dempty">Your invoices will appear here. We're adding this next.</div>
+        <p class="dlead">Your running total for this cycle, and your past invoices.</p>
+        <div id="invContent"><div class="dempty">Loading…</div></div>
       </div>
     </div>
   </div>
@@ -388,6 +405,96 @@ function dashTab(which){
   el('tabInvoices').classList.toggle('on', which==='invoices');
   el('paneBookings').style.display = which==='bookings'?'':'none';
   el('paneInvoices').style.display = which==='invoices'?'':'none';
+  if(which==='invoices') loadInvoices();
+}
+
+// billing cycle: 27th of last month to 26th of this month (cut-off 26th)
+function currentCycle(){
+  var now=new Date(); now.setHours(0,0,0,0);
+  var y=now.getFullYear(), m=now.getMonth();
+  // if today is 27th or later, the open cycle ends on the 26th of NEXT month
+  var end, start;
+  if(now.getDate()>=27){ end=new Date(y, m+1, 26); start=new Date(y, m, 27); }
+  else { end=new Date(y, m, 26); start=new Date(y, m-1, 27); }
+  return {start:start, end:end};
+}
+function money(n){ return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtFull(d){ if(!d) return ''; var x=(d instanceof Date)?d:new Date(d); if(isNaN(x)) return ''; var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return x.getDate()+' '+M[x.getMonth()]; }
+
+async function loadInvoices(){
+  var box=el('invContent'); if(!box) return;
+  box.innerHTML='<div class="dempty">Loading…</div>';
+  try{
+    // running total: completed bookings with an agreed rate, not yet invoiced, in this cycle
+    var cyc=currentCycle();
+    var br=await sb.from('portal_bookings').select('*');
+    var bookings=(br.data)||[];
+    var cycleTotal=0, cycleCount=0;
+    bookings.forEach(function(b){
+      if(b.status!=='completed') return;
+      if(b.invoiced_in) return;
+      if(b.agreed_rate==null) return;
+      cycleTotal+=Number(b.agreed_rate)||0; cycleCount++;
+    });
+    // invoices
+    var ir=await sb.from('portal_invoices').select('*').order('issued_date',{ascending:false});
+    var invoices=(ir.data)||[];
+    var outstanding=0, paidYear=0; var thisYear=new Date().getFullYear();
+    invoices.forEach(function(v){
+      if(v.status==='due') outstanding+=Number(v.amount)||0;
+      if(v.status==='paid' && v.paid_date && new Date(v.paid_date).getFullYear()===thisYear) paidYear+=Number(v.amount)||0;
+    });
+    var h='';
+    h+='<div class="cur"><div><div class="l">This cycle so far · '+fmtFull(cyc.start)+' to '+fmtFull(cyc.end)+'</div>'
+      +'<div class="big">'+money(cycleTotal)+'</div>'
+      +'<div class="csub">'+cycleCount+' completed booking'+(cycleCount===1?'':'s')+' this cycle</div></div>'
+      +'<div class="cnote">We invoice on the 26th. Your bill for this cycle will be issued then.</div></div>';
+    h+='<div class="sumrow"><div class="sum due"><div class="n">'+money(outstanding)+'</div><div class="sl">Outstanding</div></div>'
+      +'<div class="sum paid"><div class="n">'+money(paidYear)+'</div><div class="sl">Paid this year</div></div></div>';
+    h+='<div class="isect">Invoices</div>';
+    if(!invoices.length){ h+='<div class="dempty">No invoices yet. They\'re issued monthly on the 26th.</div>'; }
+    else{
+      h+='<table class="itbl"><thead><tr><th>Invoice</th><th>Period</th><th>Issued</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody>';
+      h+=invoices.map(function(v){
+        var st = v.status==='paid' ? '<span class="ist-paid">Paid</span>' : (v.status==='cancelled'?'<span style="color:#8a94a6">Cancelled</span>':'<span class="ist-due">Due</span>');
+        var pay = (v.status==='due' && v.pay_link) ? '<a class="ipay" href="'+esc(v.pay_link)+'" target="_blank">Pay now</a>' : '';
+        return '<tr><td><b>'+esc(v.invoice_no||('#'+v.id))+'</b><div class="imini">'+(v.booking_count||0)+' booking'+((v.booking_count===1)?'':'s')+'</div></td>'
+          +'<td>'+fmtFull(v.period_start)+' – '+fmtFull(v.period_end)+'</td>'
+          +'<td>'+fmtFull(v.issued_date)+'</td>'
+          +'<td class="iamt">'+money(v.amount)+'</td>'
+          +'<td>'+st+'</td>'
+          +'<td><a class="idl" onclick="downloadInvoice('+v.id+')">Download PDF</a>'+pay+'</td></tr>';
+      }).join('');
+      h+='</tbody></table>';
+      h+='<div class="imini" style="margin-top:14px">Payment by bank transfer to the account on your invoice, within the terms agreed. Reference your invoice number.</div>';
+    }
+    box.innerHTML=h;
+    window._portalInvoices=invoices;
+  }catch(e){ box.innerHTML='<div class="dempty">Could not load your invoices.</div>'; }
+}
+
+function downloadInvoice(id){
+  var v=(window._portalInvoices||[]).find(function(x){return x.id===id;});
+  if(!v) return;
+  // simple printable invoice in a new window (PDF via the browser's Save as PDF)
+  var items=(v.line_items||[]);
+  var rows=items.map(function(it){ return '<tr><td>'+esc(it.service||'')+'</td><td>'+esc(it.date||'')+'</td><td>'+esc(it.po||'')+'</td><td style="text-align:right">'+money(it.amount)+'</td></tr>'; }).join('');
+  var cust=CURRENT_CUST||{};
+  var w=window.open('','_blank'); if(!w){ alert('Please allow pop-ups to download your invoice.'); return; }
+  w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>'+esc(v.invoice_no||'Invoice')+'</title>'
+    +'<style>body{font-family:Arial,sans-serif;color:#15233b;max-width:760px;margin:28px auto;padding:0 20px}h1{color:#0d1b3a}'
+    +'.row{display:flex;justify-content:space-between;margin-bottom:20px}table{width:100%;border-collapse:collapse;margin-top:14px}'
+    +'th,td{padding:9px 10px;border-bottom:1px solid #eee;font-size:13px;text-align:left}th{color:#64748b;font-size:11px;text-transform:uppercase}'
+    +'.tot{text-align:right;font-size:18px;font-weight:800;margin-top:16px}.mut{color:#64748b;font-size:12px}</style></head><body>'
+    +'<div class="row"><div><h1>ICON<span style="color:#4a90e2">GRP</span></h1><div class="mut">Icon Medical Ltd · 15214942<br>Unit A11 Harben House, Tickford Street,<br>Newport Pagnell, Milton Keynes MK16 9EY<br>info@icongrp.co.uk · 01268 20 30 10</div></div>'
+    +'<div style="text-align:right"><h2>INVOICE</h2><div class="mut">'+esc(v.invoice_no||'')+'<br>Issued '+fmtFull(v.issued_date)+'<br>Due '+fmtFull(v.due_date)+'</div></div></div>'
+    +'<div class="mut"><b>Bill to:</b> '+esc(cust.organisation||'')+'<br>'+esc(cust.name||'')+' · '+esc(cust.email||'')+'</div>'
+    +'<div class="mut" style="margin-top:6px">Period: '+fmtFull(v.period_start)+' – '+fmtFull(v.period_end)+'</div>'
+    +'<table><thead><tr><th>Service</th><th>Date</th><th>PO / ref</th><th style="text-align:right">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
+    +'<div class="tot">Total: '+money(v.amount)+'</div>'
+    +'<div class="mut" style="margin-top:24px">Payable within the terms agreed, by bank transfer. Please quote invoice number '+esc(v.invoice_no||'')+'.</div>'
+    +'<script>window.onload=function(){window.print();}<\/script></body></html>');
+  w.document.close();
 }
 
 function fmtD(d){ if(!d) return ''; var x=new Date(d); if(isNaN(x)) return d; var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return x.getDate()+' '+M[x.getMonth()]; }
