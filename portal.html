@@ -77,7 +77,7 @@
       <div class="fld"><label>Your name <span class="req">*</span></label><input id="regName" placeholder="Full name"></div>
       <div class="fld"><label>Phone <span class="req">*</span></label><input id="regPhone" placeholder="Contact number"></div>
       <div class="fld full"><label>Type of organisation <span class="req">*</span></label>
-        <select id="regType" onchange="orgCascade()">
+        <select id="regType" onchange="orgCascade();regEmailCheck()">
           <option value="">Select...</option>
           <option value="Local authority">Local authority</option>
           <option value="Law enforcement">Law enforcement agency</option>
@@ -94,10 +94,17 @@
         <label>Organisation name <span class="req">*</span></label>
         <input id="regOrgFree" placeholder="Your organisation's name">
       </div>
-      <div class="fld full"><label>Work email <span class="req">*</span></label><input type="email" id="regEmail" placeholder="you@organisation.gov.uk"></div>
+      <div class="fld"><label>Job title <span class="req">*</span></label><input id="regJob" placeholder="e.g. Commissioning Officer"></div>
+      <div class="fld"><label>Department</label><input id="regDept" placeholder="e.g. Adult Social Care"></div>
+      <div class="fld full"><label>Work email <span class="req">*</span></label><input type="email" id="regEmail" placeholder="you@organisation.gov.uk" oninput="regEmailCheck()"><div class="hint" id="regEmailHint"></div></div>
       <div class="fld full"><label>Password <span class="req">*</span></label><input type="password" id="regPass" placeholder="At least 8 characters"></div>
+      <div class="fld full">
+        <label>Supporting document <span class="req">*</span></label>
+        <input type="file" id="regDoc" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" style="padding:10px 12px">
+        <div class="hint">A purchase order, letterhead, or official document on your organisation's paper that confirms you can place orders. PDF or image, up to 10MB.</div>
+      </div>
     </div>
-    <label class="check"><input type="checkbox" id="regAgree"> I agree to ICONGRP using these details to set up my account and respond to my requests.</label>
+    <label class="check"><input type="checkbox" id="regAgree"> I have read and accept the <a href="terms-of-business.html" target="_blank" style="color:#15356b;font-weight:700">Terms of Business</a>, and confirm I am authorised to request services on behalf of my organisation.</label>
     <button class="btn" id="regBtn" onclick="doRegister()">Create account</button>
     <div class="sw">Already have an account? <a onclick="showView('login')">Log in</a></div>
   </div>
@@ -159,30 +166,63 @@ function orgCascade(){
   else { w.style.display='none'; }
 }
 
+var TERMS_VERSION='0.1';
+// required email domain by org type (null = any work email allowed)
+function requiredDomainMsg(type, email){
+  var e=(email||'').toLowerCase();
+  if(type==='Local authority'){ return e.endsWith('.gov.uk') ? null : 'Councils must register with an official @...gov.uk email.'; }
+  if(type==='Law enforcement'){ return (/\.police\.uk$/.test(e)||/\.gov\.uk$/.test(e)||/\.pnn\.police\.uk$/.test(e)) ? null : 'Police must register with an official @...police.uk (or .gov.uk) email.'; }
+  if(type==='NHS'){ return (/\.nhs\.uk$/.test(e)||/\.nhs\.net$/.test(e)) ? null : 'NHS staff must register with an official @...nhs.uk or @nhs.net email.'; }
+  // Business: just block the obvious free inboxes
+  var free=['gmail.com','hotmail.com','hotmail.co.uk','outlook.com','yahoo.com','yahoo.co.uk','icloud.com','aol.com','live.com','live.co.uk'];
+  var dom=e.split('@')[1]||'';
+  return free.indexOf(dom)!==-1 ? 'Please use your work email, not a personal one.' : null;
+}
+function regEmailCheck(){
+  var h=requiredDomainMsg(el('regType').value, el('regEmail').value.trim());
+  el('regEmailHint').textContent = h || '';
+  el('regEmailHint').style.color = h ? '#B42318' : '#9aa3b5';
+}
+
 async function doRegister(){
   clearMsg('regMsg');
   var name=el('regName').value.trim(), phone=el('regPhone').value.trim(), type=el('regType').value,
-      email=el('regEmail').value.trim(), pass=el('regPass').value;
+      email=el('regEmail').value.trim(), pass=el('regPass').value,
+      job=el('regJob').value.trim(), dept=el('regDept').value.trim();
   var org = (type==='Business') ? el('regOrgFree').value.trim() : el('regOrgSel').value;
-  if(!name||!phone||!type||!email||!pass){ showMsg('regMsg','err','Please fill in all required fields.'); return; }
-  if(type!=='Business' && !org){ showMsg('regMsg','err','Please choose your organisation.'); return; }
-  if(type==='Business' && !org){ showMsg('regMsg','err','Please enter your organisation name.'); return; }
+  var doc = el('regDoc').files && el('regDoc').files[0];
+  if(!name||!phone||!type||!email||!pass||!job){ showMsg('regMsg','err','Please fill in all required fields.'); return; }
+  if(!org){ showMsg('regMsg','err', type==='Business'?'Please enter your organisation name.':'Please choose your organisation.'); return; }
   if(pass.length<8){ showMsg('regMsg','err','Password must be at least 8 characters.'); return; }
-  if(!el('regAgree').checked){ showMsg('regMsg','err','Please tick the box to agree before creating your account.'); return; }
+  var dmsg=requiredDomainMsg(type,email);
+  if(dmsg){ showMsg('regMsg','err',dmsg); return; }
+  if(!doc){ showMsg('regMsg','err','Please attach a supporting document.'); return; }
+  if(doc.size>10*1024*1024){ showMsg('regMsg','err','Document is too large (max 10MB).'); return; }
+  if(!el('regAgree').checked){ showMsg('regMsg','err','Please accept the Terms of Business before creating your account.'); return; }
   var btn=el('regBtn'); btn.disabled=true; btn.textContent='Creating account…';
   try{
     var r=await sb.auth.signUp({ email:email, password:pass });
     if(r.error){ showMsg('regMsg','err',r.error.message); btn.disabled=false; btn.textContent='Create account'; return; }
     var uid = r.data && r.data.user && r.data.user.id;
+    var docPath=null, docName=null;
+    if(uid && doc){
+      var ext=(doc.name.split('.').pop()||'bin').toLowerCase();
+      docPath=uid+'/document.'+ext; docName=doc.name;
+      var up=await sb.storage.from('customer-docs').upload(docPath, doc, {upsert:true});
+      if(up.error){ console.log('doc upload:', up.error.message); docPath=null; }
+    }
     if(uid){
       var ins=await sb.from('customers').insert({
         id:uid, name:name, organisation:org, org_type:type, org_name:org,
-        email:email, phone:phone, approved:false, status:'pending'
+        email:email, phone:phone, job_title:job, department:dept,
+        terms_accepted_at:new Date().toISOString(), terms_version:TERMS_VERSION,
+        document_path:docPath, document_name:docName,
+        approved:false, status:'pending'
       });
       if(ins.error){ console.log('profile insert:', ins.error.message); }
     }
-    showMsg('regMsg','ok','Account created. Our team will review it and email you once approved.');
-    setTimeout(function(){ refreshState(); }, 1200);
+    showMsg('regMsg','ok','Account created. Our team will review your details and document, and email you once approved.');
+    setTimeout(function(){ refreshState(); }, 1400);
   }catch(e){ showMsg('regMsg','err','Something went wrong. Please try again.'); btn.disabled=false; btn.textContent='Create account'; }
 }
 
