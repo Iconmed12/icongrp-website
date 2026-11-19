@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Customer Portal – ICONGRP</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preconnect" href="https://pdeeknsjiorzevwyejnv.supabase.co" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://pdeeknsjiorzevwyejnv.supabase.co">
 <style>
   :root{--navy:#0d1b3a;--brand:#15356b;--blue:#185FA5;--line:#e3e8f0;--ink:#15233b;--muted:#64748b}
   *{box-sizing:border-box}
@@ -382,18 +385,34 @@ async function refreshState(){
   var s=await sb.auth.getSession();
   var session = s && s.data && s.data.session;
   if(!session){ setLoggedOutNav(); showView('login'); return; }
-  // logged in: load profile
   var uid=session.user.id;
-  var q=await sb.from('customers').select('*').eq('id',uid).maybeSingle();
+  // fetch profile and bookings in parallel so we don't wait twice
+  var profileP = sb.from('customers').select('*').eq('id',uid).maybeSingle();
+  var bookingsP = sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
+  var q=await profileP;
   var cust=q.data;
-  if(!cust){
-    // no profile row yet (edge case) — treat as pending
-    setLoggedInNav({organisation:''}); showView('pending'); return;
-  }
+  if(!cust){ setLoggedInNav({organisation:''}); showView('pending'); return; }
   setLoggedInNav(cust);
   CURRENT_CUST=cust;
-  if(cust.approved){ showView('dash'); dashTab('bookings'); loadBookings(); }
+  if(cust.approved){
+    showView('dash'); dashTab('bookings');
+    // bookings already in flight — render as soon as they land
+    bookingsP.then(function(r){ renderBookings((r&&r.data)||[]); }).catch(function(){ el('bookingList').innerHTML='<div class="dempty">Could not load your bookings.</div>'; });
+    startPortalPoll();
+  }
   else { showView('pending'); }
+}
+
+// quietly refresh the open tab so Hub changes appear without a manual reload
+var _portalPoll=null;
+function startPortalPoll(){
+  if(_portalPoll) clearInterval(_portalPoll);
+  _portalPoll=setInterval(function(){
+    if(document.visibilityState!=='visible') return;
+    if(el('viewDash').style.display==='none') return;
+    if(el('paneBookings').style.display!=='none') loadBookings();
+    else if(el('paneInvoices').style.display!=='none') loadInvoices();
+  }, 15000);
 }
 
 // ===== Dashboard / bookings =====
@@ -520,11 +539,16 @@ function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){retur
 
 async function loadBookings(){
   var box=el('bookingList'); if(!box) return;
-  box.innerHTML='<div class="dempty">Loading…</div>';
+  if(!box.innerHTML) box.innerHTML='<div class="dempty">Loading…</div>';
   try{
     var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
     if(r.error){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; return; }
-    var list=r.data||[];
+    renderBookings(r.data||[]);
+  }catch(e){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; }
+}
+function renderBookings(list){
+  var box=el('bookingList'); if(!box) return;
+  try{
     if(!list.length){ box.innerHTML='<div class="dempty">No bookings yet. Click “+ New request” to make your first one.</div>'; return; }
     box.innerHTML=list.map(function(b){
       var langPair=(b.from_lang||b.to_lang)?(esc(b.from_lang||'?')+' → '+esc(b.to_lang||'?')):'';
