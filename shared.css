@@ -101,3 +101,5 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding
 .card-icon svg,.division-icon svg,.service-icon svg,.who-card-icon svg,.who-icon svg,.problem-icon svg,.te-point-icon svg{color:var(--blue-light);width:26px;height:26px;}
 .why-badge-icon svg,.te-feature-icon svg{color:#7FDBFF;width:20px;height:20px;}
 .footer-contact-link svg{color:currentColor;display:inline-block;vertical-align:middle;margin-right:4px;}
+/* Smaller, lighter placeholder text across forms */
+input::placeholder,textarea::placeholder{font-size:13px;color:#9aa3b5;opacity:1;}
