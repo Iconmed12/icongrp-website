@@ -44,6 +44,36 @@
   .state p{color:var(--muted);font-size:14px;line-height:1.6}
   .state .ic{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:30px}
   .ic.wait{background:#FFF4E0;color:#9A6008}.ic.ok{background:#E6F5EE;color:#176A48}
+  .btn.sm{width:auto;padding:10px 16px;margin:0;font-size:13.5px}
+  .tabs{display:flex;gap:4px;padding:0 22px;background:#f7f9fc;border-bottom:1px solid var(--line)}
+  .tab{padding:15px 16px;font-size:13.5px;font-weight:700;color:#8a94a6;border-bottom:3px solid transparent;cursor:pointer}
+  .tab.on{color:var(--brand);border-bottom-color:var(--brand)}
+  .dbody{padding:24px}
+  .dhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .dhead h2{margin:0;font-size:19px}
+  .dlead{color:var(--muted);font-size:13.5px;margin:4px 0 20px}
+  .dempty{padding:28px;text-align:center;color:#9aa3b5;font-size:13.5px;border:1px dashed #e0e5ee;border-radius:12px}
+  .bcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+  .bcard .btop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .bttl{font-size:15px;font-weight:800;color:var(--brand)}
+  .bmeta{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .bpill{border-radius:20px;padding:4px 12px;font-size:11px;font-weight:800;white-space:nowrap}
+  .bp-req{background:#FFF4E0;color:#9A6008}.bp-acc{background:#E8F1FB;color:#185FA5}.bp-book{background:#E6F5EE;color:#176A48}.bp-done{background:#EEF1F6;color:#64748b}.bp-dec{background:#FEECEB;color:#B42318}
+  .track{display:flex;align-items:center;margin-top:14px}
+  .step{flex:1;text-align:center;position:relative;font-size:10.5px;font-weight:700;color:#9aa3b5}
+  .step .dot{width:14px;height:14px;border-radius:50%;background:#dfe5ee;margin:0 auto 5px;position:relative;z-index:2}
+  .step.done .dot{background:#176A48}.step.done{color:#176A48}
+  .step.now .dot{background:#185FA5;box-shadow:0 0 0 4px #E8F1FB}.step.now{color:#185FA5}
+  .step:not(:last-child):after{content:"";position:absolute;top:7px;left:50%;width:100%;height:2px;background:#e3e8f0;z-index:1}
+  .step.done:not(:last-child):after{background:#176A48}
+  .offer{margin-top:12px;background:#f7f9fc;border:1px solid #e8ecf3;border-radius:10px;padding:11px 14px;font-size:13px;color:#334155}
+  .offer b{color:#15233b}
+  .offer .act{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+  .offer .act button{border:none;border-radius:8px;padding:8px 14px;font-weight:700;font-size:12.5px;cursor:pointer}
+  .acc-y{background:#176A48;color:#fff}.acc-n{background:#fff;color:#B42318;border:1px solid #e6b4ae!important}
+  .rback{font-size:12.5px;color:var(--muted);text-decoration:none;font-weight:700;cursor:pointer}
+  .who{background:#f7f9fc;border:1px solid #e8ecf3;border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:13px;color:#475467}
+  .who b{color:#15233b}
   @media(max-width:520px){ .grid{grid-template-columns:1fr} .fld.full{grid-column:auto} }
 </style>
 </head>
@@ -126,12 +156,69 @@
     <p>Thanks for signing up. Our team is reviewing your account and we'll email you as soon as it's approved — usually within one working day.<br><br>Once approved, you'll be able to make requests and see your invoices here.</p>
   </div>
 
-  <!-- APPROVED / DASHBOARD PLACEHOLDER (filled in Stage 2) -->
-  <div class="card state" id="viewDash" style="display:none">
-    <div class="ic ok">&#10003;</div>
-    <div class="big">You're all set</div>
-    <p id="dashHi">Your account is approved.</p>
-    <p style="color:#9aa3b5;font-size:13px;margin-top:14px">Your bookings and invoices will appear here shortly — we're adding them next.</p>
+  <!-- DASHBOARD (approved customers) -->
+  <div class="card" id="viewDash" style="display:none;padding:0;overflow:hidden">
+    <div class="tabs">
+      <div class="tab on" id="tabBookings" onclick="dashTab('bookings')">My bookings</div>
+      <div class="tab" id="tabInvoices" onclick="dashTab('invoices')">My invoices</div>
+    </div>
+    <div class="dbody">
+      <!-- BOOKINGS -->
+      <div id="paneBookings">
+        <div class="dhead"><h2>My bookings</h2><button class="btn sm" onclick="showView('newreq')">+ New request</button></div>
+        <p class="dlead">Track each request from submitted through to booked and completed.</p>
+        <div id="bookingList"><div class="dempty">Loading…</div></div>
+      </div>
+      <!-- INVOICES (Stage 3) -->
+      <div id="paneInvoices" style="display:none">
+        <div class="dhead"><h2>My invoices</h2></div>
+        <p class="dlead">What you owe and what's been paid.</p>
+        <div class="dempty">Your invoices will appear here. We're adding this next.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW REQUEST -->
+  <div class="card auth" id="viewNewreq" style="display:none;max-width:680px">
+    <a class="rback" onclick="showView('dash');dashTab('bookings')">&larr; Back to my bookings</a>
+    <div class="lg" style="text-align:left;margin-top:8px">New request</div>
+    <p class="asub" style="text-align:left">Tell us what you need. We'll confirm availability and send a quote.</p>
+    <div class="who" id="nrWho"></div>
+    <div class="msg" id="nrMsg"></div>
+    <div class="fld"><label>Service required <span class="req">*</span></label>
+      <select id="nrService" onchange="nrServiceChange()">
+        <option value="">Select...</option>
+        <option>Interpreter: in person</option>
+        <option>Interpreter: telephone</option>
+        <option>Interpreter: video call</option>
+        <option>Document translation</option>
+        <option>Certified translation</option>
+        <option>Transcription or subtitling</option>
+        <option>Other / not sure</option>
+      </select>
+    </div>
+    <div class="grid">
+      <div class="fld"><label>From language <span class="req">*</span></label><select id="nrFrom"></select></div>
+      <div class="fld"><label>To language <span class="req">*</span></label><select id="nrTo"></select></div>
+    </div>
+    <div id="nrInterp" style="display:none">
+      <div class="grid">
+        <div class="fld"><label>Date</label><input type="date" id="nrDate"></div>
+        <div class="fld"><label>Start time</label><input type="time" id="nrTime"></div>
+        <div class="fld"><label>Duration</label><select id="nrDuration"><option value="">Select...</option><option>30 minutes</option><option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>Half day</option><option>Full day</option><option>More than one day</option></select></div>
+        <div class="fld"><label>Setting</label><select id="nrSetting"><option value="">Select...</option><option>Medical or hospital</option><option>Social care or assessment</option><option>Legal, court or tribunal</option><option>Business meeting</option><option>Education or training</option><option>Other</option></select></div>
+      </div>
+      <div class="fld full"><label>Location or venue</label><input id="nrLocation" placeholder="Address for in-person, or leave blank for phone/video"></div>
+    </div>
+    <div class="grid">
+      <div class="fld"><label>PO number / reference <span class="req">*</span></label><input id="nrPO" placeholder="Your purchase order or reference"><div class="hint">Required so we can invoice correctly.</div></div>
+      <div class="fld"><label>Your offer (optional)</label><input id="nrOffer" type="number" placeholder="£ if you have a budget in mind"><div class="hint">We'll confirm or quote back.</div></div>
+    </div>
+    <div class="fld full"><label>Tell us about the request <span class="req">*</span></label>
+      <textarea id="nrDetails" style="min-height:92px;width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #d7dce5;border-radius:10px;font-size:14px;font-family:inherit" placeholder="Who the interpreter will be supporting, subject matter, dialect, gender preference, confidentiality."></textarea>
+      <div class="hint">Please don't paste confidential documents here — we'll arrange secure transfer once confirmed.</div>
+    </div>
+    <button class="btn" id="nrBtn" onclick="submitRequest()">Send request</button>
   </div>
 
 </div>
@@ -151,7 +238,7 @@ function showMsg(id,type,text){var m=el(id);m.className='msg '+type;m.textConten
 function clearMsg(id){var m=el(id);m.className='msg';m.textContent='';}
 
 function showView(v){
-  ['Login','Register','Forgot','Pending','Dash'].forEach(function(n){ el('view'+n).style.display='none'; });
+  ['Login','Register','Forgot','Pending','Dash','Newreq'].forEach(function(n){ el('view'+n).style.display='none'; });
   el('view'+v.charAt(0).toUpperCase()+v.slice(1)).style.display='';
 }
 
@@ -270,9 +357,118 @@ async function refreshState(){
     setLoggedInNav({organisation:''}); showView('pending'); return;
   }
   setLoggedInNav(cust);
-  if(cust.approved){ el('dashHi').textContent='Welcome, '+(cust.name||'')+' — your account ('+(cust.organisation||'')+') is approved.'; showView('dash'); }
+  CURRENT_CUST=cust;
+  if(cust.approved){ showView('dash'); dashTab('bookings'); loadBookings(); }
   else { showView('pending'); }
 }
+
+// ===== Dashboard / bookings =====
+var CURRENT_CUST=null;
+var LANGS=["English","French","Arabic","Lingala","Swahili","Kikongo","Tshiluba","Portuguese","Spanish","Italian","German","Dutch","Polish","Romanian","Russian","Ukrainian","Turkish","Kurdish (Sorani)","Kurdish (Kurmanji)","Farsi (Persian)","Dari","Pashto","Urdu","Hindi","Punjabi","Bengali","Gujarati","Tamil","Nepali","Sinhala","Mandarin","Cantonese","Vietnamese","Thai","Tagalog","Korean","Japanese","Somali","Amharic","Tigrinya","Oromo","Hausa","Yoruba","Igbo","Twi","Wolof","Albanian","Bulgarian","Greek","Hungarian","Czech","Slovak","Lithuanian","Latvian","Hebrew","British Sign Language (BSL)","Other"];
+
+function dashTab(which){
+  el('tabBookings').classList.toggle('on', which==='bookings');
+  el('tabInvoices').classList.toggle('on', which==='invoices');
+  el('paneBookings').style.display = which==='bookings'?'':'none';
+  el('paneInvoices').style.display = which==='invoices'?'':'none';
+}
+
+function fmtD(d){ if(!d) return ''; var x=new Date(d); if(isNaN(x)) return d; var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return x.getDate()+' '+M[x.getMonth()]; }
+function fmtDT(iso){ if(!iso) return ''; var x=new Date(iso); if(isNaN(x)) return ''; return fmtD(iso); }
+
+var STEP_ORDER=['requested','accepted','booked','completed'];
+function bookingTrack(status){
+  if(status==='declined') return '';
+  var labels={requested:'Requested',accepted:'Accepted',booked:'Booked',completed:'Completed'};
+  var idx=STEP_ORDER.indexOf(status); if(idx<0) idx=0;
+  return '<div class="track">'+STEP_ORDER.map(function(s,i){
+    var cls = i<idx?'step done':(i===idx?'step now':'step');
+    return '<div class="'+cls+'"><div class="dot"></div>'+labels[s]+'</div>';
+  }).join('')+'</div>';
+}
+function bookingPill(status){
+  var m={requested:['bp-req','Requested'],accepted:['bp-acc','Accepted'],booked:['bp-book','Booked'],completed:['bp-done','Completed'],declined:['bp-dec','Declined']};
+  var x=m[status]||m.requested; return '<span class="bpill '+x[0]+'">'+x[1]+'</span>';
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+async function loadBookings(){
+  var box=el('bookingList'); if(!box) return;
+  box.innerHTML='<div class="dempty">Loading…</div>';
+  try{
+    var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
+    if(r.error){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; return; }
+    var list=r.data||[];
+    if(!list.length){ box.innerHTML='<div class="dempty">No bookings yet. Click “+ New request” to make your first one.</div>'; return; }
+    box.innerHTML=list.map(function(b){
+      var langPair=(b.from_lang||b.to_lang)?(esc(b.from_lang||'?')+' → '+esc(b.to_lang||'?')):'';
+      var when = b.booking_date ? (' · '+fmtD(b.booking_date)+(b.booking_time?(' '+b.booking_time):'')) : '';
+      // counter-offer the customer can accept
+      var offerHtml='';
+      if(b.rate_status==='countered' && b.agreed_rate!=null){
+        offerHtml='<div class="offer">We\'ve quoted <b>£'+Number(b.agreed_rate).toLocaleString()+'</b> for this booking.'
+          +'<div class="act"><button class="acc-y" onclick="acceptQuote('+b.id+')">Accept quote</button><button class="acc-n" onclick="declineQuote('+b.id+')">Decline</button></div></div>';
+      } else if(b.rate_status==='accepted' && b.agreed_rate!=null){
+        offerHtml='<div class="offer" style="color:#176A48">Agreed rate: <b style="color:#176A48">£'+Number(b.agreed_rate).toLocaleString()+'</b></div>';
+      }
+      return '<div class="bcard">'
+        +'<div class="btop"><div><div class="bttl">'+esc(b.service||'Request')+(langPair?(' · '+langPair):'')+'</div>'
+        +'<div class="bmeta">Requested '+fmtDT(b.created_at)+when+(b.po_number?(' · PO '+esc(b.po_number)):'')+'</div></div>'
+        +bookingPill(b.status)+'</div>'
+        +(b.status_note?('<div class="bmeta" style="margin-top:8px">'+esc(b.status_note)+'</div>'):'')
+        +bookingTrack(b.status)
+        +offerHtml
+        +'</div>';
+    }).join('');
+  }catch(e){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; }
+}
+
+async function acceptQuote(id){
+  try{ await sb.from('portal_bookings').update({rate_status:'accepted'}).eq('id',id); }catch(e){}
+  loadBookings();
+}
+async function declineQuote(id){
+  try{ await sb.from('portal_bookings').update({rate_status:'rejected', status:'declined'}).eq('id',id); }catch(e){}
+  loadBookings();
+}
+
+function fillLangs(sel){ sel.innerHTML='<option value="">Select...</option>'+LANGS.map(function(l){return '<option>'+l+'</option>';}).join(''); }
+function nrServiceChange(){ var v=el('nrService').value; el('nrInterp').style.display = (v.indexOf('Interpreter')===0)?'':'none'; }
+
+function openNewReq(){
+  // prep the form
+  fillLangs(el('nrFrom')); fillLangs(el('nrTo'));
+  ['nrService','nrFrom','nrTo','nrDate','nrTime','nrDuration','nrSetting','nrLocation','nrPO','nrOffer','nrDetails'].forEach(function(id){ var e=el(id); if(e) e.value=''; });
+  el('nrInterp').style.display='none'; clearMsg('nrMsg');
+  el('nrWho').innerHTML='Requesting as <b>'+esc((CURRENT_CUST&&CURRENT_CUST.organisation)||'')+'</b> · '+esc((CURRENT_CUST&&CURRENT_CUST.email)||'')+' — we already have your details, so just fill in the request.';
+}
+
+async function submitRequest(){
+  clearMsg('nrMsg');
+  var service=el('nrService').value, from=el('nrFrom').value, to=el('nrTo').value,
+      po=el('nrPO').value.trim(), details=el('nrDetails').value.trim();
+  if(!service||!from||!to||!details){ showMsg('nrMsg','err','Please fill in the required fields.'); return; }
+  if(!po){ showMsg('nrMsg','err','A PO number or reference is required for every booking.'); return; }
+  var offer=parseFloat(el('nrOffer').value); if(isNaN(offer)) offer=null;
+  var btn=el('nrBtn'); btn.disabled=true; btn.textContent='Sending…';
+  var row={
+    customer_id:(CURRENT_CUST&&CURRENT_CUST.id),
+    service:service, from_lang:from, to_lang:to,
+    booking_date:(el('nrDate').value||null), booking_time:(el('nrTime').value||''),
+    duration:el('nrDuration').value||'', setting:el('nrSetting').value||'', location:el('nrLocation').value.trim(),
+    details:details, po_number:po, client_offer:offer, rate_status:'pending', status:'requested'
+  };
+  try{
+    var r=await sb.from('portal_bookings').insert(row);
+    if(r.error){ showMsg('nrMsg','err','Could not send: '+r.error.message); btn.disabled=false; btn.textContent='Send request'; return; }
+    btn.disabled=false; btn.textContent='Send request';
+    showView('dash'); dashTab('bookings'); loadBookings();
+  }catch(e){ showMsg('nrMsg','err','Something went wrong. Please try again.'); btn.disabled=false; btn.textContent='Send request'; }
+}
+
+// prep the new-request form whenever it's shown
+var _origShowView=showView;
+showView=function(v){ _origShowView(v); if(v==='newreq'){ openNewReq(); } };
 
 // boot
 refreshState();
