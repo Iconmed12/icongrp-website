@@ -15,9 +15,25 @@
   .pnav{background:#fff;border-bottom:1px solid var(--line);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
   .plogo{display:inline-flex;align-items:center;text-decoration:none}
   .plogo-img{height:34px;width:auto;display:block}
-  .pnav .right{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:14px}
+  .pnav .right{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px}
   .pnav .right b{color:var(--ink)}
   .pnav a.link{color:var(--brand);font-weight:700;text-decoration:none;cursor:pointer}
+  /* header chips */
+  .chip{display:inline-flex;align-items:center;gap:9px;padding:7px 12px;border-radius:10px;cursor:pointer;position:relative;transition:background .12s}
+  .chip:hover{background:#f1f5fb}
+  .chip .cico{width:26px;height:26px;border-radius:7px;background:#eef3fb;color:var(--brand);display:flex;align-items:center;justify-content:center;flex:none}
+  .chip .nm{font-size:13.5px;font-weight:700;color:var(--navy);white-space:nowrap;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+  .chip .cv{color:#9aa7bd;flex:none}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex:none}
+  .chipmenu{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 10px 30px rgba(16,24,40,.12);min-width:180px;padding:6px;display:none;z-index:50}
+  .chipmenu.show{display:block}
+  .chipmenu .mi{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:8px;font-size:13px;font-weight:600;color:#334155;cursor:pointer;white-space:nowrap}
+  .chipmenu .mi:hover{background:#f3f6fb}
+  .chipmenu .mihead{padding:8px 11px 4px;font-size:11.5px;color:#9aa7bd}
+  .chipmenu .mihead b{display:block;color:var(--navy);font-size:13px}
+  .chipmenu .sep{height:1px;background:var(--line);margin:5px 0}
+  .chipmenu .mi.out{color:#B42318}
+  @media(max-width:620px){ .chip .nm{display:none} .orgchip{display:none} }
   .wrap{max-width:1040px;margin:26px auto;padding:0 18px}
   .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 6px rgba(16,24,40,.05)}
   .auth{max-width:460px;margin:34px auto;padding:30px 26px 34px}
@@ -620,10 +636,31 @@ async function doForgot(){
 
 async function doLogout(){ await sb.auth.signOut(); location.reload(); }
 
+function initials(name){
+  var p=(name||'').trim().split(/\s+/).filter(Boolean);
+  if(!p.length) return 'U';
+  return (p[0][0]+(p.length>1?p[p.length-1][0]:'')).toUpperCase();
+}
 function setLoggedInNav(cust){
-  el('navRight').innerHTML = '<span>'+(cust&&cust.organisation?cust.organisation:'')+'</span> · <a class="link" onclick="doLogout()">Log out</a>';
+  var org=(cust&&cust.organisation)?cust.organisation:'';
+  var name=(cust&&cust.name)?cust.name:'Account';
+  var bldg='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="11" height="18" rx="1"/><path d="M15 8h4a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-4"/><path d="M8 7h3M8 11h3M8 15h3"/></svg>';
+  var cv='<svg class="cv" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  el('navRight').innerHTML =
+    (org ? '<div class="chip orgchip"><span class="cico">'+bldg+'</span><span class="nm">'+esc(org)+'</span></div>' : '')
+    + '<div class="chip" onclick="toggleUserMenu(event)"><span class="avatar">'+esc(initials(name))+'</span><span class="nm">'+esc(name)+'</span>'+cv
+      +'<div class="chipmenu" id="userMenu">'
+        +'<div class="mihead">Signed in as<b>'+esc(name)+'</b></div>'
+        +'<div class="sep"></div>'
+        +'<div class="mi out" onclick="doLogout()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>Log out</div>'
+      +'</div></div>';
 }
 function setLoggedOutNav(){ el('navRight').innerHTML='<span>Need help? 01268 20 30 10</span>'; }
+function toggleUserMenu(e){
+  if(e) e.stopPropagation();
+  var m=el('userMenu'); if(m) m.classList.toggle('show');
+}
+document.addEventListener('click',function(){ var m=document.getElementById('userMenu'); if(m) m.classList.remove('show'); });
 
 async function refreshState(){
   var s=await sb.auth.getSession();
