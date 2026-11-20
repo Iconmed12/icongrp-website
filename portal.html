@@ -13,8 +13,8 @@
   *{box-sizing:border-box}
   body{margin:0;background:#eef1f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink)}
   .pnav{background:#fff;border-bottom:1px solid var(--line);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
-  .plogo{font-weight:800;font-size:22px;letter-spacing:.03em;text-decoration:none;color:var(--navy)}
-  .plogo span{color:var(--blue)}
+  .plogo{display:inline-flex;align-items:center;text-decoration:none}
+  .plogo-img{height:34px;width:auto;display:block}
   .pnav .right{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:14px}
   .pnav .right b{color:var(--ink)}
   .pnav a.link{color:var(--brand);font-weight:700;text-decoration:none;cursor:pointer}
@@ -115,7 +115,7 @@
 </head>
 <body>
 <div class="pnav">
-  <a class="plogo" href="index.html">ICON<span>GRP</span></a>
+  <a class="plogo" href="index.html"><img src="lingua-logo.png" alt="ICON Lingua" class="plogo-img"></a>
   <div class="right" id="navRight"><span>Need help? 01268 20 30 10</span></div>
 </div>
 
