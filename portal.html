@@ -12,13 +12,12 @@
   :root{--navy:#0d1b3a;--brand:#15356b;--blue:#185FA5;--line:#e3e8f0;--ink:#15233b;--muted:#64748b}
   *{box-sizing:border-box}
   body{margin:0;background:#eef1f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink)}
-  .pnav{background:var(--navy);color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
-  .plogo{font-weight:800;font-size:18px;letter-spacing:.2px;text-decoration:none;color:#fff}
-  .plogo span{color:#4a90e2}
-  .pnav .sub{font-weight:600;font-size:13px;color:#aebfdd;margin-left:8px}
-  .pnav .right{font-size:13px;color:#c7d2e8;display:flex;align-items:center;gap:14px}
-  .pnav .right b{color:#fff}
-  .pnav a.link{color:#fff;font-weight:700;text-decoration:none;cursor:pointer}
+  .pnav{background:#fff;border-bottom:1px solid var(--line);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+  .plogo{font-weight:800;font-size:22px;letter-spacing:.03em;text-decoration:none;color:var(--navy)}
+  .plogo span{color:var(--blue)}
+  .pnav .right{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:14px}
+  .pnav .right b{color:var(--ink)}
+  .pnav a.link{color:var(--brand);font-weight:700;text-decoration:none;cursor:pointer}
   .wrap{max-width:1040px;margin:26px auto;padding:0 18px}
   .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 6px rgba(16,24,40,.05)}
   .auth{max-width:460px;margin:34px auto;padding:30px 26px 34px}
@@ -54,7 +53,21 @@
   .tabs{display:flex;gap:4px;padding:0 22px;background:#f7f9fc;border-bottom:1px solid var(--line)}
   .tab{padding:15px 16px;font-size:13.5px;font-weight:700;color:#8a94a6;border-bottom:3px solid transparent;cursor:pointer}
   .tab.on{color:var(--brand);border-bottom-color:var(--brand)}
-  .dbody{padding:24px}
+  .dbody{padding:28px 30px}
+  .hubh1{margin:0 0 4px;font-size:26px;font-weight:800;color:var(--navy)}
+  .sectlbl{font-size:13px;font-weight:800;color:var(--ink);margin:22px 0 14px}
+  .hubcards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .hubcard{border:1px solid var(--line);border-radius:14px;padding:22px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s}
+  .hubcard:hover{box-shadow:0 8px 24px rgba(16,24,40,.08);transform:translateY(-1px);border-color:#cfe0f0}
+  .hubic{width:46px;height:46px;border-radius:11px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .hubn{font-size:17px;font-weight:800;color:var(--ink)}
+  .hubd{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.5}
+  .hubgo{color:var(--blue);font-weight:700;font-size:13px;margin-top:14px}
+  .mybookpanel{border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;background:#fbfcfe;cursor:pointer;transition:box-shadow .15s}
+  .mybookpanel:hover{box-shadow:0 6px 18px rgba(16,24,40,.07)}
+  .mybookpanel .hubic{margin-bottom:0}
+  .livetag{margin-left:auto;background:#E6F5EE;color:#176A48;border-radius:20px;padding:5px 13px;font-size:11px;font-weight:800;white-space:nowrap}
+  @media(max-width:620px){ .hubcards{grid-template-columns:1fr} }
   .dhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .dhead h2{margin:0;font-size:19px}
   .dlead{color:var(--muted);font-size:13.5px;margin:4px 0 20px}
@@ -102,7 +115,7 @@
 </head>
 <body>
 <div class="pnav">
-  <div><a class="plogo" href="index.html">ICON<span>GRP</span></a><span class="sub">Icon Lingua</span></div>
+  <a class="plogo" href="index.html">ICON<span>GRP</span></a>
   <div class="right" id="navRight"><span>Need help? 01268 20 30 10</span></div>
 </div>
 
@@ -182,12 +195,38 @@
   <!-- DASHBOARD (approved customers) -->
   <div class="card" id="viewDash" style="display:none;padding:0;overflow:hidden">
     <div class="tabs">
-      <div class="tab on" id="tabBookings" onclick="dashTab('bookings')">My bookings</div>
+      <div class="tab on" id="tabHome" onclick="dashTab('home')">Home</div>
+      <div class="tab" id="tabBookings" onclick="dashTab('bookings')">My bookings</div>
       <div class="tab" id="tabInvoices" onclick="dashTab('invoices')">My invoices</div>
     </div>
     <div class="dbody">
+      <!-- HUB HOME -->
+      <div id="paneHome">
+        <h2 class="hubh1">Language Hub</h2>
+        <p class="dlead">Your central hub for translation and interpreting services.</p>
+        <div class="sectlbl">Make a request</div>
+        <div class="hubcards">
+          <div class="hubcard" onclick="newReqService('Interpreter: in person')">
+            <div class="hubic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 0 1 18 0"/><path d="M3 11v4a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 0z"/><path d="M21 11v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 0z"/></svg></div>
+            <div class="hubn">Interpreting</div>
+            <div class="hubd">Request an interpreter for a meeting, appointment or hearing.</div>
+            <div class="hubgo">Request an interpreter &rarr;</div>
+          </div>
+          <div class="hubcard" onclick="newReqService('Document translation')">
+            <div class="hubic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg></div>
+            <div class="hubn">Translation</div>
+            <div class="hubd">Submit documents for translation, certified where needed.</div>
+            <div class="hubgo">Submit documents &rarr;</div>
+          </div>
+        </div>
+        <div class="mybookpanel" onclick="dashTab('bookings')">
+          <div class="hubic" style="background:#e6f5ee;color:#176A48"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div style="flex:1"><div class="hubn">My bookings</div><div class="hubd">Track requests, bookings and completed services in one place.</div></div>
+          <span class="livetag">Live tracking</span>
+        </div>
+      </div>
       <!-- BOOKINGS -->
-      <div id="paneBookings">
+      <div id="paneBookings" style="display:none">
         <div class="dhead"><h2>My bookings</h2><button class="btn sm" onclick="showView('newreq')">+ New request</button></div>
         <p class="dlead">Track each request from submitted through to booked and completed.</p>
         <div id="bookingList"><div class="dempty">Loading…</div></div>
@@ -395,9 +434,9 @@ async function refreshState(){
   setLoggedInNav(cust);
   CURRENT_CUST=cust;
   if(cust.approved){
-    showView('dash'); dashTab('bookings');
-    // bookings already in flight — render as soon as they land
-    bookingsP.then(function(r){ renderBookings((r&&r.data)||[]); }).catch(function(){ el('bookingList').innerHTML='<div class="dempty">Could not load your bookings.</div>'; });
+    showView('dash'); dashTab('home');
+    // bookings already in flight — cache so the My bookings tab is instant
+    bookingsP.then(function(r){ _cachedBookings=(r&&r.data)||[]; }).catch(function(){});
     startPortalPoll();
   }
   else { showView('pending'); }
@@ -419,12 +458,21 @@ function startPortalPoll(){
 var CURRENT_CUST=null;
 var LANGS=["English","French","Arabic","Lingala","Swahili","Kikongo","Tshiluba","Portuguese","Spanish","Italian","German","Dutch","Polish","Romanian","Russian","Ukrainian","Turkish","Kurdish (Sorani)","Kurdish (Kurmanji)","Farsi (Persian)","Dari","Pashto","Urdu","Hindi","Punjabi","Bengali","Gujarati","Tamil","Nepali","Sinhala","Mandarin","Cantonese","Vietnamese","Thai","Tagalog","Korean","Japanese","Somali","Amharic","Tigrinya","Oromo","Hausa","Yoruba","Igbo","Twi","Wolof","Albanian","Bulgarian","Greek","Hungarian","Czech","Slovak","Lithuanian","Latvian","Hebrew","British Sign Language (BSL)","Other"];
 
+var _cachedBookings=null;
 function dashTab(which){
+  el('tabHome').classList.toggle('on', which==='home');
   el('tabBookings').classList.toggle('on', which==='bookings');
   el('tabInvoices').classList.toggle('on', which==='invoices');
+  el('paneHome').style.display = which==='home'?'':'none';
   el('paneBookings').style.display = which==='bookings'?'':'none';
   el('paneInvoices').style.display = which==='invoices'?'':'none';
+  if(which==='bookings'){ if(_cachedBookings){ renderBookings(_cachedBookings); _cachedBookings=null; } loadBookings(); }
   if(which==='invoices') loadInvoices();
+}
+// open the new-request form pre-set to a service
+function newReqService(svc){
+  showView('newreq');
+  var s=el('nrService'); if(s){ s.value=svc; nrServiceChange(); }
 }
 
 // billing cycle: 27th of last month to 26th of this month (cut-off 26th)
