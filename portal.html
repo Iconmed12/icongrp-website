@@ -50,24 +50,32 @@
   .state .ic{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:30px}
   .ic.wait{background:#FFF4E0;color:#9A6008}.ic.ok{background:#E6F5EE;color:#176A48}
   .btn.sm{width:auto;padding:10px 16px;margin:0;font-size:13.5px}
-  .tabs{display:flex;gap:4px;padding:0 22px;background:#f7f9fc;border-bottom:1px solid var(--line)}
-  .tab{padding:15px 16px;font-size:13.5px;font-weight:700;color:#8a94a6;border-bottom:3px solid transparent;cursor:pointer}
-  .tab.on{color:var(--brand);border-bottom-color:var(--brand)}
-  .dbody{padding:28px 30px}
-  .hubh1{margin:0 0 4px;font-size:26px;font-weight:800;color:var(--navy)}
-  .sectlbl{font-size:13px;font-weight:800;color:var(--ink);margin:22px 0 14px}
-  .hubcards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-  .hubcard{border:1px solid var(--line);border-radius:14px;padding:22px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s}
-  .hubcard:hover{box-shadow:0 8px 24px rgba(16,24,40,.08);transform:translateY(-1px);border-color:#cfe0f0}
-  .hubic{width:46px;height:46px;border-radius:11px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-  .hubn{font-size:17px;font-weight:800;color:var(--ink)}
-  .hubd{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.5}
-  .hubgo{color:var(--blue);font-weight:700;font-size:13px;margin-top:14px}
-  .mybookpanel{border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;background:#fbfcfe;cursor:pointer;transition:box-shadow .15s}
-  .mybookpanel:hover{box-shadow:0 6px 18px rgba(16,24,40,.07)}
-  .mybookpanel .hubic{margin-bottom:0}
-  .livetag{margin-left:auto;background:#E6F5EE;color:#176A48;border-radius:20px;padding:5px 13px;font-size:11px;font-weight:800;white-space:nowrap}
-  @media(max-width:620px){ .hubcards{grid-template-columns:1fr} }
+  /* ===== Dashboard shell: sidebar + content ===== */
+  .shell{max-width:1240px;margin:0 auto;display:flex;min-height:calc(100vh - 67px)}
+  .side{width:244px;flex:none;background:#fff;border-right:1px solid var(--line);padding:26px 16px}
+  .snav{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:11px;font-size:14px;font-weight:700;color:#5a6782;cursor:pointer;margin-bottom:4px;transition:background .12s,color .12s}
+  .snav svg{flex:none}
+  .snav:hover{background:#f3f6fb;color:var(--brand)}
+  .snav.on{background:#eaf1fb;color:var(--brand)}
+  .content{flex:1;min-width:0;padding:38px 46px}
+  .hero{display:flex;align-items:flex-start;justify-content:space-between;gap:30px;margin-bottom:38px}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+  .hubh1{margin:0;font-size:40px;line-height:1.08;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+  .herolead{color:var(--muted);font-size:15.5px;line-height:1.55;margin:18px 0 0;max-width:430px}
+  .heroart{flex:none;width:330px;max-width:38%}
+  .heroart svg{width:100%;height:auto;display:block}
+  .sectlbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a94a6;margin:0 0 16px}
+  .hubcards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .hubcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s;display:flex;flex-direction:column}
+  .hubcard:hover{box-shadow:0 10px 30px rgba(16,24,40,.09);transform:translateY(-2px);border-color:#cfe0f0}
+  .hubic{width:54px;height:54px;border-radius:13px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .hubn{font-size:20px;font-weight:800;color:var(--navy)}
+  .hubd{color:var(--muted);font-size:13.5px;margin-top:8px;line-height:1.55;flex:1}
+  .hubgo{color:var(--blue);font-weight:800;font-size:14px;margin-top:22px;display:flex;align-items:center;gap:7px}
+  .hubgo svg{transition:transform .15s}
+  .hubcard:hover .hubgo svg{transform:translateX(4px)}
+  @media(max-width:1000px){ .hubcards{grid-template-columns:1fr} .heroart{display:none} .hubh1{font-size:32px} .content{padding:30px 26px} }
+  @media(max-width:760px){ .shell{flex-direction:column;min-height:0} .side{width:auto;display:flex;gap:6px;border-right:none;border-bottom:1px solid var(--line);padding:12px} .snav{margin-bottom:0} .snav span{display:none} }
   .dhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .dhead h2{margin:0;font-size:19px}
   .dlead{color:var(--muted);font-size:13.5px;margin:4px 0 20px}
@@ -192,53 +200,100 @@
     <p>Thanks for signing up. Our team is reviewing your account and we'll email you as soon as it's approved, usually within one working day.<br><br>Once approved, you'll be able to make requests and see your invoices here.</p>
   </div>
 
-  <!-- DASHBOARD (approved customers) -->
-  <div class="card" id="viewDash" style="display:none;padding:0;overflow:hidden">
-    <div class="tabs">
-      <div class="tab on" id="tabHome" onclick="dashTab('home')">Home</div>
-      <div class="tab" id="tabBookings" onclick="dashTab('bookings')">My bookings</div>
-      <div class="tab" id="tabInvoices" onclick="dashTab('invoices')">My invoices</div>
-    </div>
-    <div class="dbody">
-      <!-- HUB HOME -->
-      <div id="paneHome">
-        <h2 class="hubh1">Language Hub</h2>
-        <p class="dlead">Your central hub for translation and interpreting services.</p>
-        <div class="sectlbl">Make a request</div>
-        <div class="hubcards">
-          <div class="hubcard" onclick="newReqService('Interpreter: in person')">
-            <div class="hubic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 0 1 18 0"/><path d="M3 11v4a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 0z"/><path d="M21 11v4a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 0z"/></svg></div>
-            <div class="hubn">Interpreting</div>
-            <div class="hubd">Request an interpreter for a meeting, appointment or hearing.</div>
-            <div class="hubgo">Request an interpreter &rarr;</div>
+  </div><!-- /wrap for auth views -->
+
+  <!-- DASHBOARD (approved customers) — full width, outside .wrap -->
+  <div id="viewDash" style="display:none">
+    <div class="shell">
+      <nav class="side">
+        <div class="snav on" id="tabHome" onclick="dashTab('home')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9 21v-6h6v6"/></svg><span>Home</span>
+        </div>
+        <div class="snav" id="tabBookings" onclick="dashTab('bookings')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg><span>My bookings</span>
+        </div>
+        <div class="snav" id="tabInvoices" onclick="dashTab('invoices')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15l-2.2-1.3L13.5 22 12 20.7 10.5 22 8.7 20.7 6.5 22 5 20.7V4a1 1 0 0 1 1-1z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Invoices</span>
+        </div>
+      </nav>
+
+      <div class="content">
+        <!-- HUB HOME -->
+        <div id="paneHome">
+          <div class="hero">
+            <div>
+              <div class="eyebrow">Welcome to ICON Lingua</div>
+              <h1 class="hubh1">Language services,<br>made simple.</h1>
+              <p class="herolead">Book interpreters, request translations and manage your invoices, all in one place.</p>
+            </div>
+            <div class="heroart">
+              <svg viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <radialGradient id="gl" cx="50%" cy="42%" r="60%">
+                    <stop offset="0%" stop-color="#dbe9fb"/><stop offset="100%" stop-color="#eaf1fb"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="168" cy="132" r="92" fill="url(#gl)"/>
+                <g fill="none" stroke="#9cc0ea" stroke-width="1.3" opacity="0.9">
+                  <ellipse cx="168" cy="132" rx="92" ry="34"/>
+                  <path d="M76 132a92 92 0 0 1 184 0"/>
+                  <path d="M168 40v184"/>
+                  <ellipse cx="168" cy="132" rx="46" ry="92"/>
+                </g>
+                <g fill="#c3dbf4" opacity="0.85">
+                  <path d="M120 96c10-6 24-4 30 2s2 14-6 16-18-2-24-8-4-6 0-10z"/>
+                  <path d="M190 150c12-3 24 2 26 10s-6 14-16 12-16-8-16-14 0-7 6-8z"/>
+                  <path d="M138 168c8-2 16 1 18 7s-3 10-10 9-12-5-12-10 1-5 4-6z"/>
+                </g>
+                <g>
+                  <g transform="translate(96,66)"><rect width="52" height="46" rx="12" fill="#15356b"/><path d="M14 46l0 14 16-14z" fill="#15356b"/><text x="26" y="32" font-family="Arial" font-size="24" font-weight="700" fill="#fff" text-anchor="middle">A</text></g>
+                  <g transform="translate(206,96)"><rect width="52" height="46" rx="12" fill="#2e7fd0"/><path d="M14 46l0 14 16-14z" fill="#2e7fd0"/><text x="26" y="33" font-family="Arial" font-size="23" font-weight="700" fill="#fff" text-anchor="middle">文</text></g>
+                  <g transform="translate(150,164)"><rect width="52" height="46" rx="12" fill="#2e7fd0"/><path d="M14 46l0 14 16-14z" fill="#2e7fd0"/><text x="26" y="33" font-family="Arial" font-size="23" font-weight="700" fill="#fff" text-anchor="middle">あ</text></g>
+                </g>
+              </svg>
+            </div>
           </div>
-          <div class="hubcard" onclick="newReqService('Document translation')">
-            <div class="hubic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg></div>
-            <div class="hubn">Translation</div>
-            <div class="hubd">Submit documents for translation, certified where needed.</div>
-            <div class="hubgo">Submit documents &rarr;</div>
+
+          <div class="sectlbl">What would you like to do?</div>
+          <div class="hubcards">
+            <div class="hubcard" onclick="newReqService('Interpreter: in person')">
+              <div class="hubic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0"/><rect x="2.5" y="12" width="4" height="7" rx="1.6"/><rect x="17.5" y="12" width="4" height="7" rx="1.6"/><path d="M20 19a3 3 0 0 1-3 3h-3"/></svg></div>
+              <div class="hubn">Request an Interpreter</div>
+              <div class="hubd">Book an interpreter for your meeting, appointment or event.</div>
+              <div class="hubgo">Make a request <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            </div>
+            <div class="hubcard" onclick="newReqService('Document translation')">
+              <div class="hubic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg></div>
+              <div class="hubn">Request a Translation</div>
+              <div class="hubd">Submit documents for translation, certified where needed.</div>
+              <div class="hubgo">Submit documents <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            </div>
+            <div class="hubcard" onclick="dashTab('invoices')">
+              <div class="hubic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15l-2.2-1.3L13.5 22 12 20.7 10.5 22 8.7 20.7 6.5 22 5 20.7V4a1 1 0 0 1 1-1z"/><path d="M9 9h6M9 13h3"/></svg></div>
+              <div class="hubn">View Invoices</div>
+              <div class="hubd">See your outstanding balance and payment history.</div>
+              <div class="hubgo">View invoices <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            </div>
           </div>
         </div>
-        <div class="mybookpanel" onclick="dashTab('bookings')">
-          <div class="hubic" style="background:#e6f5ee;color:#176A48"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-          <div style="flex:1"><div class="hubn">My bookings</div><div class="hubd">Track requests, bookings and completed services in one place.</div></div>
-          <span class="livetag">Live tracking</span>
+
+        <!-- BOOKINGS -->
+        <div id="paneBookings" style="display:none">
+          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">My bookings</h2><button class="btn sm" onclick="showView('newreq')">+ New request</button></div>
+          <p class="dlead">Track each request from submitted through to booked and completed.</p>
+          <div id="bookingList"><div class="dempty">Loading…</div></div>
+        </div>
+        <!-- INVOICES -->
+        <div id="paneInvoices" style="display:none">
+          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">Invoices</h2></div>
+          <p class="dlead">Your running total for this cycle, and your past invoices.</p>
+          <div id="invContent"><div class="dempty">Loading…</div></div>
         </div>
       </div>
-      <!-- BOOKINGS -->
-      <div id="paneBookings" style="display:none">
-        <div class="dhead"><h2>My bookings</h2><button class="btn sm" onclick="showView('newreq')">+ New request</button></div>
-        <p class="dlead">Track each request from submitted through to booked and completed.</p>
-        <div id="bookingList"><div class="dempty">Loading…</div></div>
-      </div>
-      <!-- INVOICES -->
-      <div id="paneInvoices" style="display:none">
-        <div class="dhead"><h2>My invoices</h2></div>
-        <p class="dlead">Your running total for this cycle, and your past invoices.</p>
-        <div id="invContent"><div class="dempty">Loading…</div></div>
-      </div>
     </div>
-  </div>
+  </div><!-- /viewDash -->
+
+  <div class="wrap"><!-- wrap for new-request view -->
 
   <!-- NEW REQUEST -->
   <div class="card auth" id="viewNewreq" style="display:none;max-width:680px">
