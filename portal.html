@@ -8,10 +8,13 @@
 <link rel="preconnect" href="https://pdeeknsjiorzevwyejnv.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="dns-prefetch" href="https://pdeeknsjiorzevwyejnv.supabase.co">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
-  :root{--navy:#0d1b3a;--brand:#15356b;--blue:#185FA5;--line:#e6ecf5;--ink:#15233b;--muted:#64748b;--appbg:#eef3fb}
+  :root{--navy:#092A59;--brand:#15356b;--blue:#0066CC;--line:#e6ecf5;--ink:#0B2D5C;--muted:#45658B;--appbg:#eef3fb}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--appbg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink)}
+  body{margin:0;background:var(--appbg);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;color:var(--ink)}
   .pnav{background:#fff;border-bottom:1px solid var(--line);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
   .plogo{display:inline-flex;align-items:center;text-decoration:none}
   .plogo-img{height:34px;width:auto;display:block}
@@ -69,15 +72,15 @@
   /* ===== Dashboard shell: sidebar + content ===== */
   .shell{display:flex;min-height:calc(100vh - 67px);background:var(--appbg)}
   .side{width:210px;flex:none;background:var(--appbg);border-right:1px solid #dde6f3;padding:22px 12px;display:flex;flex-direction:column}
-  .snav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:13.5px;font-weight:700;color:#5a6782;cursor:pointer;margin-bottom:3px;transition:background .12s,color .12s}
+  .snav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:16px;font-weight:500;color:#45658B;cursor:pointer;margin-bottom:3px;transition:background .12s,color .12s}
   .snav svg{flex:none}
   .snav:hover{background:#e2ebf8;color:var(--brand)}
-  .snav.on{background:#dbe7f8;color:var(--brand)}
+  .snav.on{background:#dbe7f8;color:var(--navy);font-weight:600}
   .content{flex:1;min-width:0;padding:34px 40px;max-width:1120px}
   .hero{display:flex;align-items:flex-start;justify-content:space-between;gap:30px;margin-bottom:38px}
   .eyebrow{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
-  .hubh1{margin:0;font-size:40px;line-height:1.08;font-weight:800;color:var(--navy);letter-spacing:-.01em}
-  .herolead{color:var(--muted);font-size:15.5px;line-height:1.55;margin:18px 0 0;max-width:430px}
+  .hubh1{margin:0;font-size:52px;line-height:1.15;font-weight:700;color:var(--navy);letter-spacing:-1.5px}
+  .herolead{color:var(--muted);font-size:20px;font-weight:400;line-height:1.6;margin:18px 0 0;max-width:460px}
   .heroart{flex:none;width:330px;max-width:38%}
   .heroart svg{width:100%;height:auto;display:block}
   .sectlbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a94a6;margin:0 0 16px}
@@ -85,9 +88,9 @@
   .hubcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s;display:flex;flex-direction:column}
   .hubcard:hover{box-shadow:0 10px 30px rgba(16,24,40,.09);transform:translateY(-2px);border-color:#cfe0f0}
   .hubic{width:54px;height:54px;border-radius:13px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-  .hubn{font-size:20px;font-weight:800;color:var(--navy)}
-  .hubd{color:var(--muted);font-size:13.5px;margin-top:8px;line-height:1.55;flex:1}
-  .hubgo{color:var(--blue);font-weight:800;font-size:14px;margin-top:22px;display:flex;align-items:center;gap:7px}
+  .hubn{font-size:28px;font-weight:700;line-height:1.25;color:var(--navy)}
+  .hubd{color:var(--muted);font-size:17px;margin-top:10px;line-height:1.6;flex:1}
+  .hubgo{color:var(--blue);font-weight:600;font-size:16px;margin-top:22px;display:flex;align-items:center;gap:7px}
   .hubgo svg{transition:transform .15s}
   .hubcard:hover .hubgo svg{transform:translateX(4px)}
   /* sidebar sub-nav (Request an interpreter / translation) */
