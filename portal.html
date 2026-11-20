@@ -164,24 +164,82 @@
   .dhead h2{margin:0;font-size:19px}
   .dlead{color:var(--muted);font-size:13.5px;margin:4px 0 20px}
   .dempty{padding:28px;text-align:center;color:#9aa3b5;font-size:13.5px;border:1px dashed #e0e5ee;border-radius:12px}
-  .bcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
-  .bcard .btop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-  .bttl{font-size:15px;font-weight:800;color:var(--brand)}
-  .bmeta{font-size:12.5px;color:var(--muted);margin-top:3px}
+  /* ===== My bookings: toolbar (filters + search) ===== */
+  .bktools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:2px 0 18px}
+  .bkfilters{display:flex;gap:6px;flex-wrap:wrap}
+  .bkf{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 15px;font-size:13px;font-weight:600;color:#45658B;cursor:pointer;transition:all .12s;display:inline-flex;align-items:center;gap:7px}
+  .bkf:hover{border-color:#c6d6ec}
+  .bkf.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .bkf .cnt{background:#EBF4FD;color:var(--blue);border-radius:10px;padding:1px 7px;font-size:11px;font-weight:800}
+  .bkf.on .cnt{background:rgba(255,255,255,.22);color:#fff}
+  .bksearch{margin-left:auto;position:relative;min-width:220px;flex:0 1 300px}
+  .bksearch svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9aa7bd;pointer-events:none}
+  .bksearch input{width:100%;box-sizing:border-box;padding:9px 12px 9px 36px;border:1px solid var(--line);border-radius:10px;font-size:13.5px;font-family:inherit;background:#fff}
+  .bksearch input:focus{outline:none;border-color:var(--blue)}
+  /* ===== compact collapsible booking cards ===== */
+  .bcard{border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:12px;overflow:hidden;transition:box-shadow .15s,border-color .15s}
+  .bcard.act-req{border-color:#f0d49a;box-shadow:0 0 0 1px #f6e2b8}
+  .bcard.open{box-shadow:0 8px 26px rgba(16,24,40,.08)}
+  .bchead{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer}
+  .bchead:hover{background:#fafcff}
+  .bcmain{flex:1;min-width:0}
+  .bctitle{font-size:15px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .bcsvc{font-size:11px;font-weight:700;color:var(--blue);background:#EBF4FD;border-radius:6px;padding:2px 8px}
+  .bcmeta{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .bcright{display:flex;align-items:center;gap:12px;flex:none}
+  .bcarrow{color:#9aa7bd;transition:transform .2s}
+  .bcard.open .bcarrow{transform:rotate(180deg)}
+  .bcbody{border-top:1px solid #eef2f8;padding:18px;display:none}
+  .bcard.open .bcbody{display:block}
+  /* status badges */
   .bpill{border-radius:20px;padding:4px 12px;font-size:11px;font-weight:800;white-space:nowrap}
-  .bp-req{background:#FFF4E0;color:#9A6008}.bp-acc{background:#E8F1FB;color:#185FA5}.bp-book{background:#E6F5EE;color:#176A48}.bp-done{background:#EEF1F6;color:#64748b}.bp-dec{background:#FEECEB;color:#B42318}
-  .track{display:flex;align-items:center;margin-top:14px}
-  .step{flex:1;text-align:center;position:relative;font-size:10.5px;font-weight:700;color:#9aa3b5}
-  .step .dot{width:14px;height:14px;border-radius:50%;background:#dfe5ee;margin:0 auto 5px;position:relative;z-index:2}
+  .bp-amber{background:#FFF4E0;color:#9A6008}.bp-blue{background:#E8F1FB;color:#185FA5}.bp-green{background:#E6F5EE;color:#176A48}.bp-grey{background:#EEF1F6;color:#64748b}.bp-red{background:#FEECEB;color:#B42318}
+  /* compact 4-stage tracker */
+  .track{display:flex;align-items:flex-start;margin:4px 0 18px}
+  .step{flex:1;text-align:center;position:relative;font-size:11px;font-weight:700;color:#9aa3b5}
+  .step .dot{width:14px;height:14px;border-radius:50%;background:#dfe5ee;margin:0 auto 7px;position:relative;z-index:2}
   .step.done .dot{background:#176A48}.step.done{color:#176A48}
   .step.now .dot{background:#185FA5;box-shadow:0 0 0 4px #E8F1FB}.step.now{color:#185FA5}
-  .step:not(:last-child):after{content:"";position:absolute;top:7px;left:50%;width:100%;height:2px;background:#e3e8f0;z-index:1}
+  .step.cancel .dot{background:#B42318}.step.cancel{color:#B42318}
+  .step:not(:last-child):after{content:"";position:absolute;top:6px;left:50%;width:100%;height:2px;background:#e3e8f0;z-index:1}
   .step.done:not(:last-child):after{background:#176A48}
-  .offer{margin-top:12px;background:#f7f9fc;border:1px solid #e8ecf3;border-radius:10px;padding:11px 14px;font-size:13px;color:#334155}
-  .offer b{color:#15233b}
-  .offer .act{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
-  .offer .act button{border:none;border-radius:8px;padding:8px 14px;font-weight:700;font-size:12.5px;cursor:pointer}
-  .acc-y{background:#176A48;color:#fff}.acc-n{background:#fff;color:#B42318;border:1px solid #e6b4ae!important}
+  /* quotation panel */
+  .quote{margin-top:4px;background:#F7FAFC;border:1px solid #e3ebf4;border-radius:12px;padding:16px 18px}
+  .quote .qlbl{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#8a94a6}
+  .quote .qprice{font-size:26px;font-weight:800;color:var(--navy);margin:4px 0 2px}
+  .quote .qvat{font-size:12px;color:var(--muted)}
+  .quote .qact{margin-top:14px;display:flex;gap:9px;flex-wrap:wrap}
+  .qbtn{border-radius:9px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;border:1.5px solid transparent;display:inline-flex;align-items:center;gap:7px}
+  .qbtn:disabled{opacity:.5;cursor:default}
+  .qb-accept{background:#176A48;color:#fff}.qb-accept:hover{background:#125a3d}
+  .qb-propose{background:#fff;color:var(--blue);border-color:#b9d3ef}.qb-propose:hover{background:#f2f8fd}
+  .qb-decline{background:#fff;color:#B42318;border-color:#e6b4ae}.qb-decline:hover{background:#fdf3f2}
+  .qnote{font-size:13px;color:#475467;background:#F7FAFC;border:1px solid #e3ebf4;border-radius:12px;padding:12px 16px;margin-top:4px}
+  .qnote.ok{color:#176A48;border-color:#cce7d8;background:#f2fbf6}
+  .qnote.wait{color:#9A6008;border-color:#f0dcae;background:#fffaf0}
+  /* inline propose-rate form */
+  .pform{margin-top:12px;background:#fff;border:1px solid #e3ebf4;border-radius:12px;padding:16px}
+  .pform label{display:block;font-size:12px;font-weight:700;color:#475467;margin-bottom:6px}
+  .pform .row{display:flex;gap:10px;align-items:center}
+  .pform input,.pform textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #d7dce5;border-radius:9px;font-size:14px;font-family:inherit}
+  .pform textarea{min-height:64px;margin-top:4px}
+  .pform .pfact{display:flex;gap:9px;margin-top:12px}
+  /* activity history */
+  .actwrap{margin-top:14px;border-top:1px solid #eef2f8;padding-top:12px}
+  .actbtn{background:none;border:none;color:var(--brand);font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:0}
+  .actbtn svg{transition:transform .2s}
+  .actbtn.open svg{transform:rotate(180deg)}
+  .actlist{margin-top:12px;display:none}
+  .actlist.show{display:block}
+  .actrow{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f3f6fa}
+  .actrow:last-child{border-bottom:none}
+  .actdot{width:9px;height:9px;border-radius:50%;background:#c6d2e2;margin-top:5px;flex:none}
+  .actrow.client .actdot{background:#185FA5}.actrow.icon .actdot{background:#176A48}
+  .actwho{font-size:12px;font-weight:700;color:var(--navy)}
+  .actwhen{font-size:11.5px;color:#9aa7bd;font-weight:500}
+  .actmsg{font-size:13px;color:#475467;margin-top:2px}
+  .interp-line{font-size:13px;color:#176A48;margin-top:10px}
+  @media(max-width:620px){ .bksearch{margin-left:0;flex:1 1 100%;order:-1} .bkf{padding:6px 12px;font-size:12.5px} .quote .qact{flex-direction:column} .qbtn{justify-content:center} }
   .rback{font-size:12.5px;color:var(--muted);text-decoration:none;font-weight:700;cursor:pointer}
   .who{background:#f7f9fc;border:1px solid #e8ecf3;border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:13px;color:#475467}
   .who b{color:#15233b}
@@ -349,8 +407,20 @@
 
         <!-- BOOKINGS -->
         <div id="paneBookings" style="display:none">
-          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">My bookings</h2><button class="btn sm" onclick="showView('newreq')">+ New request</button></div>
-          <p class="dlead">Track each request from submitted through to booked and completed.</p>
+          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">My bookings</h2><button class="btn sm" onclick="newReqService('Interpreter: in person')">+ New request</button></div>
+          <p class="dlead">Track your requests, agree rates and manage your bookings in one place.</p>
+          <div class="bktools">
+            <div class="bkfilters" id="bkFilters">
+              <div class="bkf on" data-f="all" onclick="setBookingFilter('all')">All <span class="cnt" id="cntAll">0</span></div>
+              <div class="bkf" data-f="action" onclick="setBookingFilter('action')">Action required <span class="cnt" id="cntAction">0</span></div>
+              <div class="bkf" data-f="progress" onclick="setBookingFilter('progress')">In progress <span class="cnt" id="cntProgress">0</span></div>
+              <div class="bkf" data-f="completed" onclick="setBookingFilter('completed')">Completed <span class="cnt" id="cntCompleted">0</span></div>
+            </div>
+            <div class="bksearch">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="bkSearch" type="search" placeholder="Search reference, language or PO number" oninput="renderBookings()">
+            </div>
+          </div>
           <div id="bookingList"><div class="dempty">Loading…</div></div>
         </div>
         <!-- INVOICES -->
@@ -843,86 +913,267 @@ function downloadInvoice(id){
 function fmtD(d){ if(!d) return ''; var x=new Date(d); if(isNaN(x)) return d; var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return x.getDate()+' '+M[x.getMonth()]; }
 function fmtDT(iso){ if(!iso) return ''; var x=new Date(iso); if(isNaN(x)) return ''; return fmtD(iso); }
 
-var STEP_ORDER=['requested','accepted','finding','booked','completed'];
-function bookingTrack(status){
-  if(status==='declined') return '';
-  var labels={requested:'Requested',accepted:'Accepted',finding:'Finding interpreter',booked:'Booked',completed:'Completed'};
-  // awaiting_client sits between requested and accepted visually
-  var effective = status==='awaiting_client' ? 'requested' : status;
-  var idx=STEP_ORDER.indexOf(effective); if(idx<0) idx=0;
-  return '<div class="track">'+STEP_ORDER.map(function(s,i){
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function gbp(n){ return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+/* ---- map internal status/rate to the 4 client-facing stages ---- */
+var CLIENT_STAGES=['Requested','Reviewing','Confirmed','Completed'];
+function clientStageIndex(b){
+  if(b.status==='completed') return 3;
+  if(b.status==='booked') return 2;              // Confirmed
+  if(b.status==='accepted'||b.status==='finding') return 1; // Reviewing (arranging)
+  if(b.status==='awaiting_client') return 1;     // Reviewing (quote out)
+  if(b.status==='requested' && (b.rate_status==='countered_client'||b.agreed_rate!=null)) return 1; // Reviewing (negotiating)
+  return 0;                                       // Requested
+}
+function isCancelled(b){ return b.status==='declined'; }
+// the single badge the client sees — action-first
+function clientBadge(b){
+  if(isCancelled(b)) return ['bp-grey','Cancelled'];
+  if(b.status==='completed') return ['bp-green','Completed'];
+  if(b.status==='booked') return ['bp-green','Confirmed'];
+  if(b.status==='awaiting_client' && b.agreed_rate!=null && b.rate_status!=='accepted') return ['bp-amber','Awaiting your response'];
+  if(b.rate_status==='accepted' && b.status!=='booked' && b.status!=='completed') return ['bp-blue','Reviewing'];
+  if(b.rate_status==='countered_client') return ['bp-blue','Awaiting ICON Lingua'];
+  if(b.status==='accepted'||b.status==='finding') return ['bp-blue','Reviewing'];
+  if(b.status==='requested') return ['bp-amber','Requested'];
+  return ['bp-blue','Reviewing'];
+}
+// does this booking need the client to act right now?
+function needsClientAction(b){ return b.status==='awaiting_client' && b.agreed_rate!=null && b.rate_status!=='accepted'; }
+function isCompletedBk(b){ return b.status==='completed'; }
+function isInProgress(b){ return !isCompletedBk(b) && !isCancelled(b); }
+
+function clientTrack(b){
+  if(isCancelled(b)) return '<div class="track"><div class="step cancel"><div class="dot"></div>Cancelled</div></div>';
+  var idx=clientStageIndex(b);
+  return '<div class="track">'+CLIENT_STAGES.map(function(s,i){
     var cls = i<idx?'step done':(i===idx?'step now':'step');
-    return '<div class="'+cls+'"><div class="dot"></div>'+labels[s]+'</div>';
+    return '<div class="'+cls+'"><div class="dot"></div>'+s+'</div>';
   }).join('')+'</div>';
 }
-function bookingPill(status){
-  var m={requested:['bp-req','Requested'],awaiting_client:['bp-req','Your response needed'],accepted:['bp-acc','Accepted'],finding:['bp-acc','Finding interpreter'],booked:['bp-book','Booked'],completed:['bp-done','Completed'],declined:['bp-dec','Declined']};
-  var x=m[status]||m.requested; return '<span class="bpill '+x[0]+'">'+x[1]+'</span>';
+
+var _bkFilter='all';
+var _openBooking=null;   // id of the currently expanded card (one at a time)
+function setBookingFilter(f){
+  _bkFilter=f;
+  document.querySelectorAll('.bkf').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-f')===f); });
+  renderBookings();
 }
-function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function toggleBooking(id){
+  _openBooking = (_openBooking===id ? null : id);
+  renderBookings();
+}
 
 async function loadBookings(){
   var box=el('bookingList'); if(!box) return;
-  if(!box.innerHTML) box.innerHTML='<div class="dempty">Loading…</div>';
+  if(!box.innerHTML || box.querySelector('.dempty')) box.innerHTML='<div class="dempty">Loading…</div>';
   try{
     var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
     if(r.error){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; return; }
     _bookingsCache=r.data||[];
-    if(_pSeen===null){ _pSeen=new Set(pNeedsResp(r.data||[])); } // baseline so we don't chime for existing quotes
-    renderBookings(r.data||[]);
-  }catch(e){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; }
-}
-function renderBookings(list){
-  var box=el('bookingList'); if(!box) return;
-  try{
-    if(!list.length){ box.innerHTML='<div class="dempty">No bookings yet. Click “+ New request” to make your first one.</div>'; return; }
-    box.innerHTML=list.map(function(b){
-      var langPair=(b.from_lang||b.to_lang)?(esc(b.from_lang||'?')+' → '+esc(b.to_lang||'?')):'';
-      var when = b.booking_date ? (' · '+fmtD(b.booking_date)+(b.booking_time?(' '+b.booking_time):'')) : '';
-      // negotiation + status detail the customer sees
-      var offerHtml='';
-      var gbp=function(n){return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});};
-      if(b.status==='awaiting_client' && b.agreed_rate!=null){
-        // we countered: client accepts, declines, or counters back
-        offerHtml='<div class="offer">We\'ve quoted <b>'+gbp(b.agreed_rate)+'</b> for this booking.'
-          +'<div class="act"><button class="acc-y" onclick="acceptQuote('+b.id+')">Accept '+gbp(b.agreed_rate)+'</button>'
-          +'<button class="acc-n" onclick="counterBack('+b.id+')" style="color:#9A6008;border-color:#e8cfa0">Counter back</button>'
-          +'<button class="acc-n" onclick="declineQuote('+b.id+')">Decline</button></div></div>';
-      } else if(b.rate_status==='accepted' && b.agreed_rate!=null){
-        offerHtml='<div class="offer" style="color:#176A48">Agreed rate: <b style="color:#176A48">'+gbp(b.agreed_rate)+'</b></div>';
-      } else if(b.rate_status==='countered_client' && b.agreed_rate!=null){
-        offerHtml='<div class="offer" style="color:#9A6008">Your counter of <b>'+gbp(b.agreed_rate)+'</b> is with our team.</div>';
-      }
-      var interp = (b.status==='booked'||b.status==='completed') && b.interpreter_name ? ('<div class="bmeta" style="margin-top:6px">Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>') : '';
-      return '<div class="bcard">'
-        +'<div class="btop"><div><div class="bttl">'+esc(b.service||'Request')+(langPair?(' · '+langPair):'')+'</div>'
-        +'<div class="bmeta">Requested '+fmtDT(b.created_at)+when+(b.po_number?(' · PO '+esc(b.po_number)):'')+'</div></div>'
-        +bookingPill(b.status)+'</div>'
-        +(b.status_note?('<div class="bmeta" style="margin-top:8px">'+esc(b.status_note)+'</div>'):'')
-        +bookingTrack(b.status)
-        +interp
-        +offerHtml
-        +'</div>';
-    }).join('');
+    if(_pSeen===null){ _pSeen=new Set(pNeedsResp(r.data||[])); }
+    renderBookings();
   }catch(e){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; }
 }
 
+function bookingMatchesSearch(b,q){
+  if(!q) return true;
+  var hay=[b.po_number,b.from_lang,b.to_lang,b.service,('BK'+b.id),String(b.id)].join(' ').toLowerCase();
+  return hay.indexOf(q)>-1;
+}
+function bookingMatchesFilter(b){
+  if(_bkFilter==='action') return needsClientAction(b);
+  if(_bkFilter==='progress') return isInProgress(b);
+  if(_bkFilter==='completed') return isCompletedBk(b);
+  return true; // all
+}
+
+function renderBookings(listArg){
+  var box=el('bookingList'); if(!box) return;
+  var all = listArg || _bookingsCache || [];
+  _bookingsCache = all;
+  // update filter counts
+  try{
+    el('cntAll').textContent=all.length;
+    el('cntAction').textContent=all.filter(needsClientAction).length;
+    el('cntProgress').textContent=all.filter(isInProgress).length;
+    el('cntCompleted').textContent=all.filter(isCompletedBk).length;
+  }catch(e){}
+  var q=(el('bkSearch')&&el('bkSearch').value||'').trim().toLowerCase();
+  var list=all.filter(function(b){ return bookingMatchesFilter(b) && bookingMatchesSearch(b,q); });
+  // action-required first, then newest
+  list.sort(function(a,b){
+    var aa=needsClientAction(a)?0:1, bb=needsClientAction(b)?0:1;
+    if(aa!==bb) return aa-bb;
+    return new Date(b.created_at)-new Date(a.created_at);
+  });
+  if(!list.length){ box.innerHTML='<div class="dempty">'+(all.length?'No bookings match this view.':'No bookings yet. Click “+ New request” to make your first one.')+'</div>'; return; }
+  box.innerHTML=list.map(bookingCard).join('');
+}
+
+function fmtRef(b){ return 'BK'+String(b.id).padStart(4,'0'); }
+
+function bookingCard(b){
+  var langPair=(b.from_lang||b.to_lang)?(esc(b.from_lang||'?')+' → '+esc(b.to_lang||'?')):'';
+  var svc=esc(b.service||'Request');
+  var badge=clientBadge(b);
+  var open=(_openBooking===b.id);
+  var actReq=needsClientAction(b);
+  var dateLine = b.booking_date ? (fmtD(b.booking_date)+(b.booking_time?(', '+b.booking_time):'')) : '';
+  var metaBits=[fmtRef(b)]; if(b.po_number) metaBits.push('PO '+esc(b.po_number)); if(dateLine) metaBits.push(dateLine);
+  // header (always visible)
+  var head='<div class="bchead" onclick="toggleBooking('+b.id+')">'
+    +'<div class="bcmain"><div class="bctitle"><span class="bcsvc">'+svc+'</span>'+(langPair?('<span>'+langPair+'</span>'):'')+'</div>'
+    +'<div class="bcmeta">'+metaBits.join(' · ')+'</div></div>'
+    +'<div class="bcright"><span class="bpill '+badge[0]+'">'+badge[1]+'</span>'
+    +'<svg class="bcarrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div></div>';
+  if(!open) return '<div class="bcard'+(actReq?' act-req':'')+'">'+head+'</div>';
+  // expanded body
+  var body='<div class="bcbody">'+clientTrack(b)+quotationPanel(b);
+  if((b.status==='booked'||b.status==='completed') && b.interpreter_name){
+    body+='<div class="interp-line">'+(b.status==='completed'?'Delivered':'Confirmed')+' · Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
+  }
+  body+=activitySection(b)+'</div>';
+  return '<div class="bcard open'+(actReq?' act-req':'')+'">'+head+body+'</div>';
+}
+
+// ---- quotation panel inside an expanded card ----
+function quotationPanel(b){
+  // client proposed and waiting on us
+  if(b.rate_status==='countered_client' && b.agreed_rate!=null){
+    return '<div class="qnote wait">You proposed <b>'+gbp(b.agreed_rate)+'</b>. Awaiting ICON Lingua.</div>';
+  }
+  // agreed
+  if(b.rate_status==='accepted' && b.agreed_rate!=null){
+    return '<div class="qnote ok">Rate agreed: <b>'+gbp(b.agreed_rate)+'</b>'+(b.status==='booked'||b.status==='completed'?'':' · We\'ll confirm the arrangements shortly.')+'</div>';
+  }
+  // active quote from us needing the client's response
+  if(b.status==='awaiting_client' && b.agreed_rate!=null){
+    return '<div class="quote">'
+      +'<div class="qlbl">Quotation from ICON Lingua</div>'
+      +'<div class="qprice">'+gbp(b.agreed_rate)+'</div>'
+      +'<div class="qvat">VAT excluded. We will issue a VAT invoice on completion.</div>'
+      +'<div class="qact">'
+        +'<button class="qbtn qb-accept" onclick="acceptQuote('+b.id+')">Accept quote</button>'
+        +'<button class="qbtn qb-propose" onclick="showPropose('+b.id+')">Propose a rate</button>'
+        +'<button class="qbtn qb-decline" onclick="declineQuote('+b.id+')">Decline</button>'
+      +'</div>'
+      +'<div id="pform'+b.id+'"></div>'
+      +'</div>';
+  }
+  // no quote yet
+  if(b.status==='requested'){
+    return '<div class="qnote">Your request has been received. ICON Lingua will review it and send a quotation.</div>';
+  }
+  if(b.status==='declined'){
+    return '<div class="qnote">This booking was cancelled.'+(b.status_note?(' '+esc(b.status_note)):'')+'</div>';
+  }
+  return '';
+}
+
+// ---- inline "propose a rate" form ----
+function showPropose(id){
+  var holder=el('pform'+id); if(!holder) return;
+  if(holder.innerHTML){ holder.innerHTML=''; return; }
+  holder.innerHTML='<div class="pform">'
+    +'<label>Your proposed rate (£)</label>'
+    +'<div class="row"><input id="prop'+id+'" type="number" min="0" step="0.01" placeholder="0.00"></div>'
+    +'<label style="margin-top:12px">Message (optional)</label>'
+    +'<textarea id="propmsg'+id+'" placeholder="Anything we should know about your proposal"></textarea>'
+    +'<div class="pfact">'
+      +'<button class="qbtn qb-propose" onclick="submitPropose('+id+')">Submit proposal</button>'
+      +'<button class="qbtn" style="background:#fff;color:#64748b;border-color:#dfe5ee" onclick="showPropose('+id+')">Cancel</button>'
+    +'</div></div>';
+  try{ el('prop'+id).focus(); }catch(e){}
+}
+
+/* ---- activity history (persistent paper trail) ---- */
+var _bkEvents={};  // booking_id -> [events]
+var _actOpen={};   // booking_id -> bool
+async function logEvent(b, type, amount, message){
+  var row={ booking_id:b.id, customer_id:b.customer_id, actor:'client',
+            actor_name:(CURRENT_CUST&&CURRENT_CUST.name)||'Client',
+            event_type:type, amount:(amount==null?null:amount), message:message };
+  try{ await sb.from('booking_events').insert(row); }catch(e){}
+}
+async function loadEvents(id){
+  try{
+    var r=await sb.from('booking_events').select('*').eq('booking_id',id).order('created_at',{ascending:true});
+    _bkEvents[id]=r.data||[];
+  }catch(e){ _bkEvents[id]=[]; }
+}
+function activitySection(b){
+  var opened=_actOpen[b.id];
+  var rows='';
+  var evs=_bkEvents[b.id];
+  if(opened){
+    if(evs && evs.length){
+      rows=evs.map(function(e){
+        var who=(e.actor==='client')?( (e.actor_name||'You') ):'ICON Lingua';
+        return '<div class="actrow '+(e.actor==='client'?'client':'icon')+'"><div class="actdot"></div>'
+          +'<div><div class="actwho">'+esc(who)+' <span class="actwhen">· '+fmtDT(e.created_at)+'</span></div>'
+          +'<div class="actmsg">'+esc(e.message||'')+'</div></div></div>';
+      }).join('');
+    } else {
+      rows='<div class="actmsg" style="padding:6px 0;color:#9aa7bd">No activity recorded yet.</div>';
+    }
+  }
+  return '<div class="actwrap">'
+    +'<button class="actbtn'+(opened?' open':'')+'" onclick="toggleActivity('+b.id+')">View activity '
+    +'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>'
+    +'<div class="actlist'+(opened?' show':'')+'">'+rows+'</div></div>';
+}
+async function toggleActivity(id){
+  _actOpen[id]=!_actOpen[id];
+  if(_actOpen[id] && !_bkEvents[id]){ await loadEvents(id); }
+  renderBookings();
+}
+
+/* ---- quote actions (with confirm dialogs + persistent history) ---- */
+var _bkBusy={};  // prevent duplicate clicks / superseded actions
 async function acceptQuote(id){
-  try{ await sb.from('portal_bookings').update({rate_status:'accepted', status:'accepted', last_offer_by:'client'}).eq('id',id); }catch(e){}
-  loadBookings();
+  if(_bkBusy[id]) return;
+  var b=(_bookingsCache||[]).find(function(x){return x.id===id;}); if(!b) return;
+  if(!(b.status==='awaiting_client' && b.agreed_rate!=null)){ loadBookings(); return; } // superseded
+  if(!confirm('Are you sure you want to accept the quotation of '+gbp(b.agreed_rate)+'?')) return;
+  _bkBusy[id]=true;
+  try{
+    // accept the rate, but do NOT auto-confirm the booking — ICON Lingua confirms arrangements
+    await sb.from('portal_bookings').update({rate_status:'accepted', last_offer_by:'client'}).eq('id',id).eq('status','awaiting_client');
+    await logEvent(b,'accepted',b.agreed_rate,'Quotation accepted: '+gbp(b.agreed_rate)+'.');
+  }catch(e){}
+  _bkBusy[id]=false; _bkEvents[id]=null;
+  await loadBookings();
 }
 async function declineQuote(id){
-  if(!confirm('Decline this quote and cancel the booking?')) return;
-  try{ await sb.from('portal_bookings').update({rate_status:'rejected', status:'declined'}).eq('id',id); }catch(e){}
-  loadBookings();
+  if(_bkBusy[id]) return;
+  var b=(_bookingsCache||[]).find(function(x){return x.id===id;}); if(!b) return;
+  if(!confirm('Decline this quotation? You can add a reason on the next line.')) return;
+  var reason=prompt('Reason for declining (optional):')||'';
+  _bkBusy[id]=true;
+  try{
+    await sb.from('portal_bookings').update({rate_status:'rejected', status:'declined', status_note:(reason?('Declined by client: '+reason):'Declined by client')}).eq('id',id);
+    await logEvent(b,'declined',null,'Quotation declined.'+(reason?(' Reason: '+reason):''));
+  }catch(e){}
+  _bkBusy[id]=false; _bkEvents[id]=null;
+  await loadBookings();
 }
-async function counterBack(id){
-  var v=prompt('Enter the price you\'d like to propose (£):');
-  if(v===null) return;
-  var amt=parseFloat(v); if(isNaN(amt)||amt<0){ alert('Enter a valid amount.'); return; }
-  // send it back to ICON GRP to accept or counter again
-  try{ await sb.from('portal_bookings').update({agreed_rate:amt, client_offer:amt, rate_status:'countered_client', status:'requested', last_offer_by:'client'}).eq('id',id); }catch(e){}
-  loadBookings();
+async function submitPropose(id){
+  if(_bkBusy[id]) return;
+  var b=(_bookingsCache||[]).find(function(x){return x.id===id;}); if(!b) return;
+  if(!(b.status==='awaiting_client' && b.agreed_rate!=null)){ loadBookings(); return; } // superseded
+  var v=el('prop'+id); var amt=parseFloat(v&&v.value);
+  if(isNaN(amt)||amt<0){ alert('Please enter a valid amount.'); return; }
+  var msg=(el('propmsg'+id)&&el('propmsg'+id).value||'').trim();
+  _bkBusy[id]=true;
+  try{
+    // send back to ICON GRP; keep status so the Hub treats it as a live counter needing their response
+    await sb.from('portal_bookings').update({agreed_rate:amt, client_offer:amt, rate_status:'countered_client', status:'requested', last_offer_by:'client'}).eq('id',id);
+    await logEvent(b,'counter',amt,'Counteroffer submitted: '+gbp(amt)+'.'+(msg?(' Message: '+msg):''));
+  }catch(e){}
+  _bkBusy[id]=false; _bkEvents[id]=null;
+  await loadBookings();
 }
 
 function fillLangs(sel){ sel.innerHTML='<option value="">Select...</option>'+LANGS.map(function(l){return '<option>'+l+'</option>';}).join(''); }
@@ -1066,8 +1317,10 @@ async function submitRequest(){
     po_number:po, client_offer:offer, rate_status:'pending', status:'requested'
   };
   try{
-    var r=await sb.from('portal_bookings').insert(row);
+    var r=await sb.from('portal_bookings').insert(row).select();
     if(r.error){ showMsg('nrMsg','err','Could not send: '+r.error.message); btn.disabled=false; btn.innerHTML=_h; return; }
+    // record the first entry in the booking's activity history
+    try{ var nb=(r.data&&r.data[0]); if(nb){ await logEvent(nb,'requested',null,'Booking request submitted.'); } }catch(e){}
     btn.disabled=false; btn.innerHTML=_h;
     dashTab('bookings'); loadBookings();
   }catch(e){ showMsg('nrMsg','err','Something went wrong. Please try again.'); btn.disabled=false; btn.innerHTML=_h; }
