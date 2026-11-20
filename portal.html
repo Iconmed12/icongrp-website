@@ -664,16 +664,61 @@ async function refreshState(){
   else { showView('pending'); }
 }
 
-// quietly refresh the open tab so Hub changes appear without a manual reload
-var _portalPoll=null;
+// ---- notification chime (WebAudio, no file) ----
+var _pAudio=null, _pSoundReady=false;
+document.addEventListener('click', function(){ if(_pSoundReady) return; try{ _pAudio=new (window.AudioContext||window.webkitAudioContext)(); _pSoundReady=true; }catch(e){} }, {once:true});
+function pChime(){
+  try{
+    if(!_pAudio){ _pAudio=new (window.AudioContext||window.webkitAudioContext)(); }
+    var ctx=_pAudio; if(ctx.state==='suspended') ctx.resume();
+    var now=ctx.currentTime;
+    [[880,0],[1174.7,0.14]].forEach(function(p){
+      var o=ctx.createOscillator(), g=ctx.createGain();
+      o.type='sine'; o.frequency.value=p[0]; o.connect(g); g.connect(ctx.destination);
+      var t=now+p[1];
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.25,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.35);
+      o.start(t); o.stop(t+0.4);
+    });
+  }catch(e){}
+}
+// bookings where the CLIENT now needs to respond (Hub quoted / countered back)
+function pNeedsResp(list){
+  var ids=[];
+  (list||[]).forEach(function(b){
+    if(b.status==='awaiting_client' && b.agreed_rate!=null) ids.push(b.id);
+  });
+  return ids;
+}
+var _pSeen=null;
+function pCheckAlerts(list){
+  var keys=pNeedsResp(list);
+  if(_pSeen===null){ _pSeen=new Set(keys); return; } // baseline, no sound on first load
+  var fresh=0; keys.forEach(function(k){ if(!_pSeen.has(k)) fresh++; });
+  if(fresh>0){ pChime(); }
+  _pSeen=new Set(keys);
+}
+
+// quietly refresh the open tab so Hub changes appear without a manual reload,
+// and chime when the Hub sends back a quote needing the client's response
+var _portalPoll=null, _bookingsCache=[];
 function startPortalPoll(){
   if(_portalPoll) clearInterval(_portalPoll);
-  _portalPoll=setInterval(function(){
+  _portalPoll=setInterval(async function(){
     if(document.visibilityState!=='visible') return;
     if(el('viewDash').style.display==='none') return;
-    if(el('paneBookings').style.display!=='none') loadBookings();
-    else if(el('paneInvoices').style.display!=='none') loadInvoices();
-  }, 15000);
+    // always check bookings for new quotes (for the chime), even if that pane isn't open
+    try{
+      var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
+      if(!r.error && r.data){
+        _bookingsCache=r.data;
+        pCheckAlerts(r.data);
+        if(el('paneBookings').style.display!=='none') renderBookings(r.data);
+      }
+    }catch(e){}
+    if(el('paneInvoices').style.display!=='none') loadInvoices();
+  }, 10000);
 }
 
 // ===== Dashboard / bookings =====
@@ -822,6 +867,8 @@ async function loadBookings(){
   try{
     var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
     if(r.error){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; return; }
+    _bookingsCache=r.data||[];
+    if(_pSeen===null){ _pSeen=new Set(pNeedsResp(r.data||[])); } // baseline so we don't chime for existing quotes
     renderBookings(r.data||[]);
   }catch(e){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; }
 }
