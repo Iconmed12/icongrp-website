@@ -996,6 +996,22 @@ function fmtDT(iso){ if(!iso) return ''; var x=new Date(iso); if(isNaN(x)) retur
 
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 function gbp(n){ return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+// ---- VAT (standard 20%) ----
+var VAT_RATE=0.20;
+function vatBreakdown(price, mode){
+  price=Number(price||0); mode=mode||'excl';
+  if(mode==='none') return {mode:'none', net:price, vat:0, gross:price};
+  if(mode==='incl'){ var net=price/(1+VAT_RATE); return {mode:'incl', net:net, vat:price-net, gross:price}; }
+  return {mode:'excl', net:price, vat:price*VAT_RATE, gross:price*(1+VAT_RATE)};
+}
+function vatLine(price, mode){
+  var b=vatBreakdown(price, mode);
+  if(b.mode==='none') return 'No VAT applies to this booking.';
+  if(b.mode==='incl') return 'Includes '+gbp(b.vat)+' VAT ('+gbp(b.net)+' + VAT). Total '+gbp(b.gross)+'.';
+  return gbp(b.net)+' + '+gbp(b.vat)+' VAT = '+gbp(b.gross)+' total.';
+}
+// the headline figure to show the customer (gross when VAT is added)
+function priceWithVat(price, mode){ var b=vatBreakdown(price, mode); return gbp(b.gross); }
 
 /* ---- map internal status/rate to the 4 client-facing stages ---- */
 var CLIENT_STAGES=['Requested','Reviewing','Finding interpreter','Confirmed','Completed'];
@@ -1182,14 +1198,14 @@ function quotationPanel(b){
     else if(b.status==='accepted') tail=' · We\'re arranging your booking.';
     else if(b.status==='booked'||b.status==='completed') tail='';
     else tail=' · We\'ll confirm the arrangements shortly.';
-    return '<div class="qnote ok">Rate agreed: <b>'+gbp(b.agreed_rate)+'</b>'+tail+'</div>';
+    return '<div class="qnote ok">Rate agreed: <b>'+priceWithVat(b.agreed_rate, b.vat_mode)+'</b> <span style="font-weight:500;color:#45658B">('+vatLine(b.agreed_rate, b.vat_mode)+')</span>'+tail+'</div>';
   }
   // active quote from us needing the client's response
   if(b.status==='awaiting_client' && b.agreed_rate!=null){
     return '<div class="quote">'
       +'<div class="qlbl">Quotation from ICON Lingua</div>'
-      +'<div class="qprice">'+gbp(b.agreed_rate)+'</div>'
-      +'<div class="qvat">VAT excluded. We will issue a VAT invoice on completion.</div>'
+      +'<div class="qprice">'+priceWithVat(b.agreed_rate, b.vat_mode)+'</div>'
+      +'<div class="qvat">'+vatLine(b.agreed_rate, b.vat_mode)+'</div>'
       +'<div class="qact">'
         +'<button class="qbtn qb-accept" onclick="acceptQuote('+b.id+')">Accept quote</button>'
         +'<button class="qbtn qb-propose" onclick="showPropose('+b.id+')">Propose a rate</button>'
@@ -1485,7 +1501,7 @@ function openConfirmation(id){
   var remote=/video|telephone|phone/i.test(svc);
   var loc = remote ? 'Remote (joining details sent separately)' : (b.location || 'To be confirmed');
   var dt = b.booking_date ? (new Date(b.booking_date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+(b.booking_time?(', '+b.booking_time):'')) : 'To be confirmed';
-  var rate = b.agreed_rate!=null ? gbp(b.agreed_rate) : 'To be confirmed';
+  var rate = b.agreed_rate!=null ? priceWithVat(b.agreed_rate, b.vat_mode) : 'To be confirmed';
   var rows=[
     ['Service', esc(fmt)],
     ['Languages', esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))],
@@ -1527,7 +1543,7 @@ function openConfirmation(id){
     +'<div class="body"><div class="ttl">Confirmed booking details</div>'
     +'<div class="grid">'+cells+'</div>'
     +'<div class="rate"><div class="k">Agreed rate</div><div class="v">'+rate+'</div></div>'
-    +'<div class="note">Rate shown excludes VAT. A VAT invoice will be issued on completion.</div>'
+    +(b.agreed_rate!=null?('<div class="note">'+vatLine(b.agreed_rate, b.vat_mode)+' A VAT invoice will be issued on completion.</div>'):'')
     +'<div class="foot"><span>ICON GRP · info@icongrp.co.uk · 01268 20 30 10</span><span>Issued '+issued+'</span></div>'
     +'</div></div>'
     +'<div class="btns"><button class="cl" onclick="window.close()">Close</button><button class="pr" onclick="window.print()">Save as PDF</button></div>'
