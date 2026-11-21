@@ -1187,8 +1187,10 @@ async function acceptQuote(id){
   if(!confirm('Are you sure you want to accept the quotation of '+gbp(b.agreed_rate)+'?')) return;
   _bkBusy[id]=true;
   try{
-    // accept the rate, but do NOT auto-confirm the booking — ICON Lingua confirms arrangements
-    await sb.from('portal_bookings').update({rate_status:'accepted', last_offer_by:'client'}).eq('id',id).eq('status','awaiting_client');
+    // accept the rate and advance to the 'accepted' stage so the Hub can start
+    // finding an interpreter. The booking is NOT auto-confirmed — ICON Lingua
+    // confirms arrangements. (Client still sees "Reviewing" for 'accepted'.)
+    await sb.from('portal_bookings').update({status:'accepted', rate_status:'accepted', last_offer_by:'client'}).eq('id',id).eq('status','awaiting_client');
     await logEvent(b,'accepted',b.agreed_rate,'Quotation accepted: '+gbp(b.agreed_rate)+'.');
   }catch(e){}
   _bkBusy[id]=false; _bkEvents[id]=null;
