@@ -911,7 +911,7 @@ function startPortalPoll(){
         if(el('paneBookings').style.display!=='none') renderBookings(r.data);
       }
     }catch(e){}
-    if(el('paneInvoices').style.display!=='none') loadInvoices();
+    if(el('paneInvoices').style.display!=='none') loadInvoices(true);
   }, 10000);
 }
 
@@ -958,9 +958,11 @@ function currentCycle(){
 function money(n){ return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtFull(d){ if(!d) return ''; var x=(d instanceof Date)?d:new Date(d); if(isNaN(x)) return ''; var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return x.getDate()+' '+M[x.getMonth()]; }
 
-async function loadInvoices(){
+async function loadInvoices(quiet){
   var box=el('invContent'); if(!box) return;
-  box.innerHTML='<div class="dempty">Loading…</div>';
+  // only show the loading placeholder on the first (non-quiet) load,
+  // so the 10s auto-refresh doesn't make the page flash
+  if(!quiet && (!box.innerHTML || box.querySelector('.dempty'))) box.innerHTML='<div class="dempty">Loading…</div>';
   try{
     // running total: completed bookings with an agreed rate, not yet invoiced, in this cycle
     var cyc=currentCycle();
