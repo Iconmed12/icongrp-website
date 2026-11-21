@@ -203,6 +203,15 @@
   .step.cancel .dot{background:#B42318}.step.cancel{color:#B42318}
   .step:not(:last-child):after{content:"";position:absolute;top:6px;left:50%;width:100%;height:2px;background:#e3e8f0;z-index:1}
   .step.done:not(:last-child):after{background:#176A48}
+  .step .sub{display:block;font-size:10px;font-weight:700;color:#9A6008;margin-top:3px}
+  .step.now .sub{color:#185FA5}
+  /* confirmation panel */
+  .cfm{margin-top:4px;background:#F7FAFC;border:1px solid #e3ebf4;border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .cfm .cfmtxt{font-size:13.5px;color:#334155}.cfm b{color:var(--navy)}
+  .cfm .cfmbtns{display:flex;gap:8px;flex-wrap:wrap}
+  .cfmbtn{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+  .cfmbtn:hover{background:#0f2a57}
+  .cfmbtn.ok{background:#176A48}.cfmbtn.ok:hover{background:#125a3d}
   /* quotation panel */
   .quote{margin-top:4px;background:#F7FAFC;border:1px solid #e3ebf4;border-radius:12px;padding:16px 18px}
   .quote .qlbl{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#8a94a6}
@@ -921,11 +930,12 @@ function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){retur
 function gbp(n){ return '£'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
 /* ---- map internal status/rate to the 4 client-facing stages ---- */
-var CLIENT_STAGES=['Requested','Reviewing','Confirmed','Completed'];
+var CLIENT_STAGES=['Requested','Reviewing','Finding interpreter','Confirmed','Completed'];
 function clientStageIndex(b){
-  if(b.status==='completed') return 3;
-  if(b.status==='booked') return 2;              // Confirmed
-  if(b.status==='accepted'||b.status==='finding') return 1; // Reviewing (arranging)
+  if(b.status==='completed') return 4;
+  if(b.status==='booked') return 3;              // Confirmed
+  if(b.status==='finding') return 2;             // Finding interpreter
+  if(b.status==='accepted') return 1;            // Reviewing (rate agreed, arranging)
   if(b.status==='awaiting_client') return 1;     // Reviewing (quote out)
   if(b.status==='requested' && (b.rate_status==='countered_client'||b.agreed_rate!=null)) return 1; // Reviewing (negotiating)
   return 0;                                       // Requested
@@ -937,9 +947,10 @@ function clientBadge(b){
   if(b.status==='completed') return ['bp-green','Completed'];
   if(b.status==='booked') return ['bp-green','Confirmed'];
   if(b.status==='awaiting_client' && b.agreed_rate!=null && b.rate_status!=='accepted') return ['bp-amber','Awaiting your response'];
+  if(b.status==='finding') return ['bp-blue','Finding interpreter'];
   if(b.rate_status==='accepted' && b.status!=='booked' && b.status!=='completed') return ['bp-blue','Reviewing'];
   if(b.rate_status==='countered_client') return ['bp-blue','Awaiting ICON Lingua'];
-  if(b.status==='accepted'||b.status==='finding') return ['bp-blue','Reviewing'];
+  if(b.status==='accepted') return ['bp-blue','Reviewing'];
   if(b.status==='requested') return ['bp-amber','Requested'];
   return ['bp-blue','Reviewing'];
 }
@@ -948,12 +959,38 @@ function needsClientAction(b){ return b.status==='awaiting_client' && b.agreed_r
 function isCompletedBk(b){ return b.status==='completed'; }
 function isInProgress(b){ return !isCompletedBk(b) && !isCancelled(b); }
 
+// --- date helpers for the countdown on a confirmed booking ---
+function bookingWhen(b){
+  if(!b.booking_date) return null;
+  var t=(b.booking_time&&/^\d{1,2}:\d{2}/.test(b.booking_time))?b.booking_time:'09:00';
+  var d=new Date(b.booking_date+'T'+(t.length===5?t:'09:00')+':00');
+  return isNaN(d.getTime())?null:d;
+}
+function countdownLabel(b){
+  var d=bookingWhen(b); if(!d) return '';
+  var now=new Date();
+  var startOfDay=function(x){return new Date(x.getFullYear(),x.getMonth(),x.getDate());};
+  var days=Math.round((startOfDay(d)-startOfDay(now))/86400000);
+  if(days>1) return 'in '+days+' days';
+  if(days===1) return 'tomorrow';
+  if(days===0) return 'today';
+  return 'date passed';
+}
+// a confirmed booking whose appointment time is in the past -> client can mark complete
+function confirmedAndPast(b){
+  if(b.status!=='booked') return false;
+  var d=bookingWhen(b); return d ? (d.getTime() < Date.now()) : false;
+}
+
 function clientTrack(b){
   if(isCancelled(b)) return '<div class="track"><div class="step cancel"><div class="dot"></div>Cancelled</div></div>';
   var idx=clientStageIndex(b);
+  // show a countdown on the final (Completed) node while the booking is Confirmed and in the future
+  var cd = (b.status==='booked') ? countdownLabel(b) : '';
   return '<div class="track">'+CLIENT_STAGES.map(function(s,i){
     var cls = i<idx?'step done':(i===idx?'step now':'step');
-    return '<div class="'+cls+'"><div class="dot"></div>'+s+'</div>';
+    var sub = (i===4 && cd) ? ('<span class="sub">'+cd+'</span>') : '';
+    return '<div class="'+cls+'"><div class="dot"></div>'+s+sub+'</div>';
   }).join('')+'</div>';
 }
 
@@ -1035,8 +1072,15 @@ function bookingCard(b){
   if(!open) return '<div class="bcard'+(actReq?' act-req':'')+'">'+head+'</div>';
   // expanded body
   var body='<div class="bcbody">'+clientTrack(b)+quotationPanel(b);
-  if((b.status==='booked'||b.status==='completed') && b.interpreter_name){
-    body+='<div class="interp-line">'+(b.status==='completed'?'Delivered':'Confirmed')+' · Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
+  // confirmed booking -> confirmation panel (view/print + mark complete once past)
+  if(b.status==='booked'){
+    var when = b.booking_date ? (fmtD(b.booking_date)+(b.booking_time?(', '+b.booking_time):'')) : 'the agreed time';
+    var interp = b.interpreter_name ? (' · Interpreter: <b>'+esc(b.interpreter_name)+'</b>') : '';
+    var markBtn = confirmedAndPast(b) ? '<button class="cfmbtn ok" onclick="markCompleted('+b.id+')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Mark as completed</button>' : '';
+    body+='<div class="cfm"><div class="cfmtxt">Your booking is confirmed for <b>'+when+'</b>'+interp+'</div>'
+      +'<div class="cfmbtns"><button class="cfmbtn" onclick="openConfirmation('+b.id+')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>View booking confirmation</button>'+markBtn+'</div></div>';
+  } else if(b.status==='completed' && b.interpreter_name){
+    body+='<div class="interp-line">Delivered · Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
   }
   body+=activitySection(b)+'</div>';
   return '<div class="bcard open'+(actReq?' act-req':'')+'">'+head+body+'</div>';
@@ -1178,6 +1222,84 @@ async function submitPropose(id){
   }catch(e){}
   _bkBusy[id]=false; _bkEvents[id]=null;
   await loadBookings();
+}
+
+// client marks a confirmed, past-date booking as completed
+async function markCompleted(id){
+  if(_bkBusy[id]) return;
+  var b=(_bookingsCache||[]).find(function(x){return x.id===id;}); if(!b) return;
+  if(!confirmedAndPast(b)){ loadBookings(); return; }
+  if(!confirm('Confirm this booking has been completed? You can raise any issue with us afterwards.')) return;
+  _bkBusy[id]=true;
+  try{
+    await sb.from('portal_bookings').update({status:'completed'}).eq('id',id).eq('status','booked');
+    await logEvent(b,'note',null,'Marked as completed by the client.');
+  }catch(e){}
+  _bkBusy[id]=false; _bkEvents[id]=null;
+  await loadBookings();
+}
+
+// open a printable booking confirmation (client copy: interpreter NAME only, no contact)
+function openConfirmation(id){
+  var b=(_bookingsCache||[]).find(function(x){return x.id===id;}); if(!b) return;
+  var org=(CURRENT_CUST&&CURRENT_CUST.organisation)||'';
+  var fmt='';
+  var svc=(b.service||'');
+  if(/translation/i.test(svc)) fmt='Document translation';
+  else { var m=svc.replace(/^Interpreter:\s*/i,''); fmt='Interpreting'+(m?(' — '+m):''); }
+  var remote=/video|telephone|phone/i.test(svc);
+  var loc = remote ? 'Remote (joining details sent separately)' : (b.location || 'To be confirmed');
+  var dt = b.booking_date ? (new Date(b.booking_date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+(b.booking_time?(', '+b.booking_time):'')) : 'To be confirmed';
+  var rate = b.agreed_rate!=null ? gbp(b.agreed_rate) : 'To be confirmed';
+  var rows=[
+    ['Service', esc(fmt)],
+    ['Languages', esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))],
+    ['Date & time', esc(dt)],
+    ['Duration', esc(b.duration||'To be confirmed')],
+    ['Interpreter', esc(b.interpreter_name||'To be assigned')],
+    ['PO / reference', esc(b.po_number||'—')],
+    ['Client', esc(org||'—')],
+    [remote?'Joining':'Location', esc(loc)]
+  ];
+  var issued=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  var cells=rows.map(function(r){return '<div class="di"><div class="k">'+r[0]+'</div><div class="v">'+r[1]+'</div></div>';}).join('');
+  var html='<!doctype html><html><head><meta charset="utf-8"><title>Booking confirmation '+fmtRef(b)+'</title>'
+    +'<style>'
+    +'*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    +'body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#0B2D5C;background:#fff}'
+    +'.wrap{max-width:720px;margin:0 auto;padding:24px}'
+    +'.head{background:#092A59;color:#fff;padding:26px 30px;display:flex;justify-content:space-between;align-items:flex-start;border-radius:12px 12px 0 0}'
+    +'.brand{font-size:22px;font-weight:800}.brand span{font-weight:400;opacity:.85}'
+    +'.tag{font-size:12px;opacity:.85;margin-top:4px}'
+    +'.ref{text-align:right;font-size:12px;opacity:.9}.ref b{display:block;font-size:16px;margin-top:2px}'
+    +'.body{border:1px solid #e6ecf5;border-top:none;border-radius:0 0 12px 12px;padding:4px 30px 24px}'
+    +'.ttl{font-size:15px;font-weight:800;color:#092A59;padding:20px 0 4px}'
+    +'.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}'
+    +'.di{padding:11px 0;border-bottom:1px solid #f1f4f8}'
+    +'.di .k{font-size:11px;font-weight:700;color:#8a94a6;text-transform:uppercase;letter-spacing:.04em}'
+    +'.di .v{font-size:14px;color:#0B2D5C;font-weight:600;margin-top:3px}'
+    +'.rate{margin-top:18px;background:#E6F5EE;border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}'
+    +'.rate .k{font-size:12px;font-weight:700;color:#176A48}.rate .v{font-size:22px;font-weight:800;color:#176A48}'
+    +'.foot{margin-top:18px;font-size:11.5px;color:#45658B;display:flex;justify-content:space-between;border-top:1px solid #eef2f8;padding-top:14px}'
+    +'.note{margin-top:14px;font-size:11px;color:#8a94a6}'
+    +'.btns{max-width:720px;margin:14px auto;display:flex;gap:10px;justify-content:flex-end;padding:0 24px}'
+    +'.btns button{border:none;border-radius:9px;padding:11px 20px;font-weight:700;font-size:13px;cursor:pointer}'
+    +'.pr{background:#092A59;color:#fff}.cl{background:#fff;color:#092A59;border:1.5px solid #d7dce5}'
+    +'@media print{.btns{display:none}.wrap{padding:0}}'
+    +'</style></head><body><div class="wrap">'
+    +'<div class="head"><div><div class="brand">ICON <span>| Lingua</span></div><div class="tag">Booking confirmation</div></div>'
+    +'<div class="ref">Reference<b>'+fmtRef(b)+'</b></div></div>'
+    +'<div class="body"><div class="ttl">Confirmed booking details</div>'
+    +'<div class="grid">'+cells+'</div>'
+    +'<div class="rate"><div class="k">Agreed rate</div><div class="v">'+rate+'</div></div>'
+    +'<div class="note">Rate shown excludes VAT. A VAT invoice will be issued on completion.</div>'
+    +'<div class="foot"><span>ICON GRP · info@icongrp.co.uk · 01268 20 30 10</span><span>Issued '+issued+'</span></div>'
+    +'</div></div>'
+    +'<div class="btns"><button class="cl" onclick="window.close()">Close</button><button class="pr" onclick="window.print()">Save as PDF</button></div>'
+    +'</body></html>';
+  var w=window.open('','_blank');
+  if(!w){ alert('Please allow pop-ups to view the booking confirmation.'); return; }
+  w.document.open(); w.document.write(html); w.document.close();
 }
 
 function fillLangs(sel){ sel.innerHTML='<option value="">Select...</option>'+LANGS.map(function(l){return '<option>'+l+'</option>';}).join(''); }
