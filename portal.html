@@ -328,10 +328,25 @@
   .cur .big{font-size:30px;font-weight:800;margin-top:2px}
   .cur .csub{font-size:12.5px;color:#bcd0ee;margin-top:3px}
   .cur .cnote{font-size:12px;color:#cfe0f5;text-align:right;max-width:240px}
+  /* running balance headline */
+  .balcard{background:linear-gradient(135deg,#0d2a57,#1a4d94);color:#fff;border-radius:16px;padding:24px 26px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+  .balcard .bl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+  .balcard .bbig{font-size:40px;font-weight:800;line-height:1.05;margin:8px 0 4px}
+  .balcard .bsub{font-size:13px;opacity:.92}
+  .balcard .bpay{font-size:12.5px;opacity:.9;text-align:right;max-width:260px;line-height:1.5}
   .sumrow{display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap}
-  .sum{flex:1;min-width:150px;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .sum{flex:1;min-width:150px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
   .sum .n{font-size:22px;font-weight:800}.sum .sl{font-size:12px;color:var(--muted);margin-top:2px}
+  .sum .n.amber{color:#9A6008}.sum .n.green{color:#176A48}
   .sum.due .n{color:#B42318}.sum.paid .n{color:#176A48}
+  /* recent jobs */
+  .jrow{display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 15px;margin-bottom:9px}
+  .jmain{flex:1;min-width:0}
+  .jttl{font-size:13.5px;font-weight:700;color:var(--navy)}
+  .jsub{font-size:12px;color:var(--muted);margin-top:2px}
+  .jamt{font-size:15px;font-weight:800;color:var(--navy);white-space:nowrap}
+  .jchip{font-size:10.5px;font-weight:800;border-radius:20px;padding:3px 9px;white-space:nowrap}
+  .jchip.inv{background:#EEF1F6;color:#64748b}.jchip.pend{background:#FFF4E0;color:#9A6008}
   .isect{font-size:11px;font-weight:800;color:#8a94a6;letter-spacing:.04em;text-transform:uppercase;margin:6px 0 10px}
   .itbl{width:100%;border-collapse:collapse}
   .itbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:#8a94a6;font-weight:800;padding:10px 12px;border-bottom:1px solid #eef1f6}
@@ -506,7 +521,7 @@
         <!-- INVOICES -->
         <div id="paneInvoices" style="display:none">
           <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">Invoices</h2></div>
-          <p class="dlead">Your running total for this cycle, and your past invoices.</p>
+          <p class="dlead">What you owe, the jobs that make it up, and your invoices.</p>
           <div id="invContent"><div class="dempty">Loading…</div></div>
         </div>
 
@@ -964,32 +979,55 @@ async function loadInvoices(quiet){
   // so the 10s auto-refresh doesn't make the page flash
   if(!quiet && (!box.innerHTML || box.querySelector('.dempty'))) box.innerHTML='<div class="dempty">Loading…</div>';
   try{
-    // running total: completed bookings with an agreed rate, not yet invoiced, in this cycle
-    var cyc=currentCycle();
-    var br=await sb.from('portal_bookings').select('*');
+    var br=await sb.from('portal_bookings').select('*').order('booking_date',{ascending:false});
     var bookings=(br.data)||[];
-    var cycleTotal=0, cycleCount=0;
+    // completed, un-invoiced, not disputed -> awaiting invoice (VAT-inclusive)
+    var awaiting=0, awaitingCount=0, recentJobs=[];
     bookings.forEach(function(b){
-      if(b.status!=='completed') return;
-      if(b.invoiced_in) return;
+      if(b.status!=='completed' || b.disputed) return;
       if(b.agreed_rate==null) return;
-      cycleTotal+=Number(b.agreed_rate)||0; cycleCount++;
+      var gross=vatBreakdown(b.agreed_rate, b.vat_mode).gross;
+      if(!b.invoiced_in){ awaiting+=gross; awaitingCount++; }
+      recentJobs.push(b);
     });
     // invoices
     var ir=await sb.from('portal_invoices').select('*').order('issued_date',{ascending:false});
     var invoices=(ir.data)||[];
-    var outstanding=0, paidYear=0; var thisYear=new Date().getFullYear();
+    var outstanding=0, paidYear=0, dueCount=0; var thisYear=new Date().getFullYear();
     invoices.forEach(function(v){
-      if(v.status==='due') outstanding+=Number(v.amount)||0;
+      if(v.status==='due'){ outstanding+=Number(v.amount)||0; dueCount++; }
       if(v.status==='paid' && v.paid_date && new Date(v.paid_date).getFullYear()===thisYear) paidYear+=Number(v.amount)||0;
     });
+    // current balance = everything owed right now (issued-but-due + completed-not-yet-invoiced)
+    var balance = outstanding + awaiting;
+    var balBits=[];
+    if(dueCount) balBits.push(dueCount+' invoice'+(dueCount===1?'':'s')+' due');
+    if(awaitingCount) balBits.push(awaitingCount+' completed job'+(awaitingCount===1?'':'s')+' not yet invoiced');
     var h='';
-    h+='<div class="cur"><div><div class="l">This cycle so far · '+fmtFull(cyc.start)+' to '+fmtFull(cyc.end)+'</div>'
-      +'<div class="big">'+money(cycleTotal)+'</div>'
-      +'<div class="csub">'+cycleCount+' completed booking'+(cycleCount===1?'':'s')+' this cycle</div></div>'
-      +'<div class="cnote">We invoice on the 26th. Your bill for this cycle will be issued then.</div></div>';
-    h+='<div class="sumrow"><div class="sum due"><div class="n">'+money(outstanding)+'</div><div class="sl">Outstanding</div></div>'
-      +'<div class="sum paid"><div class="n">'+money(paidYear)+'</div><div class="sl">Paid this year</div></div></div>';
+    // headline balance
+    h+='<div class="balcard"><div><div class="bl">Current balance</div>'
+      +'<div class="bbig">'+money(balance)+'</div>'
+      +'<div class="bsub">'+(balBits.length?balBits.join(' · '):'Nothing outstanding')+'</div></div>'
+      +'<div class="bpay">Pay by bank transfer to the account on your invoice, quoting your invoice number. Amounts include VAT.</div></div>';
+    // tiles
+    h+='<div class="sumrow"><div class="sum"><div class="n amber">'+money(awaiting)+'</div><div class="sl">Awaiting invoice · issues on the 26th</div></div>'
+      +'<div class="sum"><div class="n green">'+money(paidYear)+'</div><div class="sl">Paid this year</div></div></div>';
+    // recent jobs
+    if(recentJobs.length){
+      h+='<div class="isect">Recent jobs</div>';
+      h+=recentJobs.slice(0,8).map(function(b){
+        var svc=/^Interpreter:/i.test(b.service||'')?('Interpreting – '+esc((b.service||'').replace(/^Interpreter:\s*/i,''))):esc(b.service||'Job');
+        var pair=(b.from_lang||b.to_lang)?(' · '+esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))):'';
+        var gross=money(vatBreakdown(b.agreed_rate, b.vat_mode).gross);
+        var chip = b.invoiced_in
+          ? '<span class="jchip inv">Invoiced</span>'
+          : '<span class="jchip pend">Awaiting invoice</span>';
+        return '<div class="jrow"><div class="jmain"><div class="jttl">'+svc+pair+'</div>'
+          +'<div class="jsub">'+fmtRef(b)+' · '+(b.booking_date?fmtFull(b.booking_date):'')+(b.po_number?(' · PO '+esc(b.po_number)):'')+'</div></div>'
+          +chip+'<span class="jamt">'+gross+'</span></div>';
+      }).join('');
+    }
+    // invoices
     h+='<div class="isect">Invoices</div>';
     if(!invoices.length){ h+='<div class="dempty">No invoices yet. They\'re issued monthly on the 26th.</div>'; }
     else{
@@ -1005,8 +1043,8 @@ async function loadInvoices(quiet){
           +'<td><a class="idl" onclick="downloadInvoice('+v.id+')">Download PDF</a>'+pay+'</td></tr>';
       }).join('');
       h+='</tbody></table>';
-      h+='<div class="imini" style="margin-top:14px">Payment by bank transfer to the account on your invoice, within the terms agreed. Reference your invoice number.</div>';
     }
+    h+='<div class="imini" style="margin-top:14px">Invoices are issued once a month on the 26th and bundle that month\'s completed jobs. Pay by bank transfer within the terms agreed.</div>';
     box.innerHTML=h;
     window._portalInvoices=invoices;
   }catch(e){ box.innerHTML='<div class="dempty">Could not load your invoices.</div>'; }
@@ -1061,6 +1099,7 @@ function priceWithVat(price, mode){ var b=vatBreakdown(price, mode); return gbp(
 /* ---- map internal status/rate to the 4 client-facing stages ---- */
 var CLIENT_STAGES=['Requested','Reviewing','Finding interpreter','Confirmed','Completed'];
 function clientStageIndex(b){
+  if(b.disputed) return 3;                        // disputed -> drops back to Confirmed (in progress)
   if(b.status==='completed') return 4;
   if(b.status==='booked') return 3;              // Confirmed
   if(b.status==='finding') return 2;             // Finding interpreter
@@ -1073,6 +1112,7 @@ function isCancelled(b){ return b.status==='declined'; }
 // the single badge the client sees — action-first
 function clientBadge(b){
   if(isCancelled(b)) return ['bp-grey','Cancelled'];
+  if(b.disputed) return ['bp-amber','Disputed'];  // held while under review
   if(b.status==='completed') return ['bp-green','Completed'];
   if(b.status==='booked') return ['bp-green','Confirmed'];
   if(b.status==='awaiting_client' && b.agreed_rate!=null && b.rate_status!=='accepted') return ['bp-amber','Awaiting your response'];
@@ -1085,7 +1125,8 @@ function clientBadge(b){
 }
 // does this booking need the client to act right now?
 function needsClientAction(b){ return b.status==='awaiting_client' && b.agreed_rate!=null && b.rate_status!=='accepted'; }
-function isCompletedBk(b){ return b.status==='completed'; }
+// a disputed booking is held, so it reads as in progress (not completed)
+function isCompletedBk(b){ return b.status==='completed' && !b.disputed; }
 function isInProgress(b){ return !isCompletedBk(b) && !isCancelled(b); }
 
 // --- date helpers for the countdown on a confirmed booking ---
@@ -1225,8 +1266,10 @@ function bookingCard(b){
       +'<div class="cfmbody"><div class="cfmttl">Booking confirmed</div>'
       +'<div class="cfmsub"><span class="bit">'+calIc+esc(when)+'</span>'+interpBit+'</div></div>'
       +'<div class="cfmbtns">'+markBtn+'<button class="cfmbtn" onclick="openConfirmation('+b.id+')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>View booking confirmation</button></div></div>';
-  } else if(b.status==='completed' && b.interpreter_name){
-    body+='<div class="interp-line"'+(b.disputed?' style="color:#9aa7bd"':'')+'>Delivered · Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
+  } else if(b.status==='completed' && b.interpreter_name && !b.disputed){
+    body+='<div class="interp-line">Delivered · Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
+  } else if(b.disputed && b.interpreter_name){
+    body+='<div class="interp-line" style="color:#45658B">Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
   }
   // disputed banner (held, unpaid until resolved)
   if(b.disputed){
