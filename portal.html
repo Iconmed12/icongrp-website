@@ -273,22 +273,37 @@
   .interp-line{font-size:13px;color:#176A48;margin-top:10px}
   /* booking documents */
   .docsec{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:#fff}
-  .docsec h4{margin:0 0 3px;font-size:13.5px;font-weight:800;color:var(--navy)}
-  .docsec .dhint{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.5}
-  .drop{border:1.5px dashed #c6d4e8;border-radius:12px;background:#F7FAFC;padding:18px;text-align:center;cursor:pointer;transition:border-color .12s,background .12s}
+  .dochead{display:flex;gap:11px;align-items:flex-start;margin-bottom:12px}
+  .dochead .dhic{width:38px;height:38px;border-radius:10px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;flex:none}
+  .docsec h4{margin:0;font-size:14px;font-weight:800;color:var(--navy)}
+  .docsec .dhint{font-size:12px;color:var(--muted);margin:2px 0 0;line-height:1.45}
+  /* slim dropzone: single row */
+  .drop{border:1.5px dashed #c6d4e8;border-radius:10px;background:#F7FAFC;padding:12px 16px;text-align:center;cursor:pointer;transition:border-color .12s,background .12s}
   .drop:hover,.drop.over{border-color:#9cc0ea;background:#f1f7fd}
-  .drop .dic{width:42px;height:42px;border-radius:11px;background:#eaf1fb;color:var(--blue);display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px}
-  .drop .dbig{font-size:13.5px;font-weight:700;color:var(--navy)}
-  .drop .dsmall{font-size:11.5px;color:var(--muted);margin-top:3px}
-  .flist{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .drop .dline{display:flex;align-items:center;justify-content:center;gap:9px;font-size:13px;font-weight:600;color:#475467}
+  .drop .dline svg{color:var(--blue)}
+  .drop .dchoose{color:var(--blue);font-weight:700}
+  .drop .dsmall{font-size:11px;color:#9aa7bd;margin-top:3px}
+  .uplabel{display:flex;align-items:center;gap:10px;margin:14px 0 8px}
+  .uplabel .ut{font-size:12.5px;font-weight:800;color:var(--navy)}
+  .upchip{margin-left:auto;background:#E6F5EE;color:#176A48;border-radius:20px;padding:3px 11px;font-size:11px;font-weight:800;display:inline-flex;align-items:center;gap:5px}
+  .flist{display:flex;flex-direction:column;gap:8px}
   .frow{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
   .fic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex:none;background:#FDECEC;color:#B42318}
   .fic.doc{background:#E8F1FB;color:#185FA5}.fic.img{background:#E6F5EE;color:#176A48}
   .fmeta{flex:1;min-width:0}
   .fname{font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .fsize{font-size:11px;color:#9aa7bd;margin-top:1px}
-  .fbtn{background:none;border:none;cursor:pointer;font-size:12px;font-weight:700;padding:3px 6px}
-  .fbtn.view{color:var(--blue)}.fbtn.del{color:#B42318}
+  .fok{color:#176A48;flex:none}
+  .fmenu{position:relative;flex:none}
+  .fmenu>.fmbtn{background:none;border:none;cursor:pointer;color:#9aa7bd;font-size:18px;line-height:1;padding:2px 6px;border-radius:6px}
+  .fmenu>.fmbtn:hover{background:#f1f4f8;color:#475467}
+  .fmpop{position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(16,24,40,.12);min-width:130px;padding:5px;display:none;z-index:40}
+  .fmpop.show{display:block}
+  .fmpop button{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 10px;border-radius:7px;font-size:12.5px;font-weight:600;color:#334155;cursor:pointer}
+  .fmpop button:hover{background:#f3f6fb}
+  .fmpop button.del{color:#B42318}
+  .docfoot{font-size:11.5px;color:var(--muted);margin-top:12px;display:flex;align-items:center;gap:7px}
   .docnote{font-size:12px;color:var(--muted);background:#F7FAFC;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
   @media(max-width:620px){ .bksearch{margin-left:0;flex:1 1 100%;order:-1} .bkf{padding:6px 12px;font-size:12.5px} .quote .qact{flex-direction:column} .qbtn{justify-content:center} }
   .rback{font-size:12.5px;color:var(--muted);text-decoration:none;font-weight:700;cursor:pointer}
@@ -1280,32 +1295,48 @@ function docsSection(b){
   }
   var files=_bkFiles[b.id];
   var editable = (b.status==='booked'); // can add/remove up to the appointment
-  var listHtml='';
-  if(files==null){ listHtml='<div class="fsize" style="padding:6px 0">Loading documents…</div>'; }
-  else if(!files.length){ listHtml=''; }
-  else {
-    listHtml='<div class="flist">'+files.map(function(f){
-      var ic=fileIcon(f.file_name,f.file_type);
-      return '<div class="frow"><div class="fic '+ic[0]+'">'+ic[1]+'</div>'
-        +'<div class="fmeta"><div class="fname">'+esc(f.file_name)+'</div>'
-        +'<div class="fsize">'+humanSize(f.file_size)+' · '+fmtDT(f.created_at)+'</div></div>'
-        +'<button class="fbtn view" onclick="viewFile('+b.id+','+f.id+')">View</button>'
-        +(editable?('<button class="fbtn del" onclick="removeFile('+b.id+','+f.id+')">Remove</button>'):'')
-        +'</div>';
-    }).join('')+'</div>';
-  }
+  // slim single-row dropzone
   var dropHtml = editable ? ('<div class="drop" id="drop'+b.id+'" onclick="document.getElementById(\'fileinp'+b.id+'\').click()" '
       +'ondragover="fileDragOver(event,'+b.id+')" ondragleave="fileDragLeave('+b.id+')" ondrop="fileDrop(event,'+b.id+')">'
-      +'<div class="dic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 20h14"/></svg></div>'
-      +'<div class="dbig">Drag files here, or click to choose</div>'
-      +'<div class="dsmall">PDF, Word, JPG or PNG · up to 10MB each</div>'
+      +'<div class="dline"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 20h14"/></svg>'
+      +'<span>Drag files here or <span class="dchoose">choose files</span></span></div>'
+      +'<div class="dsmall">PDF, Word, JPG or PNG · Max 10 MB per file</div>'
       +'<input type="file" id="fileinp'+b.id+'" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="filePicked(event,'+b.id+')"></div>') : '';
+  // uploaded list
+  var listHtml='';
+  if(files==null){ listHtml='<div class="fsize" style="padding:8px 0">Loading documents…</div>'; }
+  else if(files.length){
+    listHtml='<div class="uplabel"><span class="ut">Uploaded documents ('+files.length+')</span>'
+      +'<span class="upchip"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Uploaded</span></div>'
+      +'<div class="flist">'+files.map(function(f){
+        var ic=fileIcon(f.file_name,f.file_type);
+        var menu='<div class="fmenu"><button class="fmbtn" onclick="toggleFileMenu(event,'+b.id+','+f.id+')">&#8942;</button>'
+          +'<div class="fmpop" id="fmpop'+b.id+'_'+f.id+'">'
+            +'<button onclick="viewFile('+b.id+','+f.id+')">View</button>'
+            +(editable?('<button class="del" onclick="removeFile('+b.id+','+f.id+')">Remove</button>'):'')
+          +'</div></div>';
+        return '<div class="frow"><div class="fic '+ic[0]+'">'+ic[1]+'</div>'
+          +'<div class="fmeta"><div class="fname">'+esc(f.file_name)+'</div>'
+          +'<div class="fsize">'+humanSize(f.file_size)+'</div></div>'
+          +'<svg class="fok" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="#E6F5EE" stroke="none"/><path d="M8 12l2.5 2.5L16 9"/></svg>'
+          +menu+'</div>';
+      }).join('')+'</div>';
+  }
+  var footHtml = (files && files.length) ? '<div class="docfoot"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>Shared with the ICON Lingua team and your assigned interpreter.</div>' : '';
   return '<div class="docsec" style="margin-top:12px">'
-    +'<h4>Documents for your interpreter</h4>'
-    +'<div class="dhint">'+(editable?'Share anything that will help, for example a letter, agenda or reference material. Only our team and your assigned interpreter can see these.':'Documents you shared for this booking.')+'</div>'
-    +dropHtml+listHtml
+    +'<div class="dochead"><div class="dhic"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div>'
+      +'<div><h4>Documents for your interpreter</h4><div class="dhint">'+(editable?'Upload an agenda, reference material or other useful documents (optional).':'Documents you shared for this booking.')+'</div></div></div>'
+    +dropHtml+listHtml+footHtml
     +'</div>';
 }
+function toggleFileMenu(e,bid,fid){
+  e.stopPropagation();
+  var pop=el('fmpop'+bid+'_'+fid);
+  var wasOpen=pop&&pop.classList.contains('show');
+  document.querySelectorAll('.fmpop.show').forEach(function(x){ x.classList.remove('show'); });
+  if(pop && !wasOpen) pop.classList.add('show');
+}
+document.addEventListener('click',function(){ document.querySelectorAll('.fmpop.show').forEach(function(x){ x.classList.remove('show'); }); });
 function fileDragOver(e,id){ e.preventDefault(); var d=el('drop'+id); if(d) d.classList.add('over'); }
 function fileDragLeave(id){ var d=el('drop'+id); if(d) d.classList.remove('over'); }
 function fileDrop(e,id){ e.preventDefault(); var d=el('drop'+id); if(d) d.classList.remove('over'); uploadFiles(id, e.dataTransfer.files); }
