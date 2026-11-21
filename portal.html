@@ -1094,7 +1094,12 @@ function quotationPanel(b){
   }
   // agreed
   if(b.rate_status==='accepted' && b.agreed_rate!=null){
-    return '<div class="qnote ok">Rate agreed: <b>'+gbp(b.agreed_rate)+'</b>'+(b.status==='booked'||b.status==='completed'?'':' · We\'ll confirm the arrangements shortly.')+'</div>';
+    var tail;
+    if(b.status==='finding') tail=' · We\'re finding you an interpreter.';
+    else if(b.status==='accepted') tail=' · We\'re arranging your booking.';
+    else if(b.status==='booked'||b.status==='completed') tail='';
+    else tail=' · We\'ll confirm the arrangements shortly.';
+    return '<div class="qnote ok">Rate agreed: <b>'+gbp(b.agreed_rate)+'</b>'+tail+'</div>';
   }
   // active quote from us needing the client's response
   if(b.status==='awaiting_client' && b.agreed_rate!=null){
