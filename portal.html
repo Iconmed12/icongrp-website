@@ -98,7 +98,6 @@
   .snav .caret{margin-left:auto;transition:transform .15s;padding:4px;margin:-4px -4px -4px 0;border-radius:6px}
   .snav .caret:hover{background:#dbe7f8}
   .snav.open .caret{transform:rotate(180deg)}
-  .navcount{margin-left:auto;background:#FFF4E0;color:#9A6008;border-radius:20px;padding:1px 8px;font-size:11px;font-weight:800;min-width:20px;text-align:center}
   .subnav{margin:0 0 6px 10px;padding-left:12px;border-left:2px solid #eef1f6;display:none}
   .subnav.show{display:block}
   .subitem{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;font-size:13px;font-weight:600;color:#6b7891;cursor:pointer;margin-bottom:2px}
@@ -460,10 +459,6 @@
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-4 4 4 4"/></svg>Request a translation
           </div>
         </div>
-        <div class="snav" id="tabDisputes" onclick="dashTab('disputes')">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>Disputes</span>
-          <span class="navcount" id="navDisputes" style="display:none">0</span>
-        </div>
         <div class="snav" id="tabInvoices" onclick="dashTab('invoices')">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15l-2.2-1.3L13.5 22 12 20.7 10.5 22 8.7 20.7 6.5 22 5 20.7V4a1 1 0 0 1 1-1z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Invoices</span>
         </div>
@@ -529,13 +524,6 @@
           <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">Invoices</h2></div>
           <p class="dlead">What you owe, the jobs that make it up, and your invoices.</p>
           <div id="invContent"><div class="dempty">Loading…</div></div>
-        </div>
-
-        <!-- DISPUTES -->
-        <div id="paneDisputes" style="display:none">
-          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">Disputes</h2></div>
-          <p class="dlead">Bookings where you've raised an issue. Our team is reviewing these, and they're on hold until resolved.</p>
-          <div id="bookingListDisp"><div class="dempty">Loading…</div></div>
         </div>
 
         <!-- REQUEST WIZARD -->
@@ -936,9 +924,7 @@ function startPortalPoll(){
       if(!r.error && r.data){
         _bookingsCache=r.data;
         pCheckAlerts(r.data);
-        updateDisputeBadge(r.data);
         if(el('paneBookings').style.display!=='none') renderBookings(r.data);
-        if(el('paneDisputes').style.display!=='none') loadDisputes();
       }
     }catch(e){}
     if(el('paneInvoices').style.display!=='none') loadInvoices(true);
@@ -952,11 +938,10 @@ var LANGS=["English","French","Arabic","Lingala","Swahili","Kikongo","Tshiluba",
 var _cachedBookings=null;
 var _subNavManual=null; // null = auto; true/false = user forced the sub-nav
 function dashTab(which){
-  // which: home | bookings | invoices | request | disputes
+  // which: home | bookings | invoices | request
   el('tabHome').classList.toggle('on', which==='home');
   el('tabBookings').classList.toggle('on', which==='bookings'||which==='request');
   el('tabInvoices').classList.toggle('on', which==='invoices');
-  el('tabDisputes').classList.toggle('on', which==='disputes');
   // expand the My bookings sub-nav while in bookings/request (unless the user forced it)
   var open = (_subNavManual!=null) ? _subNavManual : (which==='bookings'||which==='request');
   el('tabBookings').classList.toggle('open', open);
@@ -965,10 +950,8 @@ function dashTab(which){
   el('paneBookings').style.display = which==='bookings'?'':'none';
   el('paneInvoices').style.display = which==='invoices'?'':'none';
   el('paneRequest').style.display = which==='request'?'':'none';
-  el('paneDisputes').style.display = which==='disputes'?'':'none';
   if(which==='bookings'){ if(_cachedBookings){ renderBookings(_cachedBookings); _cachedBookings=null; } loadBookings(); }
   if(which==='invoices') loadInvoices();
-  if(which==='disputes') loadDisputes();
   if(which!=='request'){ el('subInterp').classList.remove('on'); el('subTrans').classList.remove('on'); }
 }
 // toggle the My bookings sub-nav open/closed by the chevron
@@ -978,35 +961,6 @@ function toggleBookingsNav(e){
   _subNavManual=!isOpen;
   el('subBookings').classList.toggle('show', _subNavManual);
   el('tabBookings').classList.toggle('open', _subNavManual);
-}
-// render disputed bookings (reuses the booking card)
-function loadDisputes(){
-  var box=el('bookingListDisp'); if(!box) return;
-  var all=_bookingsCache||[];
-  var disp=all.filter(function(b){ return b.disputed; });
-  if(!disp.length){ box.innerHTML='<div class="dempty">No disputes. If something goes wrong with a booking, use “Raise an issue” on it and it will appear here.</div>'; }
-  else {
-    // open them all so the detail (and resolution status) is visible
-    box.innerHTML=disp.map(function(b){ var prev=_openBooking; _openBooking=b.id; var html=bookingCard(b); _openBooking=prev; return html; }).join('');
-  }
-  // ensure cache is fresh
-  loadBookingsInto(box, disp);
-}
-async function loadBookingsInto(box, current){
-  try{
-    var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
-    if(!r.error && r.data){ _bookingsCache=r.data; var disp=r.data.filter(function(b){return b.disputed;});
-      updateDisputeBadge(r.data);
-      if(el('paneDisputes').style.display!=='none'){
-        if(!disp.length){ box.innerHTML='<div class="dempty">No disputes. If something goes wrong with a booking, use “Raise an issue” on it and it will appear here.</div>'; }
-        else { box.innerHTML=disp.map(function(b){ var prev=_openBooking; _openBooking=b.id; var html=bookingCard(b); _openBooking=prev; return html; }).join(''); }
-      }
-    }
-  }catch(e){}
-}
-function updateDisputeBadge(list){
-  var n=(list||[]).filter(function(b){return b.disputed;}).length;
-  var el2=el('navDisputes'); if(el2){ el2.textContent=n; el2.style.display=n?'':'none'; }
 }
 // open the request wizard in interpreter or translation mode
 function newReqService(svc){
@@ -1245,7 +1199,6 @@ async function loadBookings(){
     if(r.error){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; return; }
     _bookingsCache=r.data||[];
     if(_pSeen===null){ _pSeen=new Set(pNeedsResp(r.data||[])); }
-    updateDisputeBadge(r.data||[]);
     renderBookings();
   }catch(e){ box.innerHTML='<div class="dempty">Could not load your bookings.</div>'; }
 }
