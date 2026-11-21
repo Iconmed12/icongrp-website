@@ -511,6 +511,7 @@
               <div class="bkf" data-f="action" onclick="setBookingFilter('action')">Action required <span class="cnt" id="cntAction">0</span></div>
               <div class="bkf" data-f="progress" onclick="setBookingFilter('progress')">In progress <span class="cnt" id="cntProgress">0</span></div>
               <div class="bkf" data-f="completed" onclick="setBookingFilter('completed')">Completed <span class="cnt" id="cntCompleted">0</span></div>
+              <div class="bkf" data-f="cancelled" onclick="setBookingFilter('cancelled')">Cancelled <span class="cnt" id="cntCancelled">0</span></div>
             </div>
             <div class="bksearch">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -1212,6 +1213,7 @@ function bookingMatchesFilter(b){
   if(_bkFilter==='action') return needsClientAction(b);
   if(_bkFilter==='progress') return isInProgress(b);
   if(_bkFilter==='completed') return isCompletedBk(b);
+  if(_bkFilter==='cancelled') return isCancelled(b);
   return true; // all
 }
 
@@ -1225,6 +1227,7 @@ function renderBookings(listArg){
     el('cntAction').textContent=all.filter(needsClientAction).length;
     el('cntProgress').textContent=all.filter(isInProgress).length;
     el('cntCompleted').textContent=all.filter(isCompletedBk).length;
+    el('cntCancelled').textContent=all.filter(isCancelled).length;
   }catch(e){}
   var q=(el('bkSearch')&&el('bkSearch').value||'').trim().toLowerCase();
   var list=all.filter(function(b){ return bookingMatchesFilter(b) && bookingMatchesSearch(b,q); });
