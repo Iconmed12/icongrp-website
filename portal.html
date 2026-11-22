@@ -1184,6 +1184,8 @@ function priceWithVat(price, mode){ var b=vatBreakdown(price, mode); return gbp(
 
 /* ---- map internal status/rate to the 4 client-facing stages ---- */
 var CLIENT_STAGES=['Requested','Reviewing','Finding interpreter','Confirmed','Completed'];
+function isTranslationBk(b){ return /translation/i.test(b.service||''); }
+function clientStages(b){ return isTranslationBk(b) ? ['Requested','Reviewing','Finding translator','Confirmed','Completed'] : CLIENT_STAGES; }
 function clientStageIndex(b){
   if(b.disputed) return 3;                        // disputed -> drops back to Confirmed (in progress)
   if(b.status==='completed') return 4;
@@ -1202,7 +1204,7 @@ function clientBadge(b){
   if(b.status==='completed') return ['bp-green','Completed'];
   if(b.status==='booked') return ['bp-green','Confirmed'];
   if(b.status==='awaiting_client' && b.agreed_rate!=null && b.rate_status!=='accepted') return ['bp-amber','Awaiting your response'];
-  if(b.status==='finding') return ['bp-blue','Finding interpreter'];
+  if(b.status==='finding') return ['bp-blue',isTranslationBk(b)?'Finding translator':'Finding interpreter'];
   if(b.rate_status==='accepted' && b.status!=='booked' && b.status!=='completed') return ['bp-blue','Reviewing'];
   if(b.rate_status==='countered_client') return ['bp-blue','Awaiting ICON Lingua'];
   if(b.status==='accepted') return ['bp-blue','Reviewing'];
@@ -1243,7 +1245,7 @@ function clientTrack(b){
   var idx=clientStageIndex(b);
   // show a countdown on the final (Completed) node while the booking is Confirmed and in the future
   var cd = (b.status==='booked') ? countdownLabel(b) : '';
-  return '<div class="track">'+CLIENT_STAGES.map(function(s,i){
+  return '<div class="track">'+clientStages(b).map(function(s,i){
     var cls = i<idx?'step done':(i===idx?'step now':'step');
     var sub = (i===4 && cd) ? ('<span class="sub">'+cd+'</span>') : '';
     return '<div class="'+cls+'"><div class="dot"></div>'+s+sub+'</div>';
@@ -1385,9 +1387,9 @@ function quotationPanel(b){
   }
   // agreed
   if(b.rate_status==='accepted' && b.agreed_rate!=null){
-    var tail;
-    if(b.status==='finding') tail=' · We\'re finding you an interpreter.';
-    else if(b.status==='accepted') tail=' · We\'re arranging your booking.';
+    var tail; var isT=isTranslationBk(b);
+    if(b.status==='finding') tail=isT?' · We\'re assigning your translator.':' · We\'re finding you an interpreter.';
+    else if(b.status==='accepted') tail=isT?' · We\'re arranging your translation.':' · We\'re arranging your booking.';
     else if(b.status==='booked'||b.status==='completed') tail='';
     else tail=' · We\'ll confirm the arrangements shortly.';
     return '<div class="qnote ok" style="display:flex;align-items:center;gap:9px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20.6 13.4 12 22l-8-8V4h10l6.6 6.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg><span>Rate agreed: <b>'+priceWithVat(b.agreed_rate, b.vat_mode)+'</b> <span style="font-weight:500;color:#45658B">('+vatLine(b.agreed_rate, b.vat_mode)+')</span>'+tail+'</span></div>';
@@ -1463,15 +1465,17 @@ async function loadFiles(id){
   catch(e){ _bkFiles[id]=[]; }
 }
 function docsSection(b){
-  // only relevant from confirmation onward
+  var isT=isTranslationBk(b);
+  // for translations the source document was attached at request time, so no
+  // "attach once confirmed" placeholder — the files list below shows it.
   if(b.status!=='booked' && b.status!=='completed'){
-    if(b.status==='accepted'||b.status==='finding'){
+    if(!isT && (b.status==='accepted'||b.status==='finding')){
       return '<div class="docsec" style="margin-top:12px"><h4>Documents</h4><div class="docnote">You\'ll be able to attach documents for your interpreter once this booking is confirmed.</div></div>';
     }
     return '';
   }
   var files=_bkFiles[b.id];
-  var editable = (b.status==='booked'); // can add/remove up to the appointment
+  var editable = (b.status==='booked') && !isT; // translations: source doc already attached, staff deliver the finished file
   // slim single-row dropzone
   var dropHtml = editable ? ('<div class="drop" id="drop'+b.id+'" onclick="document.getElementById(\'fileinp'+b.id+'\').click()" '
       +'ondragover="fileDragOver(event,'+b.id+')" ondragleave="fileDragLeave('+b.id+')" ondrop="fileDrop(event,'+b.id+')">'
@@ -1499,13 +1503,13 @@ function docsSection(b){
           +menu+'</div>';
       }).join('')+'</div>';
   }
-  var footHtml = (files && files.length) ? '<div class="docfoot"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>Shared with the ICON Lingua team and your assigned interpreter.</div>' : '';
+  var footHtml = (files && files.length) ? ('<div class="docfoot"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'+(isT?'Your document, and the finished translation once ready, appear here.':'Shared with the ICON Lingua team and your assigned interpreter.')+'</div>') : '';
   var count = (files && files.length) ? (' ('+files.length+')') : '';
   var collapsed = !!_docsCollapsed[b.id];
   // header subtitle changes when collapsed
   var sub = collapsed
     ? ((files && files.length)? (files.length+' document'+(files.length===1?'':'s')+' · click to expand') : 'Click to expand')
-    : (editable?'Upload an agenda, reference material or other useful documents (optional).':'Documents you shared for this booking.');
+    : (editable?'Upload an agenda, reference material or other useful documents (optional).':(isT?'Your document, and the finished translation when it\'s ready.':'Documents you shared for this booking.'));
   var chevron = collapsed
     ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
     : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>';
