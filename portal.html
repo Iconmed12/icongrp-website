@@ -1120,7 +1120,8 @@ async function loadInvoices(quiet){
     // tiles
     h+='<div class="sumrow"><div class="sum"><div class="n amber">'+money(awaiting)+'</div><div class="sl">Awaiting invoice · issues on the 26th</div></div>'
       +'<div class="sum"><div class="n green">'+money(paidYear)+'</div><div class="sl">Paid this year</div></div></div>';
-    // recent jobs
+    // recent jobs — oldest first (ascending by job date)
+    recentJobs.sort(function(a,b){ return new Date(a.booking_date||a.created_at||0) - new Date(b.booking_date||b.created_at||0); });
     if(recentJobs.length){
       h+='<div class="isect">Recent jobs</div>';
       h+=recentJobs.slice(0,8).map(function(b){
