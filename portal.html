@@ -989,22 +989,42 @@ function pCheckAlerts(list){
 // quietly refresh the open tab so Hub changes appear without a manual reload,
 // and chime when the Hub sends back a quote needing the client's response
 var _portalPoll=null, _bookingsCache=[];
+async function portalRefreshNow(){
+  try{
+    var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
+    if(!r.error && r.data){
+      _bookingsCache=r.data;
+      try{ pCheckAlerts(r.data); }catch(e){}
+      if(el('paneBookings') && el('paneBookings').style.display!=='none'){ try{ renderBookings(r.data); }catch(e){} }
+    }
+  }catch(e){}
+  try{ if(el('paneInvoices') && el('paneInvoices').style.display!=='none') loadInvoices(true); }catch(e){}
+}
 function startPortalPoll(){
   if(_portalPoll) clearInterval(_portalPoll);
-  _portalPoll=setInterval(async function(){
+  _portalPoll=setInterval(function(){
     if(document.visibilityState!=='visible') return;
     if(el('viewDash').style.display==='none') return;
-    // always check bookings for new quotes (for the chime), even if that pane isn't open
-    try{
-      var r=await sb.from('portal_bookings').select('*').order('created_at',{ascending:false});
-      if(!r.error && r.data){
-        _bookingsCache=r.data;
-        pCheckAlerts(r.data);
-        if(el('paneBookings').style.display!=='none') renderBookings(r.data);
-      }
-    }catch(e){}
-    if(el('paneInvoices').style.display!=='none') loadInvoices(true);
+    portalRefreshNow();
   }, 10000);
+  // also subscribe to realtime changes so updates appear immediately
+  startPortalRealtime();
+  // refresh the moment the tab regains focus / becomes visible
+  if(!window._portalFocusHooked){
+    window._portalFocusHooked=true;
+    document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='visible') portalRefreshNow(); });
+    window.addEventListener('focus', function(){ portalRefreshNow(); });
+  }
+}
+var _portalChan=null;
+function startPortalRealtime(){
+  try{
+    if(_portalChan){ sb.removeChannel(_portalChan); _portalChan=null; }
+    if(!sb.channel) return; // older client — interval poll still covers it
+    _portalChan=sb.channel('portal-bookings-'+Math.random().toString(36).slice(2))
+      .on('postgres_changes', {event:'*', schema:'public', table:'portal_bookings'}, function(){ portalRefreshNow(); })
+      .subscribe();
+  }catch(e){}
 }
 
 // ===== Dashboard / bookings =====
@@ -1466,10 +1486,12 @@ async function loadFiles(id){
 }
 function docsSection(b){
   var isT=isTranslationBk(b);
-  // for translations the source document was attached at request time, so no
-  // "attach once confirmed" placeholder — the files list below shows it.
+  // translations: the document was uploaded at request time, so there is no
+  // "documents for your interpreter" upload section on these cards at all.
+  if(isT) return '';
+  // only relevant from confirmation onward
   if(b.status!=='booked' && b.status!=='completed'){
-    if(!isT && (b.status==='accepted'||b.status==='finding')){
+    if(b.status==='accepted'||b.status==='finding'){
       return '<div class="docsec" style="margin-top:12px"><h4>Documents</h4><div class="docnote">You\'ll be able to attach documents for your interpreter once this booking is confirmed.</div></div>';
     }
     return '';
