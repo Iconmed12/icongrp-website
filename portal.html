@@ -995,6 +995,8 @@ async function portalRefreshNow(){
     if(!r.error && r.data){
       _bookingsCache=r.data;
       try{ pCheckAlerts(r.data); }catch(e){}
+      // refresh the open card's files too (e.g. a translation just delivered by staff)
+      if(_openBooking!=null){ try{ await loadFiles(_openBooking); }catch(e){} }
       if(el('paneBookings') && el('paneBookings').style.display!=='none'){ try{ renderBookings(r.data); }catch(e){} }
     }
   }catch(e){}
