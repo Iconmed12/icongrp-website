@@ -387,9 +387,19 @@
   .itbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:#8a94a6;font-weight:800;padding:10px 12px;border-bottom:1px solid #eef1f6}
   .itbl td{padding:13px 12px;font-size:13.5px;border-bottom:1px solid #f1f4f8}
   .iamt{font-weight:800}.ist-paid{color:#176A48;font-weight:700}.ist-due{color:#B42318;font-weight:700}
+  .ist-rep{color:#9A6008;font-weight:700}
   .idl{color:var(--brand);font-weight:700;text-decoration:none;font-size:12.5px;cursor:pointer}
   .ipay{background:#176A48;color:#fff;border:none;border-radius:7px;padding:6px 12px;font-weight:700;font-size:12px;cursor:pointer;margin-left:8px;text-decoration:none;display:inline-block}
   .imini{font-size:12px;color:#8a94a6}
+  .payrow td{background:#f7f9fc;border-bottom:1px solid #f1f4f8}
+  .paypanel{padding:4px 2px}
+  .paytitle{font-weight:800;color:var(--brand);font-size:13.5px;margin-bottom:10px}
+  .paygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 22px;margin-bottom:12px}
+  .paygrid .pk{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#8a94a6;font-weight:700;margin-bottom:2px}
+  .paygrid .pv{display:block;font-size:14px;font-weight:700;color:#14213D}
+  .paynote{font-size:12.5px;color:#53647A;margin-bottom:12px}
+  .paybtn{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer}
+  .payok{background:#EAF6EF;border:1px solid #bfe3cf;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#176A48;font-weight:600}
   @media(max-width:520px){ .grid{grid-template-columns:1fr} .fld.full{grid-column:auto} }
 </style>
 </head>
@@ -1142,14 +1152,22 @@ async function loadInvoices(quiet){
     else{
       h+='<table class="itbl"><thead><tr><th>Invoice</th><th>Period</th><th>Issued</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody>';
       h+=invoices.map(function(v){
-        var st = v.status==='paid' ? '<span class="ist-paid">Paid</span>' : (v.status==='cancelled'?'<span style="color:#8a94a6">Cancelled</span>':'<span class="ist-due">Due</span>');
-        var pay = (v.status==='due' && v.pay_link) ? '<a class="ipay" href="'+esc(v.pay_link)+'" target="_blank">Pay now</a>' : '';
-        return '<tr><td><b>'+esc(v.invoice_no||('#'+v.id))+'</b><div class="imini">'+(v.booking_count||0)+' booking'+((v.booking_count===1)?'':'s')+'</div></td>'
+        var reported=(v.status==='due' && v.payment_reported);
+        var st = v.status==='paid' ? '<span class="ist-paid">Paid</span>'
+               : (v.status==='cancelled'?'<span style="color:#8a94a6">Cancelled</span>'
+               : (reported?'<span class="ist-rep">Payment reported</span>':'<span class="ist-due">Due</span>'));
+        var payBtn = (v.status==='due') ? '<a class="ipay" onclick="togglePay('+v.id+')">'+(reported?'Payment details':'Pay invoice')+'</a>' : '';
+        var row='<tr><td><b>'+esc(v.invoice_no||('#'+v.id))+'</b><div class="imini">'+(v.booking_count||0)+' booking'+((v.booking_count===1)?'':'s')+'</div></td>'
           +'<td>'+fmtFull(v.period_start)+' – '+fmtFull(v.period_end)+'</td>'
           +'<td>'+fmtFull(v.issued_date)+'</td>'
           +'<td class="iamt">'+money(v.amount)+'</td>'
           +'<td>'+st+'</td>'
-          +'<td><a class="idl" onclick="downloadInvoice('+v.id+')">Download PDF</a>'+pay+'</td></tr>';
+          +'<td><a class="idl" onclick="downloadInvoice('+v.id+')">Download PDF</a>'+payBtn+'</td></tr>';
+        // hidden pay panel (bank transfer) for due invoices
+        if(v.status==='due'){
+          row+='<tr class="payrow" id="payrow'+v.id+'" style="display:none"><td colspan="6">'+payPanel(v)+'</td></tr>';
+        }
+        return row;
       }).join('');
       h+='</tbody></table>';
     }
@@ -1157,6 +1175,48 @@ async function loadInvoices(quiet){
     box.innerHTML=h;
     window._portalInvoices=invoices;
   }catch(e){ box.innerHTML='<div class="dempty">Could not load your invoices.</div>'; }
+}
+
+// Bank details clients pay into (bank transfer only)
+var BANK={ name:'ICONGRP (trading as Icon Medical Limited)', acct:'22225339', sort:'04-06-05' };
+function payPanel(v){
+  var ref=esc(v.invoice_no||('INV-'+v.id));
+  var reported=!!v.payment_reported;
+  var h='<div class="paypanel">'
+    +'<div class="paytitle">Pay by bank transfer</div>'
+    +'<div class="paygrid">'
+      +'<div><span class="pk">Account name</span><span class="pv">'+esc(BANK.name)+'</span></div>'
+      +'<div><span class="pk">Sort code</span><span class="pv">'+esc(BANK.sort)+'</span></div>'
+      +'<div><span class="pk">Account number</span><span class="pv">'+esc(BANK.acct)+'</span></div>'
+      +'<div><span class="pk">Amount</span><span class="pv">'+money(v.amount)+'</span></div>'
+      +'<div><span class="pk">Payment reference</span><span class="pv">'+ref+'</span></div>'
+    +'</div>'
+    +'<div class="paynote">Please use <b>'+ref+'</b> as the payment reference so we can match your transfer. Amount includes VAT.</div>';
+  if(reported){
+    h+='<div class="payok">Thanks — you\'ve told us this payment is on its way. We\'ll mark it paid once it reaches our account.</div>';
+  } else {
+    h+='<button class="paybtn" onclick="reportPayment('+v.id+')">I\'ve made this payment</button>';
+  }
+  h+='</div>';
+  return h;
+}
+function togglePay(id){
+  var r=el('payrow'+id); if(!r) return;
+  var open=(r.style.display!=='none');
+  // close any other open pay panel
+  document.querySelectorAll('.payrow').forEach(function(x){ x.style.display='none'; });
+  r.style.display=open?'none':'';
+}
+async function reportPayment(id){
+  var v=(window._portalInvoices||[]).find(function(x){return x.id===id;}); if(!v) return;
+  try{
+    var r=await sb.from('portal_invoices').update({ payment_reported:true, payment_reported_at:new Date().toISOString(), payment_method:'bank_transfer' }).eq('id',id).select();
+    if(r.error){ alert('Could not record that just now. Please try again.'); return; }
+    v.payment_reported=true;
+    // re-render just this panel
+    var cell=el('payrow'+id); if(cell){ cell.querySelector('td').innerHTML=payPanel(v); }
+    loadInvoices(true);
+  }catch(e){ alert('Something went wrong. Please try again.'); }
 }
 
 function downloadInvoice(id){
@@ -1178,7 +1238,9 @@ function downloadInvoice(id){
     +'<div class="mut" style="margin-top:6px">Period: '+fmtFull(v.period_start)+' – '+fmtFull(v.period_end)+'</div>'
     +'<table><thead><tr><th>Service</th><th>Date</th><th>PO / ref</th><th style="text-align:right">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
     +'<div class="tot">Total: '+money(v.amount)+'</div>'
-    +'<div class="mut" style="margin-top:24px">Payable within the terms agreed, by bank transfer. Please quote invoice number '+esc(v.invoice_no||'')+'.</div>'
+    +'<div style="margin-top:24px;border:1px solid #e5e9f0;border-radius:8px;padding:12px 14px"><div style="font-weight:700;margin-bottom:6px">Pay by bank transfer</div>'
+      +'<div class="mut">Account name: <b>'+esc(BANK.name)+'</b><br>Sort code: <b>'+esc(BANK.sort)+'</b> · Account number: <b>'+esc(BANK.acct)+'</b><br>Reference: <b>'+esc(v.invoice_no||('INV-'+v.id))+'</b></div></div>'
+    +'<div class="mut" style="margin-top:12px">Payable within the terms agreed. Please quote invoice number '+esc(v.invoice_no||'')+' as your payment reference. Amount includes VAT.</div>'
     +'<script>window.onload=function(){window.print();}<\/script></body></html>');
   w.document.close();
 }
