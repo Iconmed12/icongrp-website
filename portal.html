@@ -2340,18 +2340,67 @@ async function loadPricing(){
   if(!TPRICE) TPRICE={rate_standard:0.12,rate_certified:0.16,rate_specialist:0.20,urgent_surcharge:0.25,min_charge:35,standard_days:3,urgent_days:1,words_per_day:2000};
 }
 function ratePerWord(){ return TPRICE?({standard:TPRICE.rate_standard,certified:TPRICE.rate_certified,specialist:TPRICE.rate_specialist}[NR_TYPE]):0.12; }
+// ---- client rate card (Hub) takes priority over the global translation_pricing ----
+function clientCard(){
+  var c=CURRENT_CUST; if(!c || !c.rate_card_active) return null;
+  var j=c.rate_card_json; if(typeof j==='string'){ try{ j=JSON.parse(j); }catch(e){ j=null; } }
+  return j||null;
+}
+function rcN(v){ var n=parseFloat(String(v==null?'':v).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
+// resolve a per-word translation rate from the client's card for the current type/languages
+function cardTransRate(){
+  var card=clientCard(); if(!card) return null;
+  var from=((WZ&&WZ.from)||'').toLowerCase(), to=((WZ&&WZ.to)||'').toLowerCase();
+  // 1) language/pair override (translation kind)
+  var langs=(card.languages||[]).filter(function(l){ return (l.kind||'interpreting')==='translation' && rcN(l.rate)>0; });
+  var hit=langs.find(function(l){ return (l.from||'').toLowerCase()===from && (l.to||'').toLowerCase()===to && from && to; });
+  if(!hit) hit=langs.find(function(l){ var lf=(l.from||'').toLowerCase(), lt=(l.to||'').toLowerCase(); var single=(lf&&!lt)?lf:((lt&&!lf)?lt:''); return single && (single===from||single===to); });
+  if(hit) return {rate:rcN(hit.rate), src:'language', label:(hit.from||'')+' → '+(hit.to||'')};
+  // 2) standard translation row by type (standard/certified/specialist)
+  var rows=(card.translation||[]);
+  var want=NR_TYPE; // 'standard'|'certified'|'specialist'
+  var std=rows.find(function(r){ return (r.service||'').toLowerCase().indexOf(want)>=0 && rcN(r.rate)>0; });
+  if(!std) std=rows.find(function(r){ return rcN(r.rate)>0; });
+  if(std) return {rate:rcN(std.rate), src:'standard', label:std.service||''};
+  return null;
+}
 function quoteCalc(){
-  // returns {words, rate, base, urgent, total, min, manual}
+  // returns {words, rate, base, urgent, total, min, manual, source, breakdown}
   var c=nrCombined();
   var words=(c.status==='ok')?c.words:null;
-  var rate=Number(ratePerWord());
-  if(words==null) return {words:null, rate:rate, base:null, urgent:0, total:null, manual:true};
+  var card=clientCard();
+  var cardRate=card?cardTransRate():null;
+  var usingCard=!!cardRate;
+  var rate=usingCard?cardRate.rate:Number(ratePerWord());
+  if(words==null) return {words:null, rate:rate, base:null, urgent:0, total:null, manual:true, source:usingCard?'card':'global'};
   var base=words*rate;
-  var minc=Number(TPRICE?TPRICE.min_charge:0);
+  var minc=usingCard?rcN(card.billing&&card.billing.min_charge):Number(TPRICE?TPRICE.min_charge:0);
   var minApplied=false;
-  if(base<minc){ base=minc; minApplied=true; }
-  var urgent=(NR_SPEED==='urgent')?(base*Number(TPRICE?TPRICE.urgent_surcharge:0.25)):0;
-  return {words:words, rate:rate, base:base, urgent:urgent, total:base+urgent, minApplied:minApplied, manual:false};
+  if(minc>0 && base<minc){ base=minc; minApplied=true; }
+  var urgPct=usingCard?(rcN(card.billing&&card.billing.urgent_pct)/100):Number(TPRICE?TPRICE.urgent_surcharge:0.25);
+  var urgent=(NR_SPEED==='urgent')?(base*urgPct):0;
+  return {words:words, rate:rate, base:base, urgent:urgent, total:base+urgent, minApplied:minApplied, manual:false,
+    source:usingCard?'card':'global', rateLabel:usingCard?cardRate.label:'', urgPct:urgPct};
+}
+// build the frozen snapshot stored on the booking when a quote is produced
+function quoteSnapshot(){
+  var q=quoteCalc(); var c=CURRENT_CUST||{};
+  var lines=[];
+  if(!q.manual){
+    lines.push({label:'Translation'+(q.rateLabel?(' ('+q.rateLabel+')'):'')+' @ '+money(q.rate)+'/word', detail:Number(q.words).toLocaleString()+' words', amount:q.base});
+    if(q.minApplied) lines.push({label:'Minimum order charge applied', amount:0});
+    if(q.urgent>0) lines.push({label:'Urgency +'+Math.round(q.urgPct*100)+'%', amount:q.urgent});
+  }
+  var net=q.manual?null:q.total;
+  var vb=(net!=null)?vatBreakdown(net,'excl'):{net:null,vat:null,gross:null};
+  return {
+    source:q.source, manual:q.manual,
+    rate_card_version:(q.source==='card')?(c.rate_card_effective||c.updated_at||'current'):'global',
+    resolved_rate:q.rate, unit:'per word', word_count:q.words,
+    translation_type:NR_TYPE, delivery_speed:NR_SPEED,
+    lines:lines, net:net, vat:vb.vat, gross:vb.gross,
+    calculated_at:new Date().toISOString()
+  };
 }
 function nrPickType(t){ NR_TYPE=t; document.querySelectorAll('.nr-topt').forEach(function(o){ o.classList.toggle('on', o.getAttribute('data-type')===t); }); nrPriceRender(); }
 function money(n){ return '£'+Number(n).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -2584,6 +2633,8 @@ async function submitRequest(){
     } else {
       row.manual_quote=true;           // no auto price — staff will quote
     }
+    // freeze the calculation + rate-card version onto the booking (Phase C)
+    try{ var snap=quoteSnapshot(); row.quote_snapshot=snap; row.rate_card_version=snap.rate_card_version; }catch(e){}
   }
   // assign a sequential order number (TRA- for translations, INT- for interpreting)
   try{
@@ -2593,6 +2644,11 @@ async function submitRequest(){
   }catch(e){}
   try{
     var r=await sb.from('portal_bookings').insert(row).select();
+    if(r.error){
+      // the quote-freeze columns may not exist yet — retry without them
+      var m=/column .*(quote_snapshot|rate_card_version|order_no)/i.test(r.error.message||'');
+      if(m){ delete row.quote_snapshot; delete row.rate_card_version; r=await sb.from('portal_bookings').insert(row).select(); }
+    }
     if(r.error){ showMsg('nrMsg','err','Could not send: '+r.error.message); btn.disabled=false; btn.innerHTML=_h; return; }
     var nb=(r.data&&r.data[0]);
     // for a translation, upload every document to the new booking
