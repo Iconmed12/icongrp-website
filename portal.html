@@ -110,6 +110,17 @@
   .sidehelp a{font-size:12.5px;color:var(--brand);font-weight:700;text-decoration:none;word-break:break-all}
   /* ===== Request wizard ===== */
   .reqgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:48px;align-items:start}
+  /* translation document upload */
+  .nr-drop{border:2px dashed #b9cde8;border-radius:14px;padding:30px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:#fbfdff}
+  .nr-drop:hover,.nr-drop.drag{border-color:#2E72D2;background:#f3f8ff}
+  .nr-dropttl{font-size:17px;font-weight:800;color:#0d1b3a;margin-top:8px}
+  .nr-dropor{color:#8a94a6;font-size:13px;margin:4px 0}
+  .nr-choose{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #d7dce5;border-radius:10px;padding:10px 18px;font-size:14px;font-weight:700;color:#15356b;cursor:pointer;font-family:inherit}
+  .nr-choose:hover{border-color:#2E72D2;color:#2E72D2}
+  .nr-drophint{font-size:12.5px;color:#8a94a6;margin-top:14px}
+  .nr-filerow{display:flex;align-items:center;gap:11px;border:1px solid #e6ecf5;border-radius:10px;padding:11px 13px;background:#fff}
+  .nr-fileic{width:34px;height:34px;border-radius:8px;background:#eaf1fb;color:#2E72D2;display:flex;align-items:center;justify-content:center;flex:none;font-size:11px;font-weight:800}
+  .nr-filex{margin-left:auto;color:#B42318;cursor:pointer;font-weight:700;font-size:13px;background:none;border:none}
   .wzback{font-size:13px;color:var(--brand);font-weight:700;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
   .wzh1{margin:12px 0 4px;font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
   .wzsub{color:var(--muted);font-size:14.5px;margin:0 0 26px}
@@ -547,14 +558,27 @@
               <div class="wzcard">
                 <!-- STEP 1: SERVICE DETAILS -->
                 <div class="wzbody wzstep" data-step="1">
-                  <div class="wzstepttl">1. Service details</div>
+                  <!-- Translation only: document upload -->
+                  <div id="nrDocWrap" style="display:none;margin-bottom:22px">
+                    <div class="wzstepttl" style="margin-bottom:4px">1. Upload your document <span class="req">*</span></div>
+                    <div id="nrDrop" class="nr-drop" onclick="document.getElementById('nrDocInput').click()">
+                      <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#2E72D2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V7m0 0l-4 4m4-4l4 4"/><path d="M4 16a4 4 0 0 0 4 4h8a4 4 0 0 0 1.5-7.7A5 5 0 0 0 8 8.3"/></svg>
+                      <div class="nr-dropttl">Drag and drop your file here</div>
+                      <div class="nr-dropor">or</div>
+                      <button type="button" class="nr-choose"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg> Choose file</button>
+                      <div class="nr-drophint">PDF, Word, Excel, PowerPoint, JPG or PNG (max 10MB)</div>
+                    </div>
+                    <input type="file" id="nrDocInput" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" onchange="nrDocPick(this.files)">
+                    <div id="nrDocChosen" style="display:none;margin-top:10px"></div>
+                  </div>
+                  <div class="wzstepttl" id="wzS1ttl">1. Service details</div>
                   <p class="wzsteplead" id="wzS1lead">Tell us what type of interpreting service you need.</p>
                   <div class="grid">
-                    <div class="fld"><label>Language pair <span class="req">*</span></label>
+                    <div class="fld"><label id="nrFromLbl">Language pair</label> <span class="req">*</span>
                       <div class="selwrap"><span class="lead"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
                         <select id="nrFrom"></select></div>
                       <div class="hint">From language</div></div>
-                    <div class="fld"><label>Into <span class="req">*</span></label>
+                    <div class="fld"><label id="nrToLbl">Into</label> <span class="req">*</span>
                       <div class="selwrap"><span class="lead"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
                         <select id="nrTo"></select></div>
                       <div class="hint">Target language</div></div>
@@ -579,11 +603,11 @@
                     </div>
                   </div>
 
-                  <div class="fld full" style="margin-top:18px"><label>Duration <span class="req">*</span></label>
+                  <div class="fld full" id="nrDurWrap" style="margin-top:18px"><label>Duration <span class="req">*</span></label>
                     <div class="selwrap"><span class="lead"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
                       <select id="nrDuration"><option value="">Select duration</option><option>30 minutes</option><option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>Half day</option><option>Full day</option><option>More than one day</option></select></div>
                   </div>
-                  <div class="fld full"><label>Additional information (optional)</label>
+                  <div class="fld full"><label id="nrDetailsLbl">Additional information (optional)</label>
                     <textarea id="nrDetails" maxlength="500" oninput="wzCount()" style="min-height:96px;width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #d7dce5;border-radius:10px;font-size:14px;font-family:inherit" placeholder="Any specific requirements, context or notes for the interpreter. Please don't paste confidential documents here."></textarea>
                     <div class="charc"><span id="nrCount">0</span>/500</div>
                   </div>
@@ -1766,20 +1790,36 @@ function startWizard(mode){
   el('subInterp').classList.toggle('on', mode==='interpreter');
   el('subTrans').classList.toggle('on', mode==='translation');
   // mode-specific copy
+  nrDocClear();
   if(mode==='translation'){
-    el('wzTitle').textContent='Request a Translation';
-    el('wzLead').textContent='Submit documents for translation, certified where needed.';
-    el('wzS1lead').textContent='Tell us what you need translated.';
-    el('nrFmtWrap').style.display='none';            // no in-person/video/phone for documents
+    el('wzTitle').textContent='Request a Document Translation';
+    el('wzLead').textContent='Upload your document, choose your languages and get a translation.';
+    el('nrDocWrap').style.display='';                 // document upload
+    el('nrDurWrap').style.display='none';             // no duration for documents
+    el('nrFmtWrap').style.display='none';             // no in-person/video/phone for documents
+    el('wzS1ttl').textContent='2. Translation details';
+    el('wzS1lead').textContent='Choose the source and target language for your document.';
+    el('nrFromLbl').textContent='From language';
+    el('nrToLbl').textContent='To language';
+    el('nrDetailsLbl').innerHTML='3. Requirements <span style="font-weight:600;color:#8a94a6">(optional)</span>';
+    el('nrDetails').placeholder='e.g. certified translation, formatting, specific terms or deadline notes…';
     el('wzInfoTitle').textContent='Translation services';
     el('wzSteps').querySelector('[data-s="2"]').lastChild.textContent='Deadline';
     el('wzSteps').querySelector('[data-s="3"]').lastChild.textContent='Delivery';
     el('wzInfoBul').innerHTML=infoBullets(['Qualified, specialist translators','Certified and sworn translations','Confidential handling of documents','Fast, reliable turnaround']);
+    nrDropInit();
   } else {
     el('wzTitle').textContent='Request an Interpreter';
     el('wzLead').textContent='Book a professional interpreter for your meeting, appointment or event.';
-    el('wzS1lead').textContent='Tell us what type of interpreting service you need.';
+    el('nrDocWrap').style.display='none';
+    el('nrDurWrap').style.display='';
     el('nrFmtWrap').style.display='';
+    el('wzS1ttl').textContent='1. Service details';
+    el('wzS1lead').textContent='Tell us what type of interpreting service you need.';
+    el('nrFromLbl').textContent='Language pair';
+    el('nrToLbl').textContent='Into';
+    el('nrDetailsLbl').textContent='Additional information (optional)';
+    el('nrDetails').placeholder="Any specific requirements, context or notes for the interpreter. Please don't paste confidential documents here.";
     el('wzInfoTitle').textContent='Interpreter services';
     el('wzSteps').querySelector('[data-s="2"]').lastChild.textContent='Date & time';
     el('wzSteps').querySelector('[data-s="3"]').lastChild.textContent='Location';
@@ -1794,6 +1834,32 @@ function pickFmt(card){
   card.classList.add('on'); WZ.fmt=card.getAttribute('data-fmt');
 }
 function wzCount(){ var t=el('nrDetails'); el('nrCount').textContent=(t&&t.value?t.value.length:0); }
+// translation document staging
+var NR_DOC=null;
+var NR_DOC_MAX=10*1024*1024;
+var NR_DOC_OK=['pdf','doc','docx','xls','xlsx','ppt','pptx','jpg','jpeg','png'];
+function nrDocPick(files){
+  if(!files||!files.length) return;
+  var f=files[0];
+  var ext=(f.name.split('.').pop()||'').toLowerCase();
+  if(NR_DOC_OK.indexOf(ext)<0){ showMsg('nrMsg','err','Please upload a PDF, Word, Excel, PowerPoint, JPG or PNG file.'); return; }
+  if(f.size>NR_DOC_MAX){ showMsg('nrMsg','err','That file is over 10MB. Please upload a smaller file.'); return; }
+  clearMsg('nrMsg');
+  NR_DOC=f;
+  var kb=f.size<1024*1024?(Math.round(f.size/1024)+' KB'):((Math.round(f.size/1024/102.4)/10)+' MB');
+  var chosen=el('nrDocChosen');
+  chosen.style.display='';
+  chosen.innerHTML='<div class="nr-filerow"><div class="nr-fileic">'+esc(ext.toUpperCase().slice(0,4))+'</div>'
+    +'<div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;color:#15233b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(f.name)+'</div><div style="font-size:11.5px;color:#8a94a6">'+kb+'</div></div>'
+    +'<button type="button" class="nr-filex" onclick="nrDocClear()">Remove</button></div>';
+}
+function nrDocClear(){ NR_DOC=null; var i=el('nrDocInput'); if(i) i.value=''; var c=el('nrDocChosen'); if(c){ c.style.display='none'; c.innerHTML=''; } }
+function nrDropInit(){
+  var d=el('nrDrop'); if(!d||d._init) return; d._init=true;
+  ['dragenter','dragover'].forEach(function(ev){ d.addEventListener(ev,function(e){ e.preventDefault(); e.stopPropagation(); d.classList.add('drag'); }); });
+  ['dragleave','drop'].forEach(function(ev){ d.addEventListener(ev,function(e){ e.preventDefault(); e.stopPropagation(); d.classList.remove('drag'); }); });
+  d.addEventListener('drop',function(e){ if(e.dataTransfer&&e.dataTransfer.files) nrDocPick(e.dataTransfer.files); });
+}
 function isRemote(){ return WZ.mode==='interpreter' && (WZ.fmt==='Video remote'||WZ.fmt==='Telephone'); }
 
 function renderWzStep(){
@@ -1817,15 +1883,21 @@ function renderWzStep(){
   }
   // buttons
   el('wzBack').style.visibility = WZ.step===1?'hidden':'visible';
-  el('wzNext').innerHTML = (WZ.step===4)
-    ? 'Send request <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>'
-    : WZ_NEXTLBL[WZ.step]+' <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var arrow=' <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var send=' <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+  var lbl;
+  if(WZ.step===4){ lbl='Send request'+send; }
+  else if(WZ.step===1 && WZ.mode==='translation'){ lbl='Get a Quote'+arrow; }
+  else if(WZ.mode==='translation'){ lbl=(WZ.step===2?'Next: Delivery':'Next: Review')+arrow; }
+  else { lbl=WZ_NEXTLBL[WZ.step]+arrow; }
+  el('wzNext').innerHTML=lbl;
   if(WZ.step===4) buildReview();
   try{ document.querySelector('.content').scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){}
 }
 
 function wzValidate(step){
   if(step===1){
+    if(WZ.mode==='translation' && !NR_DOC) return 'Please upload the document you need translated.';
     if(!el('nrFrom').value||!el('nrTo').value) return 'Please choose both languages.';
     if(WZ.mode==='interpreter' && !el('nrDuration').value) return 'Please choose a duration.';
   }
@@ -1873,6 +1945,7 @@ function serviceLabel(){
 async function submitRequest(){
   clearMsg('nrMsg');
   var po=el('nrPO').value.trim();
+  if(WZ.mode==='translation' && !NR_DOC){ showMsg('nrMsg','err','Please upload the document you need translated.'); return; }
   if(!po){ showMsg('nrMsg','err','A PO number or reference is required for every booking.'); return; }
   var pounds=parseInt(el('nrOfferP').value)||0, pence=parseInt(el('nrOfferPence').value)||0;
   if(pence>99) pence=99;
@@ -1890,9 +1963,21 @@ async function submitRequest(){
   try{
     var r=await sb.from('portal_bookings').insert(row).select();
     if(r.error){ showMsg('nrMsg','err','Could not send: '+r.error.message); btn.disabled=false; btn.innerHTML=_h; return; }
+    var nb=(r.data&&r.data[0]);
+    // for a translation, upload the document to the new booking
+    if(WZ.mode==='translation' && NR_DOC && nb){
+      try{
+        var uid=(CURRENT_CUST&&CURRENT_CUST.id);
+        var safe=NR_DOC.name.replace(/[^\w.\-]+/g,'_');
+        var path=uid+'/'+nb.id+'/'+Date.now()+'_'+safe;
+        var up=await sb.storage.from('booking-docs').upload(path, NR_DOC, {upsert:false, contentType:NR_DOC.type||undefined});
+        if(!up.error){ await sb.from('booking_files').insert({ booking_id:nb.id, customer_id:uid, path:path, file_name:NR_DOC.name, file_size:NR_DOC.size, file_type:NR_DOC.type||'', uploaded_by:(CURRENT_CUST&&CURRENT_CUST.organisation)||'Client' }); }
+      }catch(e){}
+    }
     // record the first entry in the booking's activity history
-    try{ var nb=(r.data&&r.data[0]); if(nb){ await logEvent(nb,'requested',null,'Booking request submitted.'); } }catch(e){}
+    try{ if(nb){ await logEvent(nb,'requested',null, WZ.mode==='translation'?'Translation request submitted with document.':'Booking request submitted.'); } }catch(e){}
     btn.disabled=false; btn.innerHTML=_h;
+    nrDocClear();
     dashTab('bookings'); loadBookings();
   }catch(e){ showMsg('nrMsg','err','Something went wrong. Please try again.'); btn.disabled=false; btn.innerHTML=_h; }
 }
