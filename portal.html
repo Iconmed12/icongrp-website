@@ -615,15 +615,16 @@
 
                 <!-- STEP 2: DATE & TIME -->
                 <div class="wzbody wzstep" data-step="2" style="display:none">
-                  <div class="wzstepttl">2. Date &amp; time</div>
-                  <p class="wzsteplead">When do you need the interpreter? We'll confirm availability.</p>
+                  <div class="wzstepttl" id="wzS2ttl">2. Date &amp; time</div>
+                  <p class="wzsteplead" id="wzS2lead">When do you need the interpreter? We'll confirm availability.</p>
                   <div class="grid">
-                    <div class="fld"><label>Date <span class="req">*</span></label><input type="date" id="nrDate"></div>
-                    <div class="fld"><label>Start time <span class="req">*</span></label><input type="time" id="nrTime"></div>
+                    <div class="fld" id="nrDateFld"><label id="nrDateLbl">Date <span class="req">*</span></label><input type="date" id="nrDate"></div>
+                    <div class="fld" id="nrTimeFld"><label>Start time <span class="req">*</span></label><input type="time" id="nrTime"></div>
                   </div>
-                  <div class="fld full"><label>Setting</label>
+                  <div class="fld full" id="nrSettingFld"><label>Setting</label>
                     <select id="nrSetting"><option value="">Select...</option><option>Medical or hospital</option><option>Social care or assessment</option><option>Legal, court or tribunal</option><option>Business meeting</option><option>Education or training</option><option>Other</option></select>
                     <div class="hint">Helps us match the right interpreter.</div></div>
+                  <div class="hint" id="nrDeadlineHint" style="display:none;margin-top:-4px">Leave blank if you have no fixed deadline.</div>
                 </div>
 
                 <!-- STEP 3: LOCATION -->
@@ -1807,6 +1808,14 @@ function startWizard(mode){
     el('wzSteps').querySelector('[data-s="2"]').lastChild.textContent='Deadline';
     el('wzSteps').querySelector('[data-s="3"]').lastChild.textContent='Delivery';
     el('wzInfoBul').innerHTML=infoBullets(['Qualified, specialist translators','Certified and sworn translations','Confidential handling of documents','Fast, reliable turnaround']);
+    // step 2 = deadline date only (no start time, no interpreter setting)
+    el('wzS2ttl').textContent='2. Deadline';
+    el('wzS2lead').textContent='When do you need the translation by? Leave blank if there is no fixed deadline.';
+    el('nrDateLbl').innerHTML='Required-by date';
+    el('nrTimeFld').style.display='none';
+    el('nrSettingFld').style.display='none';
+    el('nrDeadlineHint').style.display='';
+    el('nrDateFld').classList.add('full');
     nrDropInit();
   } else {
     el('wzTitle').textContent='Request an Interpreter';
@@ -1824,6 +1833,14 @@ function startWizard(mode){
     el('wzSteps').querySelector('[data-s="2"]').lastChild.textContent='Date & time';
     el('wzSteps').querySelector('[data-s="3"]').lastChild.textContent='Location';
     el('wzInfoBul').innerHTML=infoBullets(['Qualified and experienced interpreters','Wide range of languages and dialects','Flexible booking options','Secure and confidential']);
+    // step 2 = date + start time + setting (interpreter)
+    el('wzS2ttl').textContent='2. Date & time';
+    el('wzS2lead').textContent="When do you need the interpreter? We'll confirm availability.";
+    el('nrDateLbl').innerHTML='Date <span class="req">*</span>';
+    el('nrTimeFld').style.display='';
+    el('nrSettingFld').style.display='';
+    el('nrDeadlineHint').style.display='none';
+    el('nrDateFld').classList.remove('full');
   }
   renderWzStep();
 }
