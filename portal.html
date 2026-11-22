@@ -368,7 +368,10 @@
   .balcard .bl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
   .balcard .bbig{font-size:40px;font-weight:800;line-height:1.05;margin:8px 0 4px}
   .balcard .bsub{font-size:13px;opacity:.92}
-  .balcard .bpay{font-size:12.5px;opacity:.9;text-align:right;max-width:260px;line-height:1.5}
+  .balcard .bpay{font-size:12.5px;opacity:.95;text-align:right;max-width:300px;line-height:1.5}
+  .balcard .bankline{display:flex;justify-content:space-between;gap:16px;font-size:12.5px;padding:1px 0}
+  .balcard .bankline span{opacity:.8}
+  .balcard .bankline b{font-weight:800}
   .sumrow{display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap}
   .sum{flex:1;min-width:150px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
   .sum .n{font-size:22px;font-weight:800}.sum .sl{font-size:12px;color:var(--muted);margin-top:2px}
@@ -1138,7 +1141,11 @@ async function loadInvoices(quiet){
     h+='<div class="balcard"><div><div class="bl">Current balance</div>'
       +'<div class="bbig">'+money(balance)+'</div>'
       +'<div class="bsub">'+(balBits.length?balBits.join(' · '):'Nothing outstanding')+'</div></div>'
-      +'<div class="bpay">Pay by bank transfer to the account on your invoice, quoting your invoice number. Amounts include VAT.</div></div>';
+      +'<div class="bpay"><div style="font-weight:800;margin-bottom:6px;opacity:1">Pay by bank transfer</div>'
+        +'<div class="bankline"><span>Account name</span><b>'+esc(BANK.name)+'</b></div>'
+        +'<div class="bankline"><span>Sort code</span><b>'+esc(BANK.sort)+'</b></div>'
+        +'<div class="bankline"><span>Account no.</span><b>'+esc(BANK.acct)+'</b></div>'
+        +'<div style="margin-top:7px;font-size:11.5px;opacity:.85">Quote your invoice number as the reference. Amounts include VAT.</div></div></div>';
     // tiles
     h+='<div class="sumrow"><div class="sum"><div class="n amber">'+money(awaiting)+'</div><div class="sl">Awaiting invoice · issues on the 26th</div></div>'
       +'<div class="sum"><div class="n green">'+money(paidYear)+'</div><div class="sl">Paid this year</div></div></div>';
@@ -1168,17 +1175,12 @@ async function loadInvoices(quiet){
         var st = v.status==='paid' ? '<span class="ist-paid">Paid</span>'
                : (v.status==='cancelled'?'<span style="color:#8a94a6">Cancelled</span>'
                : (reported?'<span class="ist-rep">Payment reported</span>':'<span class="ist-due">Due</span>'));
-        var payBtn = (v.status==='due') ? '<a class="ipay" onclick="togglePay('+v.id+')">'+(reported?'Payment details':'Pay invoice')+'</a>' : '';
         var row='<tr><td><b>'+esc(v.invoice_no||('#'+v.id))+'</b><div class="imini">'+(v.booking_count||0)+' booking'+((v.booking_count===1)?'':'s')+'</div></td>'
           +'<td>'+fmtFull(v.period_start)+' – '+fmtFull(v.period_end)+'</td>'
           +'<td>'+fmtFull(v.issued_date)+'</td>'
           +'<td class="iamt">'+money(v.amount)+'</td>'
           +'<td>'+st+'</td>'
-          +'<td><a class="idl" onclick="downloadInvoice('+v.id+')">Download PDF</a>'+payBtn+'</td></tr>';
-        // hidden pay panel (bank transfer) for due invoices
-        if(v.status==='due'){
-          row+='<tr class="payrow" id="payrow'+v.id+'" style="display:none"><td colspan="6">'+payPanel(v)+'</td></tr>';
-        }
+          +'<td><a class="idl" onclick="downloadInvoice('+v.id+')">Download PDF</a></td></tr>';
         return row;
       }).join('');
       h+='</tbody></table>';
