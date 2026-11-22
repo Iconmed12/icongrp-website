@@ -1470,8 +1470,8 @@ function renderBookings(listArg){
   box.innerHTML=list.map(bookingCard).join('');
 }
 
-function fmtRef(b){ return 'BK'+String(b.id).padStart(4,'0'); }
-function homeRef(b){ return (isTranslationBk(b)?'TR-':'BK-')+String(b.id).padStart(6,'0'); }
+function fmtRef(b){ return b.order_no || ((isTranslationBk(b)?'TRA-':'INT-')+String(b.id).padStart(4,'0')); }
+function homeRef(b){ return b.order_no || ((isTranslationBk(b)?'TRA-':'INT-')+String(b.id).padStart(4,'0')); }
 
 // ===== Dashboard home =====
 function renderHome(){
@@ -2584,6 +2584,12 @@ async function submitRequest(){
       row.manual_quote=true;           // no auto price — staff will quote
     }
   }
+  // assign a sequential order number (TRA- for translations, INT- for interpreting)
+  try{
+    var _kind=(WZ.mode==='translation')?'TRA':'INT';
+    var _on=await sb.rpc('next_order_no',{p_kind:_kind});
+    if(!_on.error && _on.data) row.order_no=_on.data;
+  }catch(e){}
   try{
     var r=await sb.from('portal_bookings').insert(row).select();
     if(r.error){ showMsg('nrMsg','err','Could not send: '+r.error.message); btn.disabled=false; btn.innerHTML=_h; return; }
