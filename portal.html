@@ -1493,7 +1493,7 @@ function translationDelivery(b){
     return '<div class="docsec" style="margin-top:12px"><h4>Your translation</h4><div class="docnote">We\'re working on your translation. The finished document will appear here to download when it\'s ready.</div></div>';
   }
   return '<div class="docsec" style="margin-top:12px"><h4>Your translation</h4>'
-    +'<div class="docnote" style="background:#f2fbf6;border-color:#cce7d8;color:#176A48;margin-bottom:10px">Your translation is ready. Download it below.</div>'
+    +'<div style="color:#B42318;font-weight:700;font-size:13px;margin:2px 0 10px">Your translation is ready. Download it below.</div>'
     +delivered.map(function(f){ var ic=fileIcon(f.file_name,f.file_type);
       return '<div class="frow"><div class="fic '+ic[0]+'">'+ic[1]+'</div>'
         +'<div class="fmeta"><div class="fname">'+esc(f.file_name)+'</div><div class="fsize">'+humanSize(f.file_size)+'</div></div>'
