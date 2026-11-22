@@ -1036,8 +1036,12 @@ function startPortalRealtime(){
   try{
     if(_portalChan){ sb.removeChannel(_portalChan); _portalChan=null; }
     if(!sb.channel) return; // older client — interval poll still covers it
-    _portalChan=sb.channel('portal-bookings-'+Math.random().toString(36).slice(2))
+    _portalChan=sb.channel('portal-live-'+Math.random().toString(36).slice(2))
       .on('postgres_changes', {event:'*', schema:'public', table:'portal_bookings'}, function(){ portalRefreshNow(); })
+      // invoice status changes (e.g. staff mark it paid on the Hub) push straight through
+      .on('postgres_changes', {event:'*', schema:'public', table:'portal_invoices'}, function(){
+        try{ if(el('paneInvoices') && el('paneInvoices').style.display!=='none') loadInvoices(true); }catch(e){}
+      })
       .subscribe();
   }catch(e){}
 }
