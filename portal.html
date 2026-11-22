@@ -591,7 +591,7 @@
                       <button type="button" class="nr-choose"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg> Choose file</button>
                       <div class="nr-drophint">PDF, Word, Excel, PowerPoint, JPG or PNG (max 10MB)</div>
                     </div>
-                    <input type="file" id="nrDocInput" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" onchange="nrDocPick(this.files)">
+                    <input type="file" id="nrDocInput" multiple style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" onchange="nrDocPick(this.files)">
                     <div id="nrDocChosen" style="display:none;margin-top:10px"></div>
                   </div>
                   <div class="wzstepttl" id="wzS1ttl">1. Service details</div>
@@ -655,7 +655,7 @@
                   <div class="wzstepttl" id="wzS2ttl">2. Date &amp; time</div>
                   <p class="wzsteplead" id="wzS2lead">When do you need the interpreter? We'll confirm availability.</p>
                   <div class="grid">
-                    <div class="fld" id="nrDateFld"><label id="nrDateLbl">Date <span class="req">*</span></label><input type="date" id="nrDate"></div>
+                    <div class="fld" id="nrDateFld"><label id="nrDateLbl">Date <span class="req">*</span></label><input type="date" id="nrDate" onchange="if(WZ.mode==='translation')nrDateChange()"></div>
                     <div class="fld" id="nrTimeFld"><label>Start time <span class="req">*</span></label><input type="time" id="nrTime"></div>
                   </div>
                   <div class="fld full" id="nrSettingFld"><label>Setting</label>
@@ -1933,6 +1933,8 @@ function startWizard(mode){
     el('nrDateFld').classList.add('full');
     el('nrTypeWrap').style.display='';
     NR_TYPE='standard'; NR_SPEED='standard'; nrPickType('standard');
+    NR_URGENT_LOCKED=false; var _std=document.querySelector('.nr-dopt[data-speed="standard"]'); if(_std){ _std.style.opacity=''; _std.style.pointerEvents=''; _std.title=''; }
+    el('nrUrgentNote').innerHTML='<b>Urgent delivery selected.</b> A surcharge has been added to your quote. We\'ll confirm availability after you submit your request.';
     if(!TPRICE){ loadPricing().then(nrPriceRender); } else { nrPriceRender(); }
     nrDropInit();
   } else {
@@ -1973,64 +1975,86 @@ function pickFmt(card){
 }
 function wzCount(){ var t=el('nrDetails'); el('nrCount').textContent=(t&&t.value?t.value.length:0); }
 // translation document staging
-var NR_DOC=null;
+// NR_DOCS: array of {file, analysis|null}. analysis = {words,method,status,format}
+var NR_DOCS=[];
 var NR_DOC_MAX=10*1024*1024;
 var NR_DOC_OK=['pdf','doc','docx','xls','xlsx','ppt','pptx','jpg','jpeg','png'];
-// result of the document analysis: {words, method, status:'ok'|'manual', format}
-var NR_ANALYSIS=null;
 var FMT_LABEL={docx:'Word document',doc:'Word document',pdf:'PDF document',pptx:'PowerPoint',ppt:'PowerPoint',xlsx:'Excel spreadsheet',xls:'Excel spreadsheet',txt:'Text file',jpg:'Image',jpeg:'Image',png:'Image'};
+// combined analysis across all files: total words, status ok only if ALL ok
+function nrCombined(){
+  if(!NR_DOCS.length) return {count:0, words:0, status:'none', analysing:false};
+  var analysing=NR_DOCS.some(function(d){ return d.analysis==null; });
+  var anyManual=NR_DOCS.some(function(d){ return d.analysis && d.analysis.status!=='ok'; });
+  var words=NR_DOCS.reduce(function(s,d){ return s+((d.analysis&&d.analysis.status==='ok')?(d.analysis.words||0):0); },0);
+  return {count:NR_DOCS.length, words:words, status:(anyManual?'manual':(analysing?'pending':'ok')), analysing:analysing};
+}
 function nrDocPick(files){
   if(!files||!files.length) return;
-  var f=files[0];
-  var ext=(f.name.split('.').pop()||'').toLowerCase();
-  if(NR_DOC_OK.indexOf(ext)<0){ showMsg('nrMsg','err','Please upload a PDF, Word, Excel, PowerPoint, JPG or PNG file.'); return; }
-  if(f.size>NR_DOC_MAX){ showMsg('nrMsg','err','That file is over 10MB. Please upload a smaller file.'); return; }
   clearMsg('nrMsg');
-  NR_DOC=f; NR_ANALYSIS=null;
-  // analysing state
-  el('nrDocChosen').style.display='';
-  el('nrDocChosen').innerHTML=nrAnalysingPanel(f);
-  nrPriceRender();
-  analyseDoc(f).then(function(res){
-    if(NR_DOC!==f) return; // a newer file was chosen
-    NR_ANALYSIS=res;
-    el('nrDocChosen').innerHTML=nrResultPanel(f,res);
-    nrPriceRender();
-  }).catch(function(){
-    if(NR_DOC!==f) return;
-    NR_ANALYSIS={words:null,method:'manual',status:'manual',format:ext};
-    el('nrDocChosen').innerHTML=nrResultPanel(f,NR_ANALYSIS);
-    nrPriceRender();
+  var added=[];
+  for(var i=0;i<files.length;i++){
+    var f=files[i];
+    var ext=(f.name.split('.').pop()||'').toLowerCase();
+    if(NR_DOC_OK.indexOf(ext)<0){ showMsg('nrMsg','err','"'+f.name+'" is not an accepted type (PDF, Word, Excel, PowerPoint, JPG or PNG).'); continue; }
+    if(f.size>NR_DOC_MAX){ showMsg('nrMsg','err','"'+f.name+'" is over 10MB.'); continue; }
+    if(NR_DOCS.some(function(d){ return d.file.name===f.name && d.file.size===f.size; })) continue; // skip dupes
+    var entry={file:f, analysis:null};
+    NR_DOCS.push(entry); added.push(entry);
+  }
+  var inp=el('nrDocInput'); if(inp) inp.value='';
+  nrRenderDocs(); nrPriceRender();
+  // analyse each newly added file
+  added.forEach(function(entry){
+    analyseDoc(entry.file).then(function(res){ entry.analysis=res; nrRenderDocs(); nrPriceRender(); })
+      .catch(function(){ entry.analysis={words:null,method:'manual',status:'manual',format:(entry.file.name.split('.').pop()||'').toLowerCase()}; nrRenderDocs(); nrPriceRender(); });
   });
 }
-function nrDocClear(){ NR_DOC=null; NR_ANALYSIS=null; var i=el('nrDocInput'); if(i) i.value=''; var c=el('nrDocChosen'); if(c){ c.style.display='none'; c.innerHTML=''; } nrPriceRender(); }
+function nrRemoveDoc(i){ NR_DOCS.splice(i,1); nrRenderDocs(); nrPriceRender(); }
+function nrDocClear(){ NR_DOCS=[]; var i=el('nrDocInput'); if(i) i.value=''; nrRenderDocs(); nrPriceRender(); }
 function fmtKb(sz){ return sz<1024*1024?(Math.round(sz/1024)+' KB'):((Math.round(sz/1024/102.4)/10)+' MB'); }
-function nrAnalysingPanel(f){
-  var ext=(f.name.split('.').pop()||'').toUpperCase().slice(0,4);
-  return '<div class="nr-anal"><div class="nr-fileic">'+esc(ext)+'</div>'
-    +'<div style="flex:1;min-width:0"><div class="nr-fn">'+esc(f.name)+'</div>'
-    +'<div style="font-size:12px;color:#8a94a6"><span class="nr-spin"></span> Analysing document…</div></div>'
-    +'<button type="button" class="nr-filex" onclick="nrDocClear()">Remove</button></div>';
+function nrRenderDocs(){
+  var box=el('nrDocChosen'); if(!box) return;
+  if(!NR_DOCS.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='';
+  var rows=NR_DOCS.map(function(d,i){ return nrDocRow(d,i); }).join('');
+  // combined summary strip when more than one
+  var c=nrCombined();
+  var summary='';
+  if(NR_DOCS.length>1){
+    summary='<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid #e6ecf5;margin-top:8px;padding-top:10px;font-size:13px">'
+      +'<span style="font-weight:800;color:#15356b">'+NR_DOCS.length+' documents</span>'
+      +(c.status==='ok'?('<span style="color:#45658B">Total word count <b style="color:#15233b">'+c.words.toLocaleString()+'</b></span>'):'')
+      +(c.analysing?'<span style="color:#8a94a6"><span class="nr-spin"></span> Analysing…</span>':'')
+      +(c.status==='manual'?'<span style="color:#9A6008;font-weight:700">Manual quote — our team will confirm the total</span>':'')
+      +'</div>';
+  }
+  box.innerHTML=rows+summary;
 }
-function nrResultPanel(f,res){
-  var ext=(f.name.split('.').pop()||'').toLowerCase();
-  var ok=(res.status==='ok');
+function nrDocRow(d,i){
+  var f=d.file, ext=(f.name.split('.').pop()||'').toLowerCase();
+  var ic='<div class="nr-fileic">'+esc(ext.toUpperCase().slice(0,4))+'</div>';
+  var rm='<button type="button" class="nr-filex" onclick="nrRemoveDoc('+i+')">Remove</button>';
+  if(d.analysis==null){
+    return '<div class="nr-anal">'+ic
+      +'<div style="flex:1;min-width:0"><div class="nr-fn">'+esc(f.name)+'</div>'
+      +'<div style="font-size:12px;color:#8a94a6"><span class="nr-spin"></span> Analysing document…</div></div>'+rm+'</div>';
+  }
+  var ok=(d.analysis.status==='ok');
   var border=ok?'#bfe6cf':'#f0d49a', bg=ok?'#f2fbf6':'#FFF7E8';
   var statusTxt=ok?'Document analysed successfully':'Manual quote required';
   var statusCol=ok?'#176A48':'#9A6008';
-  var h='<div class="nr-result" style="border-color:'+border+';background:'+bg+'">'
-    +'<div class="nr-fileic">'+esc(ext.toUpperCase().slice(0,4))+'</div>'
+  var h='<div class="nr-result" style="border-color:'+border+';background:'+bg+'">'+ic
     +'<div style="flex:1;min-width:0"><div class="nr-fn">'+esc(f.name)+'</div>'
     +'<div style="font-size:12px;font-weight:700;color:'+statusCol+';display:flex;align-items:center;gap:5px">'
       +(ok?'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>':'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>')
       +statusTxt+'</div></div>';
   if(ok){
-    h+='<div class="nr-metric"><div class="nr-mlbl">Word count</div><div class="nr-mval">'+Number(res.words).toLocaleString()+'</div></div>'
-      +'<div class="nr-metric"><div class="nr-mlbl">Detected format</div><div class="nr-mval" style="font-size:14px">'+esc(FMT_LABEL[ext]||'Document')+'</div></div>';
+    h+='<div class="nr-metric"><div class="nr-mlbl">Word count</div><div class="nr-mval">'+Number(d.analysis.words).toLocaleString()+'</div></div>'
+      +'<div class="nr-metric"><div class="nr-mlbl">Format</div><div class="nr-mval" style="font-size:14px">'+esc(FMT_LABEL[ext]||'Document')+'</div></div>';
   } else {
-    h+='<div style="flex:1;font-size:12px;color:#7a4c06;max-width:280px">We couldn\'t read the text automatically (scanned or image file). You can still submit — our team will confirm the word count and send your quote.</div>';
+    h+='<div style="flex:1;font-size:12px;color:#7a4c06;max-width:260px">Couldn\'t read the text automatically — our team will confirm the word count.</div>';
   }
-  h+='<button type="button" class="nr-filex" onclick="nrDocClear()">Remove</button></div>';
+  h+=rm+'</div>';
   return h;
 }
 
@@ -2115,7 +2139,8 @@ async function loadPricing(){
 function ratePerWord(){ return TPRICE?({standard:TPRICE.rate_standard,certified:TPRICE.rate_certified,specialist:TPRICE.rate_specialist}[NR_TYPE]):0.12; }
 function quoteCalc(){
   // returns {words, rate, base, urgent, total, min, manual}
-  var words=(NR_ANALYSIS&&NR_ANALYSIS.status==='ok')?NR_ANALYSIS.words:null;
+  var c=nrCombined();
+  var words=(c.status==='ok')?c.words:null;
   var rate=Number(ratePerWord());
   if(words==null) return {words:null, rate:rate, base:null, urgent:0, total:null, manual:true};
   var base=words*rate;
@@ -2130,8 +2155,9 @@ function money(n){ return '£'+Number(n).toLocaleString('en-GB',{minimumFraction
 function nrPriceRender(){
   var box=el('nrPricePanel'); if(!box) return;
   var q=quoteCalc();
-  if(!NR_DOC){ box.innerHTML='<div style="font-size:13px;color:#5b76a0">Upload a document to see your estimated price.</div>'; return; }
-  if(NR_ANALYSIS==null){ box.innerHTML='<div style="font-size:13px;color:#5b76a0"><span class="nr-spin"></span> Calculating…</div>'; return; }
+  var cc=nrCombined();
+  if(!NR_DOCS.length){ box.innerHTML='<div style="font-size:13px;color:#5b76a0">Upload your document(s) to see your estimated price.</div>'; return; }
+  if(cc.analysing){ box.innerHTML='<div style="font-size:13px;color:#5b76a0"><span class="nr-spin"></span> Calculating…</div>'; return; }
   if(q.manual){
     box.innerHTML='<div style="display:flex;gap:9px;align-items:flex-start"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#9A6008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><div style="font-size:13px;color:#8a5a12"><b>Manual quote</b><div style="margin-top:2px">We\'ll confirm the word count and send your price after you submit.</div></div></div>';
     return;
@@ -2145,17 +2171,47 @@ function nrPriceRender(){
       +(q.minApplied?'<div style="font-size:11.5px;color:#9A6008;margin-top:4px">Minimum order charge applied.</div>':'')
     +'</div>';
 }
-function nrPickSpeed(s){ NR_SPEED=s; document.querySelectorAll('.nr-dopt').forEach(function(o){ o.classList.toggle('on', o.getAttribute('data-speed')===s); }); el('nrUrgentNote').style.display=(s==='urgent'&&NR_ANALYSIS&&NR_ANALYSIS.status==='ok')?'':'none'; nrDeliveryRender(); }
+var NR_URGENT_LOCKED=false; // true when the chosen deadline is within 24h → urgent is forced
+function nrPickSpeed(s){ if(NR_URGENT_LOCKED && s==='standard') return; NR_SPEED=s; document.querySelectorAll('.nr-dopt').forEach(function(o){ o.classList.toggle('on', o.getAttribute('data-speed')===s); }); el('nrUrgentNote').style.display=(s==='urgent'&&nrCombined().status==='ok')?'':'none'; nrDeliveryRender(); }
+// When the required-by date is within 24 hours, the job must be urgent.
+function nrDateChange(){
+  var v=el('nrDate').value;
+  var std=document.querySelector('.nr-dopt[data-speed="standard"]');
+  if(v){
+    // "within 24 hours" for a date-only deadline = due today or tomorrow
+    var today=new Date(); today.setHours(0,0,0,0);
+    var due=new Date(v+'T00:00:00');
+    var daysAway=Math.round((due.getTime()-today.getTime())/(24*60*60*1000));
+    var soon=(daysAway<=1); // today or the next calendar day → urgent
+    if(soon){
+      NR_URGENT_LOCKED=true;
+      if(std){ std.style.opacity='.5'; std.style.pointerEvents='none'; std.title='Not available for a deadline within 24 hours'; }
+      nrPickSpeed('urgent');
+      el('nrUrgentNote').innerHTML='<b>Urgent delivery applied.</b> Your deadline is within 24 hours, so this is treated as an urgent job. A surcharge has been added to your quote and we\'ll confirm availability after you submit.';
+      el('nrUrgentNote').style.display=(nrCombined().status==='ok')?'':'none';
+      nrPriceRender();
+      return;
+    }
+  }
+  // not within 24h → unlock standard
+  if(NR_URGENT_LOCKED){
+    NR_URGENT_LOCKED=false;
+    if(std){ std.style.opacity=''; std.style.pointerEvents=''; std.title=''; }
+    el('nrUrgentNote').innerHTML='<b>Urgent delivery selected.</b> A surcharge has been added to your quote. We\'ll confirm availability after you submit your request.';
+  }
+  nrDeliveryRender(); nrPriceRender();
+}
 function addBusinessDays(from, n){ var d=new Date(from); var added=0; while(added<n){ d.setDate(d.getDate()+1); var dow=d.getDay(); if(dow!==0&&dow!==6) added++; } return d; }
 function fmtNice(d){ return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
 function nrDeliveryRender(){
-  var manual=!(NR_ANALYSIS&&NR_ANALYSIS.status==='ok');
+  var cc=nrCombined();
+  var manual=(cc.status!=='ok');
   el('nrManualNote').style.display=manual?'':'none';
   el('nrUrgentNote').style.display=(!manual&&NR_SPEED==='urgent')?'':'none';
   var ta=el('nrTurnaround');
   if(manual){ ta.innerHTML='<b>Estimated turnaround</b><div style="margin-top:2px">We\'ll confirm the turnaround once we\'ve checked the word count.</div>'; }
   else {
-    var words=NR_ANALYSIS.words, wpd=Number(TPRICE?TPRICE.words_per_day:2000);
+    var words=cc.words, wpd=Number(TPRICE?TPRICE.words_per_day:2000);
     var stdDays=Math.max(Number(TPRICE?TPRICE.standard_days:3), Math.ceil(words/wpd));
     var urgDays=Math.max(Number(TPRICE?TPRICE.urgent_days:1), Math.ceil(words/(wpd*2)));
     var today=new Date(); today.setHours(0,0,0,0);
@@ -2211,7 +2267,7 @@ function renderWzStep(){
 
 function wzValidate(step){
   if(step===1){
-    if(WZ.mode==='translation' && !NR_DOC) return 'Please upload the document you need translated.';
+    if(WZ.mode==='translation' && !NR_DOCS.length) return 'Please upload the document(s) you need translated.';
     if(!el('nrFrom').value||!el('nrTo').value) return 'Please choose both languages.';
     if(WZ.mode==='interpreter' && !el('nrDuration').value) return 'Please choose a duration.';
   }
@@ -2249,8 +2305,9 @@ function buildReview(){
   h+=rowLine('Languages', (el('nrFrom').value&&el('nrTo').value)?(el('nrFrom').value+' → '+el('nrTo').value):'');
   if(WZ.mode==='interpreter'){ h+=rowLine('Duration', el('nrDuration').value); h+=rowLine('When', when); h+=rowLine('Setting', el('nrSetting').value); h+=rowLine('Location', loc); }
   else {
-    h+=rowLine('Document', NR_DOC?NR_DOC.name:'');
-    if(NR_ANALYSIS&&NR_ANALYSIS.status==='ok') h+=rowLine('Word count', Number(NR_ANALYSIS.words).toLocaleString()+' words');
+    var _c=nrCombined();
+    h+=rowLine(NR_DOCS.length>1?'Documents':'Document', NR_DOCS.length?(NR_DOCS.length>1?(NR_DOCS.length+' files'):NR_DOCS[0].file.name):'');
+    if(_c.status==='ok') h+=rowLine('Word count', Number(_c.words).toLocaleString()+' words');
     h+=rowLine('Translation type', ({standard:'Standard translation',certified:'Certified translation',specialist:'Specialist translation'}[NR_TYPE]));
     h+=rowLine('Required by', el('nrDate').value?fmtD(el('nrDate').value):'No fixed deadline');
     h+=rowLine('Delivery', (NR_SPEED==='urgent'?'Urgent':'Standard')+' — uploaded to your portal');
@@ -2292,7 +2349,7 @@ function serviceLabel(){
 async function submitRequest(){
   clearMsg('nrMsg');
   var po=el('nrPO').value.trim();
-  if(WZ.mode==='translation' && !NR_DOC){ showMsg('nrMsg','err','Please upload the document you need translated.'); return; }
+  if(WZ.mode==='translation' && !NR_DOCS.length){ showMsg('nrMsg','err','Please upload the document(s) you need translated.'); return; }
   if(WZ.mode!=='translation' && !po){ showMsg('nrMsg','err','A PO number or reference is required for every booking.'); return; }
   var pounds=parseInt(el('nrOfferP').value)||0, pence=parseInt(el('nrOfferPence').value)||0;
   if(pence>99) pence=99;
@@ -2309,12 +2366,12 @@ async function submitRequest(){
   };
   // translation: attach the automatic quote (or flag for manual pricing)
   if(WZ.mode==='translation'){
-    var q=quoteCalc();
+    var q=quoteCalc(); var _c=nrCombined();
     row.translation_type=NR_TYPE;
     row.delivery_speed=NR_SPEED;
-    row.word_count=(NR_ANALYSIS&&NR_ANALYSIS.status==='ok')?NR_ANALYSIS.words:null;
-    row.word_count_method=(NR_ANALYSIS?NR_ANALYSIS.method:'manual');
-    row.word_count_status=(NR_ANALYSIS&&NR_ANALYSIS.status==='ok')?'ok':'manual_required';
+    row.word_count=(_c.status==='ok')?_c.words:null;
+    row.word_count_method=(NR_DOCS.length>1?'multiple':((NR_DOCS[0]&&NR_DOCS[0].analysis)?NR_DOCS[0].analysis.method:'manual'));
+    row.word_count_status=(_c.status==='ok')?'ok':'manual_required';
     if(!q.manual){
       row.rate_per_word=q.rate;
       row.quote_amount=q.total;        // net, ex VAT
@@ -2329,18 +2386,21 @@ async function submitRequest(){
     var r=await sb.from('portal_bookings').insert(row).select();
     if(r.error){ showMsg('nrMsg','err','Could not send: '+r.error.message); btn.disabled=false; btn.innerHTML=_h; return; }
     var nb=(r.data&&r.data[0]);
-    // for a translation, upload the document to the new booking
-    if(WZ.mode==='translation' && NR_DOC && nb){
-      try{
-        var uid=(CURRENT_CUST&&CURRENT_CUST.id);
-        var safe=NR_DOC.name.replace(/[^\w.\-]+/g,'_');
-        var path=uid+'/'+nb.id+'/'+Date.now()+'_'+safe;
-        var up=await sb.storage.from('booking-docs').upload(path, NR_DOC, {upsert:false, contentType:NR_DOC.type||undefined});
-        if(!up.error){ await sb.from('booking_files').insert({ booking_id:nb.id, customer_id:uid, path:path, file_name:NR_DOC.name, file_size:NR_DOC.size, file_type:NR_DOC.type||'', uploaded_by:(CURRENT_CUST&&CURRENT_CUST.organisation)||'Client' }); }
-      }catch(e){}
+    // for a translation, upload every document to the new booking
+    if(WZ.mode==='translation' && NR_DOCS.length && nb){
+      var uid=(CURRENT_CUST&&CURRENT_CUST.id);
+      for(var di=0; di<NR_DOCS.length; di++){
+        var f=NR_DOCS[di].file;
+        try{
+          var safe=f.name.replace(/[^\w.\-]+/g,'_');
+          var path=uid+'/'+nb.id+'/'+Date.now()+'_'+di+'_'+safe;
+          var up=await sb.storage.from('booking-docs').upload(path, f, {upsert:false, contentType:f.type||undefined});
+          if(!up.error){ await sb.from('booking_files').insert({ booking_id:nb.id, customer_id:uid, path:path, file_name:f.name, file_size:f.size, file_type:f.type||'', uploaded_by:(CURRENT_CUST&&CURRENT_CUST.organisation)||'Client' }); }
+        }catch(e){}
+      }
     }
     // record the first entry in the booking's activity history
-    try{ if(nb){ await logEvent(nb,'requested',null, WZ.mode==='translation'?'Translation request submitted with document.':'Booking request submitted.'); } }catch(e){}
+    try{ if(nb){ var _dn=NR_DOCS.length; await logEvent(nb,'requested',null, WZ.mode==='translation'?('Translation request submitted with '+_dn+' document'+(_dn===1?'':'s')+'.'):'Booking request submitted.'); } }catch(e){}
     btn.disabled=false; btn.innerHTML=_h;
     nrDocClear();
     dashTab('bookings'); loadBookings();
