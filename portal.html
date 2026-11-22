@@ -1387,6 +1387,8 @@ function bookingCard(b){
   }
   // documents: upload on confirmed bookings, read-only once completed
   body+=docsSection(b);
+  // translation: show the finished translation for download when delivered
+  body+=translationDelivery(b);
   // bottom-right action depends on stage
   var btmRight='<span></span>';
   if(!b.disputed && canRaiseIssue(b)){
@@ -1480,6 +1482,24 @@ function fileIcon(name,type){
   return ['doc','FILE'];
 }
 function humanSize(n){ if(n==null) return ''; if(n<1024) return n+' B'; if(n<1048576) return Math.round(n/1024)+' KB'; return (n/1048576).toFixed(1)+' MB'; }
+// translation: show the finished translation (delivered by staff) for download
+function translationDelivery(b){
+  if(!isTranslationBk(b)) return '';
+  if(b.status!=='booked' && b.status!=='completed') return '';
+  var files=_bkFiles[b.id];
+  if(files==null){ if(_openBooking===b.id){ loadFiles(b.id).then(renderBookings); } return ''; }
+  var delivered=files.filter(function(f){ return f.is_delivery; });
+  if(!delivered.length){
+    return '<div class="docsec" style="margin-top:12px"><h4>Your translation</h4><div class="docnote">We\'re working on your translation. The finished document will appear here to download when it\'s ready.</div></div>';
+  }
+  return '<div class="docsec" style="margin-top:12px"><h4>Your translation</h4>'
+    +'<div class="docnote" style="background:#f2fbf6;border-color:#cce7d8;color:#176A48;margin-bottom:10px">Your translation is ready. Download it below.</div>'
+    +delivered.map(function(f){ var ic=fileIcon(f.file_name,f.file_type);
+      return '<div class="frow"><div class="fic '+ic[0]+'">'+ic[1]+'</div>'
+        +'<div class="fmeta"><div class="fname">'+esc(f.file_name)+'</div><div class="fsize">'+humanSize(f.file_size)+'</div></div>'
+        +'<button class="cfmbtn ok" style="padding:8px 14px" onclick="viewFile('+b.id+','+f.id+')"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>Download</button></div>';
+    }).join('')+'</div>';
+}
 async function loadFiles(id){
   try{ var r=await sb.from('booking_files').select('*').eq('booking_id',id).order('created_at',{ascending:true}); _bkFiles[id]=r.data||[]; }
   catch(e){ _bkFiles[id]=[]; }
