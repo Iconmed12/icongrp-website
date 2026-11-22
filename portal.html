@@ -85,6 +85,63 @@
   .heroart svg{width:100%;height:auto;display:block}
   .heroart-img{width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 8px 28px rgba(9,42,89,.18)}
   .sectlbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a94a6;margin:0 0 16px}
+  /* ===== client dashboard home ===== */
+  .dash-head{margin-bottom:20px}
+  .dash-hi{font-size:28px;font-weight:800;color:var(--navy)}
+  .dash-sub{color:#5b6b85;font-size:14px;margin-top:3px}
+  .dash-acts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+  .dash-act{border-radius:16px;padding:22px 24px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:box-shadow .15s,transform .15s}
+  .dash-act:hover{transform:translateY(-2px)}
+  .dash-act.primary{background:linear-gradient(120deg,#1b4fcf,#2563eb);color:#fff;box-shadow:0 10px 24px rgba(27,79,207,.26)}
+  .dash-act.ghost{background:#fff;border:1px solid var(--line);color:var(--navy)}
+  .dash-act.ghost:hover{border-color:#cfe0f0;box-shadow:0 8px 22px rgba(16,24,40,.07)}
+  .dash-act-ic{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dash-act.primary .dash-act-ic{background:rgba(255,255,255,.18)}
+  .dash-act.ghost .dash-act-ic{background:#eaf1fb;color:var(--blue)}
+  .dash-act h3{font-size:19px;font-weight:800}
+  .dash-act p{font-size:13px;opacity:.85;margin-top:2px}
+  .dash-arr{margin-left:auto;opacity:.9}
+  .dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .dash-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px}
+  .dash-stat-ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dash-stat .n{font-size:26px;font-weight:800;line-height:1;color:var(--navy)}
+  .dash-stat .l{font-size:13px;color:#5b6b85;margin-top:3px}
+  .dsi-blue{background:#eaf1fb;color:#1b4fcf}.dsi-green{background:#e7f6ee;color:#1a8f55}.dsi-amber{background:#fdf0dd;color:#c7860f}.dsi-red{background:#fdeaea;color:#d93a3a}
+  .dash-sech{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .dash-sech h2{font-size:20px;font-weight:800;color:var(--navy)}
+  .dash-viewall{color:var(--blue);font-weight:700;font-size:13.5px;cursor:pointer}
+  .dash-ordcard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:22px}
+  .dash-otbl{width:100%;border-collapse:collapse}
+  .dash-otbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:#8a97ac;font-weight:700;padding:14px 18px;border-bottom:1px solid #eef2f8}
+  .dash-otbl td{padding:14px 18px;border-bottom:1px solid #f3f6fb;font-size:13.5px;vertical-align:middle}
+  .dash-otbl tr:last-child td{border-bottom:none}
+  .dash-ono{color:var(--blue);font-weight:800;cursor:pointer}
+  .dash-svc{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--navy)}
+  .dash-svc-ic{width:30px;height:30px;border-radius:8px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dash-det b{font-weight:700;display:block;color:var(--navy)}
+  .dash-det span{font-size:12px;color:#8a97ac}
+  .dash-vbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--navy)}
+  .dash-vbtn:hover{background:#f8fafc}
+  .dash-empty{padding:28px;text-align:center;color:#8a97ac;font-size:14px}
+  .dash-brow{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+  .dash-bcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  .dash-bcard-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .dash-bt{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;color:var(--navy)}
+  .dash-bt svg{stroke:var(--blue)}
+  .dash-profbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--navy)}
+  .dash-acctrow{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .dash-org{font-size:22px;font-weight:800;color:var(--navy)}
+  .dash-tag{background:#fdf0dd;color:#c7860f;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:8px}
+  .dash-role{font-size:12.5px;color:#8a97ac;margin-top:3px}
+  .dash-contact{border-left:1px solid #eef2f8;padding-left:26px}
+  .dash-contact div{display:flex;align-items:center;gap:9px;font-size:13.5px;color:#334;padding:3px 0}
+  .dash-contact svg{stroke:#8a97ac;flex-shrink:0}
+  .dash-ql{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #f3f6fb;cursor:pointer;font-weight:700;font-size:14px;color:var(--navy)}
+  .dash-ql:last-child{border-bottom:none}
+  .dash-ql:hover{color:var(--blue)}
+  .dash-qlic{width:34px;height:34px;border-radius:9px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dash-qlarr{margin-left:auto;color:#c3cedd;font-size:18px}
+  @media(max-width:900px){.dash-acts,.dash-brow{grid-template-columns:1fr}.dash-stats{grid-template-columns:1fr 1fr}.dash-contact{border-left:none;padding-left:0}}
   .hubcards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   .hubcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s;display:flex;flex-direction:column}
   .hubcard:hover{box-shadow:0 10px 30px rgba(16,24,40,.09);transform:translateY(-2px);border-color:#cfe0f0}
@@ -509,38 +566,40 @@
       </nav>
 
       <div class="content">
-        <!-- HUB HOME -->
+        <!-- HUB HOME (dashboard) -->
         <div id="paneHome">
-          <div class="hero">
-            <div>
-              <div class="eyebrow">Welcome to ICON Lingua</div>
-              <h1 class="hubh1">Language services,<br>made simple.</h1>
-              <p class="herolead">Book interpreters, request translations and manage your invoices, all in one place.</p>
+          <!-- greeting -->
+          <div class="dash-head">
+            <div><h1 class="dash-hi" id="dashGreet">Welcome</h1><div class="dash-sub">Welcome to your ICON Lingua client portal.</div></div>
+          </div>
+          <!-- action cards -->
+          <div class="dash-acts">
+            <div class="dash-act primary" onclick="newReqService('Document translation')">
+              <div class="dash-act-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg></div>
+              <div><h3>Request a Translation</h3><p>Upload documents and get a quote</p></div>
+              <span class="dash-arr"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-            <div class="heroart">
-              <img src="lingua-globe.png" alt="Global language services" class="heroart-img">
+            <div class="dash-act ghost" onclick="newReqService('Interpreter: in person')">
+              <div class="dash-act-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0"/><rect x="2.5" y="12" width="4" height="7" rx="1.6"/><rect x="17.5" y="12" width="4" height="7" rx="1.6"/><path d="M20 19a3 3 0 0 1-3 3h-3"/></svg></div>
+              <div><h3>Request Interpreting</h3><p>Book an interpreter (in person, video or phone)</p></div>
+              <span class="dash-arr"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
           </div>
-
-          <div class="sectlbl">What would you like to do?</div>
-          <div class="hubcards">
-            <div class="hubcard" onclick="newReqService('Interpreter: in person')">
-              <div class="hubic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0"/><rect x="2.5" y="12" width="4" height="7" rx="1.6"/><rect x="17.5" y="12" width="4" height="7" rx="1.6"/><path d="M20 19a3 3 0 0 1-3 3h-3"/></svg></div>
-              <div class="hubn">Request an Interpreter</div>
-              <div class="hubd">Book an interpreter for your meeting, appointment or event.</div>
-              <div class="hubgo">Make a request <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+          <!-- stat tiles -->
+          <div class="dash-stats" id="dashStats"></div>
+          <!-- my orders -->
+          <div class="dash-sech"><h2>My Orders</h2><a class="dash-viewall" onclick="dashTab('bookings')">View all orders →</a></div>
+          <div class="dash-ordcard"><div id="dashOrders"></div></div>
+          <!-- bottom row -->
+          <div class="dash-brow">
+            <div class="dash-bcard">
+              <div class="dash-bcard-h"><div class="dash-bt"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg> Your Account</div><button class="dash-profbtn" onclick="dashTab('invoices')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Open Profile</button></div>
+              <div id="dashAccount"></div>
             </div>
-            <div class="hubcard" onclick="newReqService('Document translation')">
-              <div class="hubic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg></div>
-              <div class="hubn">Request a Translation</div>
-              <div class="hubd">Submit documents for translation, certified where needed.</div>
-              <div class="hubgo">Submit documents <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-            </div>
-            <div class="hubcard" onclick="dashTab('invoices')">
-              <div class="hubic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15l-2.2-1.3L13.5 22 12 20.7 10.5 22 8.7 20.7 6.5 22 5 20.7V4a1 1 0 0 1 1-1z"/><path d="M9 9h6M9 13h3"/></svg></div>
-              <div class="hubn">View Invoices</div>
-              <div class="hubd">See your outstanding balance and payment history.</div>
-              <div class="hubgo">View invoices <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="dash-bcard">
+              <div class="dash-bcard-h"><div class="dash-bt"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg> Quick Links</div></div>
+              <div class="dash-ql" onclick="dashTab('bookings')"><div class="dash-qlic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div> My Orders <span class="dash-qlarr">›</span></div>
+              <div class="dash-ql" onclick="dashTab('invoices')"><div class="dash-qlic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15l-2.2-1.3L13.5 22 12 20.7 10.5 22 8.7 20.7 6.5 22 5 20.7V4a1 1 0 0 1 1-1z"/><path d="M9 9h6M9 13h3"/></svg></div> Invoices <span class="dash-qlarr">›</span></div>
             </div>
           </div>
         </div>
@@ -1065,6 +1124,7 @@ function dashTab(which){
   el('paneBookings').style.display = which==='bookings'?'':'none';
   el('paneInvoices').style.display = which==='invoices'?'':'none';
   el('paneRequest').style.display = which==='request'?'':'none';
+  if(which==='home'){ renderHome(); loadBookings().then(renderHome).catch(function(){}); }
   if(which==='bookings'){ if(_cachedBookings){ renderBookings(_cachedBookings); _cachedBookings=null; } loadBookings(); }
   if(which==='invoices') loadInvoices();
   if(which!=='request'){ el('subInterp').classList.remove('on'); el('subTrans').classList.remove('on'); }
@@ -1411,6 +1471,78 @@ function renderBookings(listArg){
 }
 
 function fmtRef(b){ return 'BK'+String(b.id).padStart(4,'0'); }
+function homeRef(b){ return (isTranslationBk(b)?'TR-':'BK-')+String(b.id).padStart(6,'0'); }
+
+// ===== Dashboard home =====
+function renderHome(){
+  // greeting
+  var hr=new Date().getHours();
+  var greet = hr<12 ? 'Good morning' : (hr<18 ? 'Good afternoon' : 'Good evening');
+  var first = ((CURRENT_CUST&&CURRENT_CUST.name)||'').trim().split(/\s+/)[0] || 'there';
+  var ge=el('dashGreet'); if(ge) ge.textContent=greet+', '+first;
+  var all = _bookingsCache || [];
+  // stats
+  var active=0, completed=0, inprog=0, disputes=0;
+  all.forEach(function(b){
+    if(b.disputed){ disputes++; }
+    if(isCancelled(b)) return;
+    if(b.status==='completed'){ completed++; return; }
+    active++; // anything open (requested/accepted/finding/booked/awaiting)
+    if(b.status==='finding'||b.status==='booked'||b.rate_status==='accepted'){ inprog++; }
+  });
+  var se=el('dashStats');
+  if(se){
+    se.innerHTML=
+      dashStat('dsi-blue','<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>',active,'Active Orders')
+      +dashStat('dsi-green','<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',completed,'Completed')
+      +dashStat('dsi-amber','<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',inprog,'In Progress')
+      +dashStat('dsi-red','<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',disputes,'Disputes');
+  }
+  // recent orders (latest 4 by created)
+  var recent = all.slice().sort(function(a,b){ return (b.created_at||'').localeCompare(a.created_at||''); }).slice(0,4);
+  var oe=el('dashOrders');
+  if(oe){
+    if(!recent.length){ oe.innerHTML='<div class="dash-empty">No orders yet. Request a translation or interpreter to get started.</div>'; }
+    else{
+      var rows=recent.map(function(b){
+        var isT=isTranslationBk(b);
+        var svcName=isT?'Translation':'Interpreting';
+        var svcIc=isT
+          ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7M9 3v2c0 4-2 7-5 8M5 9c0 2 2 4 5 5"/><path d="m13 21 4-9 4 9M14.5 18h5"/></svg>'
+          : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0"/><rect x="2.5" y="12" width="4" height="7" rx="1.6"/><rect x="17.5" y="12" width="4" height="7" rx="1.6"/></svg>';
+        var det = isT ? (firstDocName(b)||(b.service||'Document')) : (b.service||'Interpreting session');
+        var pair = (b.from_lang||b.to_lang) ? (esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))+(b.duration?(' · '+esc(b.duration)):'')) : '';
+        var bd = clientBadge(b);
+        var dt = b.booking_date ? fmtFull(b.booking_date) : (b.created_at?fmtFull(b.created_at.slice(0,10)):'');
+        return '<tr>'
+          +'<td><span class="dash-ono" onclick="dashOpenOrder('+b.id+')">'+homeRef(b)+'</span></td>'
+          +'<td><div class="dash-svc"><div class="dash-svc-ic">'+svcIc+'</div>'+svcName+'</div></td>'
+          +'<td><div class="dash-det"><b>'+esc(det)+'</b>'+(pair?'<span>'+pair+'</span>':'')+'</div></td>'
+          +'<td style="color:#5b6b85;white-space:nowrap">'+dt+'</td>'
+          +'<td><span class="bpill '+bd[0]+'">'+bd[1]+'</span></td>'
+          +'<td><button class="dash-vbtn" onclick="dashOpenOrder('+b.id+')"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg> View</button></td>'
+          +'</tr>';
+      }).join('');
+      oe.innerHTML='<table class="dash-otbl"><thead><tr><th>Order no.</th><th>Service</th><th>Details</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    }
+  }
+  // account card
+  var ae=el('dashAccount'); var c=CURRENT_CUST||{};
+  if(ae){
+    ae.innerHTML='<div class="dash-acctrow">'
+      +'<div><div class="dash-org">'+esc(c.organisation||c.name||'Your organisation')+(c.org_type?'<span class="dash-tag">'+esc(c.org_type)+'</span>':'')+'</div>'
+      +'<div class="dash-role">'+esc([c.name,c.job_title].filter(Boolean).join(', ')||'')+'</div></div>'
+      +'<div class="dash-contact">'
+        +(c.email?'<div><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg> '+esc(c.email)+'</div>':'')
+        +(c.phone?'<div><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg> '+esc(c.phone)+'</div>':'')
+      +'</div></div>';
+  }
+}
+function dashStat(cls, ic, n, lbl){
+  return '<div class="dash-stat"><div class="dash-stat-ic '+cls+'">'+ic+'</div><div><div class="n">'+n+'</div><div class="l">'+lbl+'</div></div></div>';
+}
+function firstDocName(b){ var f=(_bkFiles&&_bkFiles[b.id])||[]; var d=f.find(function(x){return !x.is_delivery;}); return d?d.file_name:''; }
+function dashOpenOrder(id){ dashTab('bookings'); setTimeout(function(){ var el2=document.getElementById('bk'+id); if(el2) el2.scrollIntoView({behavior:'smooth',block:'center'}); },200); }
 
 function bookingCard(b){
   var langPair=(b.from_lang||b.to_lang)?(esc(b.from_lang||'?')+' → '+esc(b.to_lang||'?')):'';
