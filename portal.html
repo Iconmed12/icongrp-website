@@ -1806,7 +1806,8 @@ function startWizard(mode){
     el('nrDetails').placeholder='e.g. certified translation, formatting, specific terms or deadline notes…';
     el('wzInfoTitle').textContent='Translation services';
     el('wzSteps').querySelector('[data-s="2"]').lastChild.textContent='Deadline';
-    el('wzSteps').querySelector('[data-s="3"]').lastChild.textContent='Delivery';
+    el('wzSteps').querySelector('[data-s="3"]').style.display='none';           // no Delivery step for translations
+    el('wzSteps').querySelector('[data-s="4"]').querySelector('.num').textContent='3';
     el('wzInfoBul').innerHTML=infoBullets(['Qualified, specialist translators','Certified and sworn translations','Confidential handling of documents','Fast, reliable turnaround']);
     // step 2 = deadline date only (no start time, no interpreter setting)
     el('wzS2ttl').textContent='2. Deadline';
@@ -1831,7 +1832,9 @@ function startWizard(mode){
     el('nrDetails').placeholder="Any specific requirements, context or notes for the interpreter. Please don't paste confidential documents here.";
     el('wzInfoTitle').textContent='Interpreter services';
     el('wzSteps').querySelector('[data-s="2"]').lastChild.textContent='Date & time';
+    el('wzSteps').querySelector('[data-s="3"]').style.display='';               // restore Location step
     el('wzSteps').querySelector('[data-s="3"]').lastChild.textContent='Location';
+    el('wzSteps').querySelector('[data-s="4"]').querySelector('.num').textContent='4';
     el('wzInfoBul').innerHTML=infoBullets(['Qualified and experienced interpreters','Wide range of languages and dialects','Flexible booking options','Secure and confidential']);
     // step 2 = date + start time + setting (interpreter)
     el('wzS2ttl').textContent='2. Date & time';
@@ -1905,7 +1908,7 @@ function renderWzStep(){
   var lbl;
   if(WZ.step===4){ lbl='Send request'+send; }
   else if(WZ.step===1 && WZ.mode==='translation'){ lbl='Get a Quote'+arrow; }
-  else if(WZ.mode==='translation'){ lbl=(WZ.step===2?'Next: Delivery':'Next: Review')+arrow; }
+  else if(WZ.mode==='translation'){ lbl='Next: Review'+arrow; } // step 2 -> review (no delivery)
   else { lbl=WZ_NEXTLBL[WZ.step]+arrow; }
   el('wzNext').innerHTML=lbl;
   if(WZ.step===4) buildReview();
@@ -1933,8 +1936,10 @@ function wzStep(dir){
     if(err){ showMsg('nrMsg','err',err); return; }
     if(WZ.step===4){ submitRequest(); return; }
     WZ.step++;
+    if(WZ.mode==='translation' && WZ.step===3) WZ.step=4; // skip Delivery for translations
   } else {
     WZ.step--;
+    if(WZ.mode==='translation' && WZ.step===3) WZ.step=2;
   }
   if(WZ.step<1) WZ.step=1; if(WZ.step>4) WZ.step=4;
   renderWzStep();
@@ -1948,11 +1953,20 @@ function buildReview(){
   var h='<div style="background:#f7f9fc;border:1px solid #e8ecf3;border-radius:12px;padding:6px 16px;margin-bottom:18px">';
   h+=rowLine('Service', svc);
   h+=rowLine('Languages', (el('nrFrom').value&&el('nrTo').value)?(el('nrFrom').value+' → '+el('nrTo').value):'');
-  if(WZ.mode==='interpreter'){ h+=rowLine('Duration', el('nrDuration').value); h+=rowLine('When', when); h+=rowLine('Setting', el('nrSetting').value); }
-  h+=rowLine(WZ.mode==='translation'?'Delivery':'Location', loc);
-  if(el('nrDetails').value.trim()) h+=rowLine('Notes', el('nrDetails').value.trim());
+  if(WZ.mode==='interpreter'){ h+=rowLine('Duration', el('nrDuration').value); h+=rowLine('When', when); h+=rowLine('Setting', el('nrSetting').value); h+=rowLine('Location', loc); }
+  else {
+    h+=rowLine('Document', NR_DOC?NR_DOC.name:'');
+    h+=rowLine('Required by', el('nrDate').value?fmtD(el('nrDate').value):'No fixed deadline');
+    h+=rowLine('Delivery', 'Uploaded to your portal to download');
+  }
+  if(el('nrDetails').value.trim()) h+=rowLine(WZ.mode==='translation'?'Requirements':'Notes', el('nrDetails').value.trim());
   h+='</div>';
-  el('wzReview').innerHTML=h;
+  if(WZ.mode==='translation'){
+    var h2='<div style="display:flex;gap:10px;align-items:flex-start;background:#eef5ff;border:1px solid #cfe0f5;border-radius:10px;padding:12px 14px;font-size:13px;color:#1b4a85"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>We\'ll quote and prepare your translation, then upload the finished document to this booking. You\'ll be notified when it\'s ready to download.</span></div>';
+    el('wzReview').innerHTML=h+h2;
+  } else {
+    el('wzReview').innerHTML=h;
+  }
 }
 function serviceLabel(){
   if(WZ.mode==='translation') return 'Document translation';
