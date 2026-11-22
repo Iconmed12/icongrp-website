@@ -2382,6 +2382,78 @@ function quoteCalc(){
   return {words:words, rate:rate, base:base, urgent:urgent, total:base+urgent, minApplied:minApplied, manual:false,
     source:usingCard?'card':'global', rateLabel:usingCard?cardRate.label:'', urgPct:urgPct};
 }
+// ---- interpreting pricing from the client's rate card ----
+function durationToMinutes(s){
+  s=String(s||'').toLowerCase();
+  if(/full day/.test(s)) return 420;
+  if(/half day/.test(s)) return 210;
+  if(/more than one day/.test(s)) return 0; // unknown -> manual
+  var m=s.match(/([\d.]+)/); var n=m?parseFloat(m[1]):0;
+  if(/min/.test(s)) return n;
+  return n*60; // hours
+}
+function cardInterpRate(fmt){
+  var card=clientCard(); if(!card) return null;
+  var from=((WZ&&WZ.from)||el('nrFrom').value||'').toLowerCase(), to=((WZ&&WZ.to)||el('nrTo').value||'').toLowerCase();
+  // service keyword from the chosen format
+  var f=(fmt||'').toLowerCase();
+  var want = /video|remote/.test(f)?'video':(/phone|telephone/.test(f)?'telephone':'face');
+  // 1) language override (interpreting kind)
+  var langs=(card.languages||[]).filter(function(l){ return (l.kind||'interpreting')==='interpreting' && rcN(l.rate)>0; });
+  var hit=langs.find(function(l){ return (l.from||'').toLowerCase()===from && (l.to||'').toLowerCase()===to && from && to; });
+  if(!hit) hit=langs.find(function(l){ var lf=(l.from||'').toLowerCase(), lt=(l.to||'').toLowerCase(); var single=(lf&&!lt)?lf:((lt&&!lf)?lt:''); return single && (single===from||single===to); });
+  if(hit) return {rate:rcN(hit.rate), unit:hit.unit||'Per Hour', src:'language', label:(hit.from||'')+' → '+(hit.to||'')};
+  // 2) standard interpreting row by format
+  var rows=(card.interpreting||[]);
+  var std=rows.find(function(r){ var s=(r.service||'').toLowerCase();
+    if(want==='video') return /video|remote/.test(s)&&rcN(r.rate)>0;
+    if(want==='telephone') return /phone|telephone/.test(s)&&rcN(r.rate)>0;
+    return /face|in.person/.test(s)&&rcN(r.rate)>0;
+  });
+  if(!std) std=rows.find(function(r){ return rcN(r.rate)>0; });
+  if(std) return {rate:rcN(std.rate), unit:std.unit||'Per Hour', src:'standard', label:std.service||''};
+  return null;
+}
+// is the booking time out of hours? before 08:00 / after 18:00 weekday, or weekend
+function isOutOfHours(dateStr, timeStr){
+  if(!dateStr) return false;
+  var d=new Date(dateStr+'T'+((timeStr||'12:00'))+':00');
+  var day=d.getDay(); if(day===0||day===6) return true;        // weekend
+  var h=d.getHours()+d.getMinutes()/60;
+  return (h<8 || h>=18);
+}
+function interpQuoteCalc(){
+  var card=clientCard();
+  var fmt=(WZ&&WZ.fmt)||'';
+  var cr=card?cardInterpRate(fmt):null;
+  if(!cr){ return {manual:true, source:card?'card':'global'}; }
+  var mins=durationToMinutes(el('nrDuration').value);
+  if(mins<=0){ return {manual:true, source:'card', reason:'duration'}; }
+  var b=card.billing||{};
+  var lines=[]; var minApplied=false;
+  var floor=rcN((card.terms&&card.terms.min_duration)?durationToMinutes(card.terms.min_duration):0);
+  if(floor && mins<floor){ mins=floor; minApplied=true; }
+  var inc=durationToMinutes(b.increment); if(inc>0){ mins=Math.ceil(mins/inc)*inc; }
+  var perMin=/minute/i.test(cr.unit);
+  var qty = perMin ? mins : (mins/60);
+  var base = qty*cr.rate;
+  lines.push({label:(cr.label||'Interpreting')+' @ '+money(cr.rate)+'/'+(perMin?'min':'hr'), detail:(perMin?(mins+' min'):(mins/60).toFixed(2)+' hrs')+(minApplied?' (min applied)':''), amount:base});
+  var net=base;
+  var ooh=isOutOfHours(el('nrDate').value, el('nrTime').value);
+  var oohPct=rcN(b.ooh_pct);
+  if(ooh && oohPct>0){ var s1=net*oohPct/100; lines.push({label:'Out-of-hours +'+oohPct+'%', amount:s1}); net+=s1; }
+  var minC=rcN(b.min_charge);
+  if(minC>0 && net<minC){ lines.push({label:'Minimum order charge applied', amount:minC-net}); net=minC; }
+  return {manual:false, source:'card', rate:cr.rate, unit:cr.unit, lines:lines, net:Math.round(net*100)/100,
+    rateLabel:cr.label, ooh:ooh, rate_card_version:(CURRENT_CUST&&(CURRENT_CUST.rate_card_effective||CURRENT_CUST.updated_at))||'current'};
+}
+function interpSnapshot(){
+  var q=interpQuoteCalc();
+  if(q.manual) return {source:q.source, manual:true, rate_card_version:q.rate_card_version||'global', calculated_at:new Date().toISOString()};
+  var vb=vatBreakdown(q.net,'excl');
+  return {source:'card', manual:false, rate_card_version:q.rate_card_version, resolved_rate:q.rate, unit:q.unit,
+    lines:q.lines, net:q.net, vat:vb.vat, gross:vb.gross, out_of_hours:q.ooh, calculated_at:new Date().toISOString()};
+}
 // build the frozen snapshot stored on the booking when a quote is produced
 function quoteSnapshot(){
   var q=quoteCalc(); var c=CURRENT_CUST||{};
@@ -2586,11 +2658,26 @@ function buildReview(){
     el('nrPOReq').style.display='none';
     el('nrPOHint').textContent='Add a PO or reference if your organisation needs one on the invoice.';
   } else {
-    el('wzReview').innerHTML=h;
-    el('nrOfferFld').style.display='';
-    el('nrReviewFields').style.gridTemplateColumns='';
-    el('nrPOReq').style.display='';
-    el('nrPOHint').textContent='Required so we can invoice correctly.';
+    // interpreting — auto-price from the client's rate card when possible
+    var iq=interpQuoteCalc();
+    if(!iq.manual){
+      var ibd='<div style="background:#f7f9fc;border:1px solid #e8ecf3;border-radius:12px;padding:14px 16px;margin-bottom:16px">'
+        +'<div style="font-size:13px;font-weight:800;color:#15356b;margin-bottom:10px">Price breakdown</div>'
+        +iq.lines.map(function(l){ return '<div style="display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0"><span style="color:#45658B">'+l.label+(l.detail?(' <span style="color:#8a94a6">('+l.detail+')</span>'):'')+'</span><b>'+money(l.amount)+'</b></div>'; }).join('')
+        +'<div style="display:flex;justify-content:space-between;align-items:center;background:#eef5ff;border-radius:10px;padding:11px 14px;margin-top:10px"><b style="font-size:15px;color:#15356b">Total <span style="font-weight:600;color:#64748b">(excluding VAT)</span></b><b style="font-size:22px;color:#0d1b3a">'+money(iq.net)+'</b></div>'
+      +'</div>';
+      el('wzReview').innerHTML=ibd+h;
+      el('nrOfferFld').style.display='none';        // price is set from the rate card
+      el('nrReviewFields').style.gridTemplateColumns='1fr';
+      el('nrPOReq').style.display='';
+      el('nrPOHint').textContent='Required so we can invoice correctly.';
+    } else {
+      el('wzReview').innerHTML=h;
+      el('nrOfferFld').style.display='';            // no card price — client can propose
+      el('nrReviewFields').style.gridTemplateColumns='';
+      el('nrPOReq').style.display='';
+      el('nrPOHint').textContent='Required so we can invoice correctly.';
+    }
   }
 }
 function serviceLabel(){
@@ -2635,6 +2722,20 @@ async function submitRequest(){
     }
     // freeze the calculation + rate-card version onto the booking (Phase C)
     try{ var snap=quoteSnapshot(); row.quote_snapshot=snap; row.rate_card_version=snap.rate_card_version; }catch(e){}
+  } else {
+    // interpreting — auto-price from the client's rate card when it resolves
+    try{
+      var iq=interpQuoteCalc();
+      if(!iq.manual){
+        row.agreed_rate=iq.net;        // proposed price (staff confirm via Accept)
+        row.quote_amount=iq.net;
+        row.vat_mode='excl';
+        row.manual_quote=false;
+        var isnap=interpSnapshot(); row.quote_snapshot=isnap; row.rate_card_version=isnap.rate_card_version;
+      } else {
+        row.manual_quote=true;
+      }
+    }catch(e){}
   }
   // assign a sequential order number (TRA- for translations, INT- for interpreting)
   try{
