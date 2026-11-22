@@ -1010,7 +1010,9 @@ async function portalRefreshNow(){
       if(el('paneBookings') && el('paneBookings').style.display!=='none'){ try{ renderBookings(r.data); }catch(e){} }
     }
   }catch(e){}
-  try{ if(el('paneInvoices') && el('paneInvoices').style.display!=='none') loadInvoices(true); }catch(e){}
+  // invoices change only when staff issue/settle them, not second-to-second,
+  // so they are NOT part of the 10s poll (it was re-rendering and closing the
+  // pay panel). They refresh when the tab is opened or the page regains focus.
 }
 function startPortalPoll(){
   if(_portalPoll) clearInterval(_portalPoll);
@@ -1024,8 +1026,9 @@ function startPortalPoll(){
   // refresh the moment the tab regains focus / becomes visible
   if(!window._portalFocusHooked){
     window._portalFocusHooked=true;
-    document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='visible') portalRefreshNow(); });
-    window.addEventListener('focus', function(){ portalRefreshNow(); });
+    var onReturn=function(){ portalRefreshNow(); if(el('paneInvoices') && el('paneInvoices').style.display!=='none') loadInvoices(true); };
+    document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='visible') onReturn(); });
+    window.addEventListener('focus', onReturn);
   }
 }
 var _portalChan=null;
