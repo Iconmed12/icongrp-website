@@ -1102,18 +1102,23 @@ async function loadInvoices(quiet){
   try{
     var br=await sb.from('portal_bookings').select('*').order('booking_date',{ascending:false});
     var bookings=(br.data)||[];
+    // invoices — drafts are internal (not yet issued) so clients never see them
+    var ir=await sb.from('portal_invoices').select('*').order('issued_date',{ascending:false});
+    var allInvoices=(ir.data)||[];
+    var invoices=allInvoices.filter(function(v){ return (v.status||'due')!=='draft'; });
+    // ids of invoices that are still drafts — a job attached to one of these is
+    // not really invoiced yet from the client's point of view
+    var draftIds={}; allInvoices.forEach(function(v){ if((v.status||'')==='draft') draftIds[v.id]=true; });
     // completed, un-invoiced, not disputed -> awaiting invoice (VAT-inclusive)
     var awaiting=0, awaitingCount=0, recentJobs=[];
     bookings.forEach(function(b){
       if(b.status!=='completed' || b.disputed) return;
       if(b.agreed_rate==null) return;
+      var reallyInvoiced = b.invoiced_in && !draftIds[b.invoiced_in];
       var gross=vatBreakdown(b.agreed_rate, b.vat_mode).gross;
-      if(!b.invoiced_in){ awaiting+=gross; awaitingCount++; }
+      if(!reallyInvoiced){ awaiting+=gross; awaitingCount++; }
       recentJobs.push(b);
     });
-    // invoices
-    var ir=await sb.from('portal_invoices').select('*').order('issued_date',{ascending:false});
-    var invoices=(ir.data)||[];
     var outstanding=0, paidYear=0, dueCount=0; var thisYear=new Date().getFullYear();
     invoices.forEach(function(v){
       if(v.status==='due'){ outstanding+=Number(v.amount)||0; dueCount++; }
@@ -1141,7 +1146,7 @@ async function loadInvoices(quiet){
         var svc=/^Interpreter:/i.test(b.service||'')?('Interpreting – '+esc((b.service||'').replace(/^Interpreter:\s*/i,''))):esc(b.service||'Job');
         var pair=(b.from_lang||b.to_lang)?(' · '+esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))):'';
         var gross=money(vatBreakdown(b.agreed_rate, b.vat_mode).gross);
-        var chip = b.invoiced_in
+        var chip = (b.invoiced_in && !draftIds[b.invoiced_in])
           ? '<span class="jchip inv">Invoiced</span>'
           : '<span class="jchip pend">Awaiting invoice</span>';
         return '<div class="jrow"><div class="jmain"><div class="jttl">'+svc+pair+'</div>'
