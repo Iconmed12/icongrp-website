@@ -1376,8 +1376,10 @@ function bookingCard(b){
       +'<div class="cfmbody"><div class="cfmttl">Booking confirmed</div>'
       +'<div class="cfmsub"><span class="bit">'+calIc+esc(when)+'</span>'+interpBit+'</div></div>'
       +'<div class="cfmbtns">'+markBtn+'<button class="cfmbtn" onclick="openConfirmation('+b.id+')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>View booking confirmation</button></div></div>';
-  } else if(b.status==='completed' && b.interpreter_name && !b.disputed){
-    body+='<div class="interp-line">Delivered · Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
+  } else if(b.status==='completed' && !b.disputed){
+    var compWho = b.interpreter_name ? ('<div class="interp-line">Delivered · '+(isTranslationBk(b)?'Translator':'Interpreter')+': <b>'+esc(b.interpreter_name)+'</b></div>') : '';
+    body+=compWho
+      +'<div class="cfmbtns" style="margin-top:10px"><button class="cfmbtn" onclick="openConfirmation('+b.id+')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>View '+(isTranslationBk(b)?'order summary':'booking confirmation')+'</button></div>';
   } else if(b.disputed && b.interpreter_name){
     body+='<div class="interp-line" style="color:#45658B">Interpreter: <b>'+esc(b.interpreter_name)+'</b></div>';
   }
@@ -1813,20 +1815,36 @@ function openConfirmation(id){
   var svc=(b.service||'');
   if(/translation/i.test(svc)) fmt='Document translation';
   else { var m=svc.replace(/^Interpreter:\s*/i,''); fmt='Interpreting'+(m?(' — '+m):''); }
+  var isT=/translation/i.test(svc);
   var remote=/video|telephone|phone/i.test(svc);
   var loc = remote ? 'Remote (joining details sent separately)' : (b.location || 'To be confirmed');
-  var dt = b.booking_date ? (new Date(b.booking_date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+(b.booking_time?(', '+b.booking_time):'')) : 'To be confirmed';
+  var dt = b.booking_date ? (new Date(b.booking_date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+(b.booking_time?(', '+b.booking_time):'')) : (isT?'No fixed deadline':'To be confirmed');
   var rate = b.agreed_rate!=null ? priceWithVat(b.agreed_rate, b.vat_mode) : 'To be confirmed';
-  var rows=[
-    ['Service', esc(fmt)],
-    ['Languages', esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))],
-    ['Date & time', esc(dt)],
-    ['Duration', esc(b.duration||'To be confirmed')],
-    ['Interpreter', esc(b.interpreter_name||'To be assigned')],
-    ['PO / reference', esc(b.po_number||'—')],
-    ['Client', esc(org||'—')],
-    [remote?'Joining':'Location', esc(loc)]
-  ];
+  var rows;
+  if(isT){
+    var typeLbl={standard:'Standard',certified:'Certified',specialist:'Specialist'}[b.translation_type]||(b.translation_type||'Standard');
+    rows=[
+      ['Service', esc(fmt)],
+      ['Languages', esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))],
+      ['Word count', b.word_count!=null?(Number(b.word_count).toLocaleString()+' words'):'—'],
+      ['Translation type', esc(typeLbl)],
+      ['Required by', esc(dt)],
+      ['Delivery', (b.delivery_speed==='urgent'?'Urgent — ':'')+'Uploaded to your portal'],
+      ['PO / reference', esc(b.po_number||'—')],
+      ['Client', esc(org||'—')]
+    ];
+  } else {
+    rows=[
+      ['Service', esc(fmt)],
+      ['Languages', esc((b.from_lang||'?')+' → '+(b.to_lang||'?'))],
+      ['Date & time', esc(dt)],
+      ['Duration', esc(b.duration||'To be confirmed')],
+      ['Interpreter', esc(b.interpreter_name||'To be assigned')],
+      ['PO / reference', esc(b.po_number||'—')],
+      ['Client', esc(org||'—')],
+      [remote?'Joining':'Location', esc(loc)]
+    ];
+  }
   var issued=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
   var cells=rows.map(function(r){return '<div class="di"><div class="k">'+r[0]+'</div><div class="v">'+r[1]+'</div></div>';}).join('');
   var html='<!doctype html><html><head><meta charset="utf-8"><title>Booking confirmation '+fmtRef(b)+'</title>'
@@ -1853,9 +1871,9 @@ function openConfirmation(id){
     +'.pr{background:#092A59;color:#fff}.cl{background:#fff;color:#092A59;border:1.5px solid #d7dce5}'
     +'@media print{.btns{display:none}.wrap{padding:0}}'
     +'</style></head><body><div class="wrap">'
-    +'<div class="head"><div><div class="brand">ICON <span>| Lingua</span></div><div class="tag">Booking confirmation</div></div>'
+    +'<div class="head"><div><div class="brand">ICON <span>| Lingua</span></div><div class="tag">'+(isT?'Order summary':'Booking confirmation')+'</div></div>'
     +'<div class="ref">Reference<b>'+fmtRef(b)+'</b></div></div>'
-    +'<div class="body"><div class="ttl">Confirmed booking details</div>'
+    +'<div class="body"><div class="ttl">'+(isT?'Translation order details':'Confirmed booking details')+'</div>'
     +'<div class="grid">'+cells+'</div>'
     +'<div class="rate"><div class="k">Agreed rate</div><div class="v">'+rate+'</div></div>'
     +(b.agreed_rate!=null?('<div class="note">'+vatLine(b.agreed_rate, b.vat_mode)+' A VAT invoice will be issued on completion.</div>'):'')
