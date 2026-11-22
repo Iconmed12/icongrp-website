@@ -1491,9 +1491,7 @@ function translationDelivery(b){
   var files=_bkFiles[b.id];
   if(files==null){ if(_openBooking===b.id){ loadFiles(b.id).then(renderBookings); } return ''; }
   var delivered=files.filter(function(f){ return f.is_delivery; });
-  if(!delivered.length){
-    return '<div class="docsec" style="margin-top:12px"><h4>Your translation</h4><div class="docnote">We\'re working on your translation. The finished document will appear here to download when it\'s ready.</div></div>';
-  }
+  if(!delivered.length) return ''; // nothing to show until the finished file is delivered
   return '<div class="docsec" style="margin-top:12px"><h4>Your translation</h4>'
     +'<div style="color:#B42318;font-weight:700;font-size:13px;margin:2px 0 10px">Your translation is ready. Download it below.</div>'
     +delivered.map(function(f){ var ic=fileIcon(f.file_name,f.file_type);
