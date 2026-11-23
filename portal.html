@@ -85,6 +85,23 @@
   .heroart svg{width:100%;height:auto;display:block}
   .heroart-img{width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 8px 28px rgba(9,42,89,.18)}
   .sectlbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a94a6;margin:0 0 16px}
+  /* ===== client profile ===== */
+  .pfhead{display:flex;align-items:center;gap:14px;margin:6px 0 18px}
+  .pfic{width:48px;height:48px;border-radius:13px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center}
+  .pfh1{font-size:24px;font-weight:800;color:var(--navy)}
+  .pfsub{font-size:13.5px;color:#5b6b85;margin-top:2px}
+  .pfcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;max-width:860px}
+  .pfcard-h{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:16px}
+  .pfgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.pfgrid{grid-template-columns:1fr}}
+  .pffield label{display:block;font-size:12px;font-weight:700;color:#53647A;margin-bottom:5px}
+  .pffield input{width:100%;border:1px solid #D7DCE5;border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;color:var(--navy);box-sizing:border-box}
+  .pffield input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 2px rgba(27,79,207,.12)}
+  .pffield input[readonly]{background:#f5f7fb;color:#64748b}
+  .pffull{grid-column:1 / -1}
+  .pfactions{margin-top:18px;display:flex;justify-content:flex-end}
+  .pfsave{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+  .pfsave:hover{background:#1744b0}
   /* ===== client dashboard home ===== */
   .dash-head{margin-bottom:20px}
   .dash-hi{font-size:28px;font-weight:800;color:var(--navy)}
@@ -594,7 +611,7 @@
           <!-- bottom row -->
           <div class="dash-brow">
             <div class="dash-bcard">
-              <div class="dash-bcard-h"><div class="dash-bt"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg> Your Account</div><button class="dash-profbtn" onclick="dashTab('invoices')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Open Profile</button></div>
+              <div class="dash-bcard-h"><div class="dash-bt"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg> Your Account</div><button class="dash-profbtn" onclick="dashTab('profile')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Open Profile</button></div>
               <div id="dashAccount"></div>
             </div>
             <div class="dash-bcard">
@@ -803,6 +820,21 @@
                 <a href="mailto:support@icongrp.co.uk">Contact us <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
               </div>
             </aside>
+          </div>
+        </div>
+
+        <!-- CLIENT PROFILE -->
+        <div id="paneProfile" style="display:none">
+          <a class="wzback" onclick="dashTab('home')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back to dashboard</a>
+          <div class="pfhead">
+            <div class="pfic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div>
+            <div><h1 class="pfh1">Company Profile</h1><div class="pfsub">Your company and account details.</div></div>
+          </div>
+          <div class="msg" id="pfMsg" style="margin-bottom:14px"></div>
+          <div class="pfcard">
+            <div class="pfcard-h">Company details</div>
+            <div id="pfForm"></div>
+            <div class="pfactions"><button class="pfsave" onclick="saveProfile()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> Save changes</button></div>
           </div>
         </div>
       </div>
@@ -1125,6 +1157,8 @@ function dashTab(which){
   el('paneBookings').style.display = which==='bookings'?'':'none';
   el('paneInvoices').style.display = which==='invoices'?'':'none';
   el('paneRequest').style.display = which==='request'?'':'none';
+  var pp=el('paneProfile'); if(pp) pp.style.display = which==='profile'?'':'none';
+  if(which==='profile') renderProfile();
   if(which==='home'){ renderHome(); loadBookings().then(renderHome).catch(function(){}); }
   if(which==='bookings'){ if(_cachedBookings){ renderBookings(_cachedBookings); _cachedBookings=null; } loadBookings(); }
   if(which==='invoices') loadInvoices();
@@ -1474,6 +1508,58 @@ function renderBookings(listArg){
 function fmtRef(b){ return b.order_no || ((isTranslationBk(b)?'TRA-':'INT-')+String(b.id).padStart(4,'0')); }
 function homeRef(b){ return b.order_no || ((isTranslationBk(b)?'TRA-':'INT-')+String(b.id).padStart(4,'0')); }
 
+// ===== Client profile =====
+function pfSplitAddr(str){
+  if(!str) return {};
+  var parts=String(str).split(/\s*,\s*|\n/).map(function(x){return x.trim();}).filter(Boolean);
+  var pc=''; if(parts.length){ var last=parts[parts.length-1]; if(/\b[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/i.test(last)){ pc=last; parts.pop(); } }
+  var city=parts.length?parts.pop():'';
+  return {addr1:parts[0]||'', addr2:parts.slice(1).join(', '), city:city, postcode:pc};
+}
+function renderProfile(){
+  var c=CURRENT_CUST||{};
+  var p=(c.addr1||c.addr2||c.city||c.postcode)?{addr1:c.addr1,addr2:c.addr2,city:c.city,postcode:c.postcode}:pfSplitAddr(c.address);
+  function f(label,id,val,opt){ return '<div class="pffield'+(opt&&opt.full?' pffull':'')+'"><label>'+label+'</label><input id="'+id+'" value="'+esc(val||'')+'"'+(opt&&opt.ro?' readonly':'')+(opt&&opt.ph?(' placeholder="'+esc(opt.ph)+'"'):'')+'></div>'; }
+  var h='<div class="pfgrid">'
+    +f('Company name','pfOrg',c.organisation||c.name,{ro:true})
+    +f('Company number','pfRegNo',c.company_number)
+    +f('Contact person','pfName',c.name)
+    +f('Job title','pfJob',c.job_title)
+    +f('Email','pfEmail',c.email)
+    +f('Telephone','pfPhone',c.phone)
+    +f('VAT number','pfVat',c.vat_number)
+    +f('Website','pfWeb',c.website)
+  +'</div>'
+  +'<div class="pfcard-h" style="margin:20px 0 14px;font-size:14px">Registered address</div>'
+  +'<div class="pfgrid">'
+    +f('Address line 1','pfA1',p.addr1,{full:true})
+    +f('Address line 2 (optional)','pfA2',p.addr2,{full:true})
+    +f('City','pfCity',p.city)
+    +f('Postcode','pfPostcode',p.postcode)
+  +'</div>';
+  el('pfForm').innerHTML=h;
+}
+async function saveProfile(){
+  var c=CURRENT_CUST; if(!c) return;
+  var g=function(id){ var e=el(id); return e?e.value.trim():''; };
+  var a1=g('pfA1'), a2=g('pfA2'), city=g('pfCity'), pc=g('pfPostcode');
+  var combined=[a1,a2,city,pc].filter(Boolean).join(', ');
+  var upd={ name:g('pfName'), job_title:g('pfJob'), email:g('pfEmail'), phone:g('pfPhone'),
+    company_number:g('pfRegNo'), vat_number:g('pfVat'), website:g('pfWeb'),
+    addr1:a1, addr2:a2, city:city, postcode:pc, address:combined };
+  var ok=true;
+  try{
+    var r=await sb.from('customers').update(upd).eq('id',c.id);
+    if(r.error){ // some columns may not exist yet — retry with the core ones
+      ['company_number','vat_number','website','job_title','addr1','addr2','city','postcode'].forEach(function(k){ delete upd[k]; });
+      var r2=await sb.from('customers').update(upd).eq('id',c.id); ok=!r2.error;
+    }
+  }catch(e){ ok=false; }
+  // reflect locally
+  Object.keys(upd).forEach(function(k){ c[k]=upd[k]; });
+  showMsg('pfMsg', ok?'ok':'err', ok?'Your details have been saved.':'Saved, but some fields need a database update first.');
+  renderHome();
+}
 // ===== Dashboard home =====
 function renderHome(){
   // greeting
