@@ -90,6 +90,9 @@
   .pfic{width:48px;height:48px;border-radius:13px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center}
   .pfh1{font-size:24px;font-weight:800;color:var(--navy)}
   .pfsub{font-size:13.5px;color:#5b6b85;margin-top:2px}
+  .pftabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .pftab{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#53647A;border:1px solid var(--line);border-radius:11px;padding:11px 16px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
+  .pftab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
   .pfcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;max-width:860px}
   .pfcard-h{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:16px}
   .pfgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -102,6 +105,16 @@
   .pfactions{margin-top:18px;display:flex;justify-content:flex-end}
   .pfsave{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
   .pfsave:hover{background:#1744b0}
+  .pfdoc{display:flex;align-items:center;gap:13px;border:1px solid #eef2f8;border-radius:11px;padding:13px 15px;margin-bottom:10px}
+  .pfdoc-ic{width:40px;height:40px;border-radius:10px;background:#eaf1fb;color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .pfdoc-btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit}
+  .pfdoc-btn:hover{background:#f8fafc}
+  .pfrtbl{border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-bottom:16px}
+  .pfrtbl-h{display:grid;grid-template-columns:1fr 130px 140px;gap:10px;background:#f8fafc;padding:10px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:#8a97ac;font-weight:800;border-bottom:1px solid var(--line)}
+  .pfrtbl-r{display:grid;grid-template-columns:1fr 130px 140px;gap:10px;padding:11px 14px;font-size:13.5px;border-bottom:1px solid #f3f6fb;color:var(--navy)}
+  .pfrtbl-r:last-child{border-bottom:none}
+  .pfrtbl-r span:last-child{font-weight:700}
+  @media(max-width:620px){.pfrtbl-h,.pfrtbl-r{grid-template-columns:1fr}.pfrtbl-h span:not(:first-child){display:none}}
   /* ===== client dashboard home ===== */
   .dash-head{margin-bottom:20px}
   .dash-hi{font-size:28px;font-weight:800;color:var(--navy)}
@@ -830,13 +843,11 @@
             <div class="pfic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div>
             <div><h1 class="pfh1">Company Profile</h1><div class="pfsub">Your company and account details.</div></div>
           </div>
+          <div id="pfTabs" class="pftabs"></div>
           <div class="msg" id="pfMsg" style="margin-bottom:14px"></div>
-          <div class="pfcard">
-            <div class="pfcard-h">Company details</div>
-            <div id="pfForm"></div>
-            <div class="pfactions"><button class="pfsave" onclick="saveProfile()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> Save changes</button></div>
-          </div>
+          <div id="pfBody"></div>
         </div>
+        <input type="file" id="pfDocInput" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" onchange="pfDocUpload(this.files)">
       </div>
     </div>
   </div><!-- /viewDash -->
@@ -1158,7 +1169,7 @@ function dashTab(which){
   el('paneInvoices').style.display = which==='invoices'?'':'none';
   el('paneRequest').style.display = which==='request'?'':'none';
   var pp=el('paneProfile'); if(pp) pp.style.display = which==='profile'?'':'none';
-  if(which==='profile') renderProfile();
+  if(which==='profile'){ renderProfile(); pfLoadDocs().then(renderProfile).catch(function(){}); }
   if(which==='home'){ renderHome(); loadBookings().then(renderHome).catch(function(){}); }
   if(which==='bookings'){ if(_cachedBookings){ renderBookings(_cachedBookings); _cachedBookings=null; } loadBookings(); }
   if(which==='invoices') loadInvoices();
@@ -1516,28 +1527,123 @@ function pfSplitAddr(str){
   var city=parts.length?parts.pop():'';
   return {addr1:parts[0]||'', addr2:parts.slice(1).join(', '), city:city, postcode:pc};
 }
+var _pfTab='details';
+var _pfDocs=[]; // extra uploaded customer documents
+function pfSetTab(t){ _pfTab=t; renderProfile(); }
 function renderProfile(){
   var c=CURRENT_CUST||{};
+  // tabs
+  var docCount=(c.document_path?1:0)+_pfDocs.length;
+  var tabs=[['details','Company Details',''],['docs','Uploaded Documents ('+docCount+')',''],['terms','Accepted Terms',''],['rates','Rate Card','']];
+  el('pfTabs').innerHTML=tabs.map(function(t){ return '<button class="pftab'+(_pfTab===t[0]?' on':'')+'" onclick="pfSetTab(\''+t[0]+'\')">'+t[1]+'</button>'; }).join('');
+  el('pfBody').innerHTML=pfTabBody(c);
+}
+function pfTabBody(c){
+  if(_pfTab==='docs') return pfDocsBody(c);
+  if(_pfTab==='terms') return pfTermsBody(c);
+  if(_pfTab==='rates') return pfRatesBody(c);
+  // company details (default)
   var p=(c.addr1||c.addr2||c.city||c.postcode)?{addr1:c.addr1,addr2:c.addr2,city:c.city,postcode:c.postcode}:pfSplitAddr(c.address);
-  function f(label,id,val,opt){ return '<div class="pffield'+(opt&&opt.full?' pffull':'')+'"><label>'+label+'</label><input id="'+id+'" value="'+esc(val||'')+'"'+(opt&&opt.ro?' readonly':'')+(opt&&opt.ph?(' placeholder="'+esc(opt.ph)+'"'):'')+'></div>'; }
-  var h='<div class="pfgrid">'
-    +f('Company name','pfOrg',c.organisation||c.name,{ro:true})
-    +f('Company number','pfRegNo',c.company_number)
-    +f('Contact person','pfName',c.name)
-    +f('Job title','pfJob',c.job_title)
-    +f('Email','pfEmail',c.email)
-    +f('Telephone','pfPhone',c.phone)
-    +f('VAT number','pfVat',c.vat_number)
-    +f('Website','pfWeb',c.website)
-  +'</div>'
-  +'<div class="pfcard-h" style="margin:20px 0 14px;font-size:14px">Registered address</div>'
-  +'<div class="pfgrid">'
-    +f('Address line 1','pfA1',p.addr1,{full:true})
-    +f('Address line 2 (optional)','pfA2',p.addr2,{full:true})
-    +f('City','pfCity',p.city)
-    +f('Postcode','pfPostcode',p.postcode)
+  function f(label,id,val,opt){ return '<div class="pffield'+(opt&&opt.full?' pffull':'')+'"><label>'+label+'</label><input id="'+id+'" value="'+esc(val||'')+'"'+(opt&&opt.ro?' readonly':'')+'></div>'; }
+  return '<div class="pfcard"><div class="pfcard-h">Company details</div>'
+    +'<div class="pfgrid">'
+      +f('Company name','pfOrg',c.organisation||c.name,{ro:true})
+      +f('Company number','pfRegNo',c.company_number)
+      +f('Contact person','pfName',c.name)
+      +f('Job title','pfJob',c.job_title)
+      +f('Email','pfEmail',c.email)
+      +f('Telephone','pfPhone',c.phone)
+      +f('VAT number','pfVat',c.vat_number)
+      +f('Website','pfWeb',c.website)
+    +'</div>'
+    +'<div class="pfcard-h" style="margin:20px 0 14px;font-size:14px">Registered address</div>'
+    +'<div class="pfgrid">'
+      +f('Address line 1','pfA1',p.addr1,{full:true})
+      +f('Address line 2 (optional)','pfA2',p.addr2,{full:true})
+      +f('City','pfCity',p.city)
+      +f('Postcode','pfPostcode',p.postcode)
+    +'</div>'
+    +'<div class="pfactions"><button class="pfsave" onclick="saveProfile()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> Save changes</button></div>'
   +'</div>';
-  el('pfForm').innerHTML=h;
+}
+function pfDocRow(name,sub,onView){
+  return '<div class="pfdoc"><div class="pfdoc-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div>'
+    +'<div style="flex:1"><div style="font-weight:700;color:var(--navy)">'+esc(name)+'</div><div style="font-size:12px;color:#8a97ac">'+esc(sub)+'</div></div>'
+    +(onView?('<button class="pfdoc-btn" onclick="'+onView+'">View</button>'):'')+'</div>';
+}
+function pfDocsBody(c){
+  var h='<div class="pfcard"><div class="pfcard-h" style="display:flex;justify-content:space-between;align-items:center">Uploaded documents<button class="pfsave" style="padding:9px 15px;font-size:13px" onclick="document.getElementById(\'pfDocInput\').click()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Upload</button></div>';
+  var any=false;
+  if(c.document_path){ any=true; h+=pfDocRow(c.document_name||'Registration document','Uploaded at sign-up','pfViewDoc(\''+esc(c.document_path)+'\')'); }
+  _pfDocs.forEach(function(d){ any=true; h+=pfDocRow(d.file_name||'Document', d.created_at?('Uploaded '+fmtFull(String(d.created_at).slice(0,10))):'Uploaded', 'pfViewDoc(\''+esc(d.path)+'\')'); });
+  if(!any) h+='<div style="color:#8a97ac;font-size:14px;padding:6px 0">No documents yet. Use Upload to add one.</div>';
+  return h+'</div>';
+}
+function pfTermsBody(c){
+  var h='<div class="pfcard"><div class="pfcard-h">Accepted terms</div>';
+  if(c.terms_accepted_at){
+    h+='<div style="display:flex;align-items:center;gap:10px;background:#eef7f1;border:1px solid #bfe3cf;border-radius:11px;padding:14px 16px;color:#1a8f55;font-weight:600"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14.01l-3-3"/></svg> You accepted our Terms of Business on '+esc(fmtFull(String(c.terms_accepted_at).slice(0,10)))+(c.terms_version?(' (version '+esc(c.terms_version)+')'):'')+'.</div>';
+    h+='<div style="margin-top:12px"><a href="terms.html" target="_blank" style="color:var(--blue);font-weight:700;text-decoration:none">Read the terms of business →</a></div>';
+  } else {
+    h+='<div style="color:#8a97ac;font-size:14px">Terms of Business have not been accepted on this account yet.</div>';
+  }
+  return h+'</div>';
+}
+function pfRatesBody(c){
+  var j=c.rate_card_json; if(typeof j==='string'){ try{ j=JSON.parse(j); }catch(e){ j=null; } }
+  var active=!!c.rate_card_active;
+  if(!j || !active){
+    return '<div class="pfcard"><div class="pfcard-h">Rate card</div><div style="color:#8a97ac;font-size:14px">No agreed rate card is active on your account yet. Prices are confirmed per booking.</div></div>';
+  }
+  function tbl(title,rows){ rows=(rows||[]).filter(function(r){ return r.rate; }); if(!rows.length) return '';
+    return '<div class="pfcard-h" style="font-size:14px;margin:4px 0 10px">'+title+'</div><div class="pfrtbl">'
+      +'<div class="pfrtbl-h"><span>Service</span><span>Unit</span><span>Rate (ex VAT)</span></div>'
+      +rows.map(function(r){ return '<div class="pfrtbl-r"><span>'+esc(r.service||'')+'</span><span>'+esc(r.unit||'')+'</span><span>£'+esc(String(r.rate))+'</span></div>'; }).join('')+'</div>';
+  }
+  var h='<div class="pfcard"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div class="pfcard-h" style="margin:0">Your rate card</div><span style="background:#e7f6ee;color:#1a8f55;border-radius:20px;padding:5px 13px;font-size:12.5px;font-weight:700">Active'+(c.rate_card_effective?(' · from '+esc(fmtFull(String(c.rate_card_effective).slice(0,10)))):'')+'</span></div>';
+  h+=tbl('Interpreting', j.interpreting);
+  h+=tbl('Translation', j.translation);
+  if(j.languages&&j.languages.length) h+=tbl('Language rates', j.languages.map(function(l){ return {service:[l.from,l.to].filter(Boolean).join(' → '),unit:l.unit,rate:l.rate}; }));
+  h+=tbl('Additional charges', j.additional);
+  h+='<div style="font-size:12px;color:#8a97ac;margin-top:14px">These are the agreed rates applied to your bookings. To change them, contact our team.</div>';
+  return h+'</div>';
+}
+async function pfViewDoc(path){
+  try{
+    var bucket = path.indexOf('/')>=0 && _pfDocs.find(function(d){return d.path===path;}) ? 'customer-docs' : 'customer-docs';
+    var r=await sb.storage.from('customer-docs').createSignedUrl(path,120);
+    if(r.data&&r.data.signedUrl){ window.open(r.data.signedUrl,'_blank'); return; }
+  }catch(e){}
+  // fallback: booking-docs
+  try{ var r2=await sb.storage.from('booking-docs').createSignedUrl(path,120); if(r2.data&&r2.data.signedUrl){ window.open(r2.data.signedUrl,'_blank'); return; } }catch(e){}
+  showMsg('pfMsg','err','Could not open the document.');
+}
+async function pfDocUpload(files){
+  if(!files||!files.length) return;
+  var c=CURRENT_CUST; if(!c) return;
+  var f=files[0];
+  if(f.size>10*1024*1024){ showMsg('pfMsg','err','File must be under 10MB.'); return; }
+  showMsg('pfMsg','wait','Uploading…');
+  try{
+    var safe=f.name.replace(/[^\w.\-]+/g,'_');
+    var path=c.id+'/docs/'+Date.now()+'_'+safe;
+    var up=await sb.storage.from('customer-docs').upload(path, f, {upsert:false, contentType:f.type||undefined});
+    if(up.error){ showMsg('pfMsg','err','Upload failed: '+up.error.message); return; }
+    var ins=await sb.from('customer_files').insert({ customer_id:c.id, path:path, file_name:f.name, file_size:f.size }).select();
+    if(ins.error){ // table may not exist yet — still keep it visible this session
+      _pfDocs.push({path:path, file_name:f.name, created_at:new Date().toISOString()});
+      showMsg('pfMsg','ok','Uploaded (note: run the customer-files SQL to store it permanently).');
+    } else {
+      if(ins.data&&ins.data[0]) _pfDocs.unshift(ins.data[0]);
+      showMsg('pfMsg','ok','Document uploaded.');
+    }
+    renderProfile();
+  }catch(e){ showMsg('pfMsg','err','Something went wrong.'); }
+  el('pfDocInput').value='';
+}
+async function pfLoadDocs(){
+  var c=CURRENT_CUST; if(!c) return;
+  try{ var r=await sb.from('customer_files').select('*').eq('customer_id',c.id).order('created_at',{ascending:false}); if(!r.error&&r.data) _pfDocs=r.data; }catch(e){}
 }
 async function saveProfile(){
   var c=CURRENT_CUST; if(!c) return;
