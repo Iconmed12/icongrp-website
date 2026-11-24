@@ -894,7 +894,7 @@
 
         <!-- BOOKINGS -->
         <div id="paneBookings" style="display:none">
-          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">My bookings</h2><button class="btn sm" onclick="newReqService('Interpreter: in person')">+ New request</button></div>
+          <div class="dhead"><h2 style="font-size:24px;color:var(--navy)">My bookings</h2></div>
           <p class="dlead">Track your requests, agree rates and manage your bookings in one place.</p>
           <div class="bktools">
             <div class="bkfilters" id="bkFilters">
@@ -1923,7 +1923,7 @@ function renderBookings(listArg){
     if(aa!==bb) return aa-bb;
     return new Date(b.created_at)-new Date(a.created_at);
   });
-  if(!list.length){ box.innerHTML='<div class="dempty">'+(all.length?'No bookings match this view.':'No bookings yet. Click “+ New request” to make your first one.')+'</div>'; return; }
+  if(!list.length){ box.innerHTML='<div class="dempty">'+(all.length?'No bookings match this view.':'No bookings yet.')+'</div>'; return; }
   box.innerHTML=list.map(bookingCard).join('');
 }
 
