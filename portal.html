@@ -1226,28 +1226,38 @@ async function doRegister(){
     var d1=await up(doc,'document'); if(d1){ docPath=d1.path; docName=d1.name; }
     var d2=await up(doc2,'credit-application');
     if(uid){
-      var row={
+      // These columns existed before this redesign and are safe to insert everywhere.
+      var core={
         id:uid, name:contact, organisation:org, org_type:type||'Business', org_name:org,
-        trading_name:trading||null, company_number:companyNo||null, vat_number:vat||null,
-        email:email, phone:phone, job_title:job,
-        addr1:a1||null, addr2:a2||null, city:city||null, postcode:pc||null, address:combined||null,
-        finance_contact:finName||null, finance_email:finEmail||null,
-        po_required:poRequired, payment_pref:SUW.pay, account_type:SUW.acct,
+        email:email, phone:phone, job_title:job, address:combined||null,
         terms_accepted_at:new Date().toISOString(), terms_version:TERMS_VERSION,
         document_path:docPath, document_name:docName,
-        credit_doc_path:d2?d2.path:null, credit_doc_name:d2?d2.name:null,
         approved:false, status:'pending'
       };
-      var ins=await sb.from('customers').insert(row);
+      // Extra columns from the new signup — added by icon-hub-signup-fields.sql.
+      var extra={
+        trading_name:trading||null, company_number:companyNo||null, vat_number:vat||null,
+        addr1:a1||null, addr2:a2||null, city:city||null, postcode:pc||null,
+        finance_contact:finName||null, finance_email:finEmail||null,
+        po_required:poRequired, payment_pref:SUW.pay, account_type:SUW.acct,
+        credit_doc_path:d2?d2.path:null, credit_doc_name:d2?d2.name:null
+      };
+      var full={}; for(var k in core) full[k]=core[k]; for(var k2 in extra) full[k2]=extra[k2];
+      var ins=await sb.from('customers').insert(full);
       if(ins.error){
-        console.log('profile insert:', ins.error.message);
-        // retry with the core columns only, in case newer columns are not in the DB yet
-        ['trading_name','company_number','vat_number','addr1','addr2','city','postcode','finance_contact','finance_email','po_required','payment_pref','account_type','credit_doc_path','credit_doc_name'].forEach(function(k){ delete row[k]; });
-        await sb.from('customers').insert(row);
+        console.log('profile insert (full):', ins.error.message);
+        // fall back to the core columns that have always existed
+        var ins2=await sb.from('customers').insert(core);
+        if(ins2.error){
+          console.log('profile insert (core):', ins2.error.message);
+          showMsg('regMsg4','err','We created your login but could not save your profile. Please contact us on 01268 20 30 10 and we will finish setting you up.');
+          btn.disabled=false; btn.innerHTML='Create account &rarr;';
+          return;
+        }
       }
     }
     suwGo(5);
-  }catch(e){ showMsg('regMsg4','err','Something went wrong. Please try again.'); btn.disabled=false; btn.innerHTML='Create account &rarr;'; }
+  }catch(e){ console.log('register error:', e&&e.message); showMsg('regMsg4','err','Something went wrong. Please try again.'); btn.disabled=false; btn.innerHTML='Create account &rarr;'; }
 }
 
 async function doLogin(){
