@@ -1226,16 +1226,17 @@ async function doRegister(){
     var d1=await up(doc,'document'); if(d1){ docPath=d1.path; docName=d1.name; }
     var d2=await up(doc2,'credit-application');
     if(uid){
-      // These columns existed before this redesign and are safe to insert everywhere.
+      // Minimal columns that have always existed on the customers table.
       var core={
         id:uid, name:contact, organisation:org, org_type:type||'Business', org_name:org,
-        email:email, phone:phone, job_title:job, address:combined||null,
+        email:email, phone:phone, job_title:job,
         terms_accepted_at:new Date().toISOString(), terms_version:TERMS_VERSION,
         document_path:docPath, document_name:docName,
         approved:false, status:'pending'
       };
-      // Extra columns from the new signup — added by icon-hub-signup-fields.sql.
+      // Extra columns added by icon-hub-signup-fields.sql (and the legacy combined address).
       var extra={
+        address:combined||null,
         trading_name:trading||null, company_number:companyNo||null, vat_number:vat||null,
         addr1:a1||null, addr2:a2||null, city:city||null, postcode:pc||null,
         finance_contact:finName||null, finance_email:finEmail||null,
