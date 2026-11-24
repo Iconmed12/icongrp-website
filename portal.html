@@ -587,6 +587,41 @@
   .suw-page{display:none}.suw-page.on{display:block}
   .suw-hint{font-size:11.5px;color:#B42318;margin-top:5px;min-height:1px}
   @media(max-width:860px){ .suw-shell{grid-template-columns:1fr} .suw-side{display:none} .suw-main{padding:24px} .suw-two,.suw-gf,.suw-acct{grid-template-columns:1fr} }
+
+  /* ===== Onboarding gate (onb-) ===== */
+  .onb-wrap{max-width:760px;margin:30px auto;padding:0 18px}
+  .onb-head{text-align:center;margin-bottom:26px}
+  .onb-badge{display:inline-flex;gap:7px;align-items:center;background:#FEF3F2;color:#B42318;border:1px solid #FCDCD7;border-radius:30px;padding:6px 14px;font-size:12.5px;font-weight:800;margin-bottom:16px;text-transform:uppercase;letter-spacing:.3px}
+  .onb-h1{font-size:26px;font-weight:800;color:var(--navy);margin:0 0 10px}
+  .onb-sub{color:var(--muted);font-size:14.5px;line-height:1.6;margin:0 auto;max-width:600px}
+  .onb-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:26px}
+  .onb-step{background:#f5f8fc;border:1px solid #e6edf6;border-radius:12px;padding:12px 10px;font-size:12px;font-weight:700;color:#45658B;text-align:center;line-height:1.35}
+  .onb-n{display:inline-flex;width:22px;height:22px;border-radius:50%;background:#1559b0;color:#fff;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-bottom:6px}
+  .onb-list{display:flex;flex-direction:column;gap:14px}
+  .onb-card{background:#fff;border:1px solid #e6ecf5;border-radius:14px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 2px 10px rgba(9,42,89,.04)}
+  .onb-card.done{border-color:#c4e6d2;background:#fbfdfc}
+  .onb-card .ic{width:44px;height:44px;border-radius:11px;background:#eef3fb;color:#1559b0;display:flex;align-items:center;justify-content:center;flex:none}
+  .onb-card.done .ic{background:#1a8f55;color:#fff}
+  .onb-card .bd{flex:1;min-width:0}
+  .onb-card .nm{font-weight:800;color:var(--navy);font-size:15px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .onb-card .ds{color:#8a97ac;font-size:12.5px;margin-top:3px;line-height:1.5}
+  .onb-card .fn{color:#1a8f55;font-size:12px;font-weight:700;margin-top:7px;word-break:break-all}
+  .onb-pill{font-size:10.5px;font-weight:800;border-radius:20px;padding:2px 9px;text-transform:uppercase;letter-spacing:.3px}
+  .onb-pill.todo{background:#FEF6EE;color:#BA7517}
+  .onb-pill.ok{background:#EBF8F1;color:#1a8f55}
+  .onb-acts{display:flex;flex-direction:column;gap:8px;flex:none}
+  .onb-btn{border:none;border-radius:9px;padding:9px 15px;font:inherit;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;justify-content:center;white-space:nowrap}
+  .onb-btn.dl{background:#fff;color:var(--navy);border:1px solid #d7dce5}
+  .onb-btn.up{background:linear-gradient(120deg,#1b4fcf,#2563eb);color:#fff}
+  .onb-btn.re{background:#fff;color:#1559b0;border:1px solid #cfe0f5}
+  .onb-btn:disabled{opacity:.6;cursor:default}
+  .onb-status{margin-top:22px;border-radius:14px;padding:18px 20px;display:flex;gap:14px;align-items:center}
+  .onb-status.pending{background:#EBF8F1;border:1px solid #c4e6d2}
+  .onb-status .sic{width:42px;height:42px;border-radius:11px;background:#1a8f55;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+  .onb-status .st{font-weight:800;color:var(--navy);font-size:15px}
+  .onb-status .ss{color:#5a6b85;font-size:13px;margin-top:2px}
+  .onb-foot{text-align:center;color:#9aa6ba;font-size:12.5px;margin-top:26px}
+  @media(max-width:620px){ .onb-steps{grid-template-columns:1fr 1fr} .onb-card{flex-wrap:wrap} .onb-acts{flex-direction:row;width:100%} .onb-btn{flex:1} }
 </style>
 </head>
 <body>
@@ -771,11 +806,25 @@
     <div class="sw"><a onclick="showView('login')">Back to log in</a></div>
   </div>
 
-  <!-- PENDING APPROVAL -->
-  <div class="card state" id="viewPending" style="display:none">
-    <div class="ic wait">&#9203;</div>
-    <div class="big">Account awaiting approval</div>
-    <p>Thanks for signing up. Our team is reviewing your account and we'll email you as soon as it's approved, usually within one working day.<br><br>Once approved, you'll be able to make requests and see your invoices here.</p>
+  <!-- PENDING APPROVAL / ONBOARDING -->
+  <div id="viewPending" style="display:none">
+    <div class="onb-wrap">
+      <div class="onb-head">
+        <div class="onb-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Account locked &middot; onboarding</div>
+        <h1 class="onb-h1">Welcome &mdash; let's finish setting up your account</h1>
+        <p class="onb-sub">Before you can book interpreters, request translations or see invoices, please complete the documents below. Download each one, sign it, and upload the signed copy. Our team will then review and activate your account.</p>
+      </div>
+      <div class="onb-steps">
+        <div class="onb-step"><span class="onb-n">1</span> Download each document</div>
+        <div class="onb-step"><span class="onb-n">2</span> Sign it</div>
+        <div class="onb-step"><span class="onb-n">3</span> Upload the signed copy</div>
+        <div class="onb-step"><span class="onb-n">4</span> We review &amp; activate you</div>
+      </div>
+      <div id="onbList" class="onb-list"></div>
+      <div id="onbStatus" class="onb-status" style="display:none"></div>
+      <input type="file" id="onbFileInput" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none">
+      <div class="onb-foot">Having trouble? Call us on 01268 20 30 10 or email info@icongrp.co.uk</div>
+    </div>
   </div>
 
   </div><!-- /wrap for auth views -->
@@ -1332,7 +1381,81 @@ async function refreshState(){
     bookingsP.then(function(r){ _cachedBookings=(r&&r.data)||[]; }).catch(function(){});
     startPortalPoll();
   }
-  else { showView('pending'); }
+  else { showView('pending'); onbInit(); }
+}
+
+// ===== Onboarding gate (not-yet-approved clients) =====
+// Fixed standard set of documents. Blank files live in the repo under /onboarding/.
+// Replace the file names with your real documents when ready.
+var ONBOARDING_DOCS=[
+  {key:'terms',   name:'Terms &amp; Conditions',      desc:'Our Client Service Agreement. Please read, sign and return.', file:'onboarding/terms-and-conditions.pdf'},
+  {key:'data',    name:'Data Processing Agreement',   desc:'How we handle your data under GDPR. Sign to confirm you accept.', file:'onboarding/data-processing-agreement.pdf'},
+  {key:'credit',  name:'Credit Account Application',  desc:'Only if you applied to pay by invoice. Complete and return.', file:'onboarding/credit-account-application.pdf'}
+];
+var _onbUploads={}; // doc_key -> {path, file_name}
+async function onbInit(){
+  _onbUploads={};
+  try{
+    var uid=CURRENT_CUST&&CURRENT_CUST.id;
+    if(uid){
+      var r=await sb.from('customer_files').select('*').eq('customer_id',uid).eq('category','onboarding');
+      (r.data||[]).forEach(function(f){ if(f.doc_key) _onbUploads[f.doc_key]={path:f.path, file_name:f.file_name}; });
+    }
+  }catch(e){ /* table may not have doc_key/category yet — show empty */ }
+  onbRender();
+}
+function onbRender(){
+  var box=el('onbList'); if(!box) return;
+  var done=0;
+  box.innerHTML = ONBOARDING_DOCS.map(function(d){
+    var up=_onbUploads[d.key];
+    if(up) done++;
+    var pill = up ? '<span class="onb-pill ok">Signed &amp; uploaded</span>' : '<span class="onb-pill todo">Action needed</span>';
+    var icon = up
+      ? '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>';
+    var dl='<a class="onb-btn dl" href="'+d.file+'" download target="_blank"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download</a>';
+    var upBtn = up
+      ? '<button class="onb-btn re" onclick="onbPick(\''+d.key+'\')">Replace</button>'
+      : '<button class="onb-btn up" onclick="onbPick(\''+d.key+'\')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg> Upload signed</button>';
+    return '<div class="onb-card'+(up?' done':'')+'"><div class="ic">'+icon+'</div>'
+      +'<div class="bd"><div class="nm">'+d.name+' '+pill+'</div><div class="ds">'+d.desc+'</div>'
+      +(up?('<div class="fn">Uploaded: '+esc(up.file_name||'signed document')+'</div>'):'')+'</div>'
+      +'<div class="onb-acts">'+dl+upBtn+'</div></div>';
+  }).join('');
+  var st=el('onbStatus');
+  if(st){
+    if(done>=ONBOARDING_DOCS.length){
+      st.style.display=''; st.className='onb-status pending';
+      st.innerHTML='<div class="sic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>'
+        +'<div><div class="st">All documents submitted</div><div class="ss">Thank you. Our team is reviewing your documents and will activate your account, usually within one working day.</div></div>';
+    } else { st.style.display='none'; }
+  }
+}
+var _onbCurrentKey=null;
+function onbPick(key){
+  _onbCurrentKey=key;
+  var inp=el('onbFileInput'); if(!inp) return;
+  inp.value='';
+  inp.onchange=function(){ var f=inp.files&&inp.files[0]; if(f) onbUpload(key,f); };
+  inp.click();
+}
+async function onbUpload(key, file){
+  if(file.size>10*1024*1024){ alert('That file is too large (max 10MB).'); return; }
+  var uid=CURRENT_CUST&&CURRENT_CUST.id; if(!uid) return;
+  var card=null; // simple busy feedback
+  try{
+    var ext=(file.name.split('.').pop()||'bin').toLowerCase();
+    var path=uid+'/signed/'+key+'.'+ext;
+    var up=await sb.storage.from('customer-docs').upload(path, file, {upsert:true});
+    if(up.error){ alert('Upload failed: '+up.error.message); return; }
+    // record it (one row per doc_key — replace if it exists)
+    try{ await sb.from('customer_files').delete().eq('customer_id',uid).eq('category','onboarding').eq('doc_key',key); }catch(e){}
+    var ins=await sb.from('customer_files').insert({ customer_id:uid, path:path, file_name:file.name, category:'onboarding', doc_key:key });
+    if(ins.error){ console.log('onboarding record:', ins.error.message); }
+    _onbUploads[key]={path:path, file_name:file.name};
+    onbRender();
+  }catch(e){ alert('Upload failed. Please try again.'); }
 }
 
 // ---- notification chime (WebAudio, no file) ----
