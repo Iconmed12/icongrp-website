@@ -491,8 +491,8 @@
   @media(max-width:520px){ .grid{grid-template-columns:1fr} .fld.full{grid-column:auto} }
 
   /* ===== Signup wizard (suw-) ===== */
-  #viewRegister.suw-view{max-width:1120px;margin:22px auto;padding:0;background:transparent;border:none;box-shadow:none}
-  .suw-shell{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(9,42,89,.16);display:grid;grid-template-columns:290px 1fr;min-height:620px}
+  #viewRegister.suw-view{max-width:none;width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:-26px;margin-bottom:-26px;padding:0;background:transparent;border:none;box-shadow:none}
+  .suw-shell{background:#fff;border-radius:0;overflow:hidden;box-shadow:none;display:grid;grid-template-columns:320px 1fr;min-height:100vh}
   .suw-side{position:relative;background:linear-gradient(160deg,#0a2a57 0%,#0d3a74 55%,#114a8f 100%);color:#fff;padding:30px 22px;display:flex;flex-direction:column}
   .suw-side:after{content:"";position:absolute;inset:0;background:radial-gradient(900px 400px at 120% 0%,rgba(37,99,235,.35),transparent 60%);pointer-events:none}
   .suw-logo{height:38px;margin-bottom:34px;position:relative;z-index:2}
