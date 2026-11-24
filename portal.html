@@ -115,6 +115,30 @@
   .pfrtbl-r:last-child{border-bottom:none}
   .pfrtbl-r span:last-child{font-weight:700}
   @media(max-width:620px){.pfrtbl-h,.pfrtbl-r{grid-template-columns:1fr}.pfrtbl-h span:not(:first-child){display:none}}
+  /* required-documents checklist */
+  .dcl-prog{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .dcl-bar{flex:1;height:8px;background:#e8eef6;border-radius:20px;overflow:hidden}
+  .dcl-bar i{display:block;height:100%;background:linear-gradient(90deg,#1b4fcf,#2563eb);border-radius:20px;transition:width .3s}
+  .dcl-count{font-size:12.5px;font-weight:700;color:#45658B;white-space:nowrap}
+  .dcl-row{display:flex;align-items:center;gap:15px;padding:15px 16px;border:1px solid #e9eef5;border-radius:12px;margin-bottom:11px}
+  .dcl-row.done{border-color:#c4e6d2;background:#fbfdfc}
+  .dcl-ic{width:42px;height:42px;border-radius:11px;background:#eef3fb;color:#1559b0;display:flex;align-items:center;justify-content:center;flex:none}
+  .dcl-row.done .dcl-ic{background:#1a8f55;color:#fff}
+  .dcl-bd{flex:1;min-width:0}
+  .dcl-nm{font-weight:800;color:#0a2a57;font-size:14.5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .dcl-ds{color:#8a97ac;font-size:12px;margin-top:3px;line-height:1.45}
+  .dcl-fn{color:#1a8f55;font-size:11.5px;font-weight:700;margin-top:5px;word-break:break-all}
+  .dcl-req{font-size:9.5px;font-weight:800;color:#B42318}
+  .dcl-pill{font-size:10px;font-weight:800;border-radius:20px;padding:2px 9px;text-transform:uppercase;letter-spacing:.3px}
+  .dcl-pill.todo{background:#FEF6EE;color:#BA7517}
+  .dcl-pill.ok{background:#EBF8F1;color:#1a8f55}
+  .dcl-acts{display:flex;gap:8px;flex:none}
+  .dcl-btn{border:none;border-radius:9px;padding:9px 14px;font:inherit;font-weight:700;font-size:12.5px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;white-space:nowrap;text-decoration:none}
+  .dcl-btn.dl{background:#fff;color:#0a2a57;border:1px solid #d7dce5}
+  .dcl-btn.up{background:linear-gradient(120deg,#1b4fcf,#2563eb);color:#fff}
+  .dcl-btn.re{background:#fff;color:#1559b0;border:1px solid #cfe0f5}
+  .dcl-btn.view{background:#fff;color:#1a8f55;border:1px solid #c4e6d2}
+  @media(max-width:620px){.dcl-row{flex-wrap:wrap}.dcl-acts{width:100%}.dcl-btn{flex:1;justify-content:center}}
   /* ===== client dashboard home ===== */
   .dash-head{margin-bottom:20px}
   .dash-hi{font-size:28px;font-weight:800;color:var(--navy)}
@@ -1388,9 +1412,9 @@ async function refreshState(){
 // Fixed standard set of documents. Blank files live in the repo under /onboarding/.
 // Replace the file names with your real documents when ready.
 var ONBOARDING_DOCS=[
-  {key:'terms',   name:'Terms &amp; Conditions',      desc:'Our Client Service Agreement. Please read, sign and return.', file:'onboarding/terms-and-conditions.pdf'},
-  {key:'data',    name:'Data Processing Agreement',   desc:'How we handle your data under GDPR. Sign to confirm you accept.', file:'onboarding/data-processing-agreement.pdf'},
-  {key:'credit',  name:'Credit Account Application',  desc:'Only if you applied to pay by invoice. Complete and return.', file:'onboarding/credit-account-application.pdf'}
+  {key:'terms', name:'Terms &amp; Conditions', desc:'Our Client Service Agreement. Please read, sign and return.', file:'onboarding/terms-and-conditions.pdf', required:true},
+  {key:'data',  name:'Data Processing Agreement (GDPR)', desc:'How we handle your data under GDPR. Sign to confirm you accept.', file:'onboarding/data-processing-agreement.pdf', required:true},
+  {key:'nda',   name:'Confidentiality Agreement (NDA)', desc:'Confidentiality undertaking covering the work we do for you.', file:'onboarding/confidentiality-agreement.pdf', required:true}
 ];
 var _onbUploads={}; // doc_key -> {path, file_name}
 async function onbInit(){
@@ -1454,7 +1478,9 @@ async function onbUpload(key, file){
     var ins=await sb.from('customer_files').insert({ customer_id:uid, path:path, file_name:file.name, category:'onboarding', doc_key:key });
     if(ins.error){ console.log('onboarding record:', ins.error.message); }
     _onbUploads[key]={path:path, file_name:file.name};
-    onbRender();
+    // refresh whichever view is showing: the onboarding gate or the profile Documents tab
+    try{ if(el('onbList')) onbRender(); }catch(e){}
+    try{ if(el('paneProfile') && el('paneProfile').style.display!=='none' && _pfTab==='docs') renderProfile(); }catch(e){}
   }catch(e){ alert('Upload failed. Please try again.'); }
 }
 
@@ -1944,8 +1970,8 @@ function pfSetTab(t){ _pfTab=t; renderProfile(); }
 function renderProfile(){
   var c=CURRENT_CUST||{};
   // tabs
-  var docCount=(c.document_path?1:0)+_pfDocs.length;
-  var tabs=[['details','Company Details',''],['docs','Uploaded Documents ('+docCount+')',''],['terms','Accepted Terms',''],['rates','Rate Card','']];
+  var reqDone=ONBOARDING_DOCS.filter(function(d){ return _onbUploads[d.key]; }).length;
+  var tabs=[['details','Company Details',''],['docs','Documents ('+reqDone+'/'+ONBOARDING_DOCS.length+')',''],['terms','Accepted Terms',''],['rates','Rate Card','']];
   el('pfTabs').innerHTML=tabs.map(function(t){ return '<button class="pftab'+(_pfTab===t[0]?' on':'')+'" onclick="pfSetTab(\''+t[0]+'\')">'+t[1]+'</button>'; }).join('');
   el('pfBody').innerHTML=pfTabBody(c);
 }
@@ -1983,11 +2009,42 @@ function pfDocRow(name,sub,onView){
     +(onView?('<button class="pfdoc-btn" onclick="'+onView+'">View</button>'):'')+'</div>';
 }
 function pfDocsBody(c){
-  var h='<div class="pfcard"><div class="pfcard-h" style="display:flex;justify-content:space-between;align-items:center">Uploaded documents<button class="pfsave" style="padding:9px 15px;font-size:13px" onclick="document.getElementById(\'pfDocInput\').click()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Upload</button></div>';
-  var any=false;
-  if(c.document_path){ any=true; h+=pfDocRow(c.document_name||'Registration document','Uploaded at sign-up','pfViewDoc(\''+esc(c.document_path)+'\')'); }
-  _pfDocs.forEach(function(d){ any=true; h+=pfDocRow(d.file_name||'Document', d.created_at?('Uploaded '+fmtFull(String(d.created_at).slice(0,10))):'Uploaded', 'pfViewDoc(\''+esc(d.path)+'\')'); });
-  if(!any) h+='<div style="color:#8a97ac;font-size:14px;padding:6px 0">No documents yet. Use Upload to add one.</div>';
+  // Required-documents checklist: download the blank, sign, upload the signed copy.
+  var done=0;
+  var rows=ONBOARDING_DOCS.map(function(d){
+    var up=_onbUploads[d.key];
+    if(up) done++;
+    var pill = up
+      ? '<span class="dcl-pill ok">Signed &amp; uploaded</span>'
+      : '<span class="dcl-pill todo">Action needed</span>';
+    var reqTag = (d.required && !up) ? '<span class="dcl-req">Required</span>' : '';
+    var icon = up
+      ? '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>';
+    var dl='<a class="dcl-btn dl" href="'+d.file+'" download target="_blank"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download</a>';
+    var acts;
+    if(up){
+      acts='<button class="dcl-btn view" onclick="pfViewDoc(\''+esc(up.path)+'\')"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> View</button>'
+        +'<button class="dcl-btn re" onclick="onbPick(\''+d.key+'\')">Replace</button>';
+    } else {
+      acts=dl+'<button class="dcl-btn up" onclick="onbPick(\''+d.key+'\')"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg> Upload signed</button>';
+    }
+    return '<div class="dcl-row'+(up?' done':'')+'"><div class="dcl-ic">'+icon+'</div>'
+      +'<div class="dcl-bd"><div class="dcl-nm">'+d.name+' '+reqTag+' '+pill+'</div>'
+      +'<div class="dcl-ds">'+d.desc+'</div>'
+      +(up?('<div class="dcl-fn">Uploaded: '+esc(up.file_name||'signed document')+'</div>'):'')+'</div>'
+      +'<div class="dcl-acts">'+acts+'</div></div>';
+  }).join('');
+  var pct = ONBOARDING_DOCS.length ? Math.round(done/ONBOARDING_DOCS.length*100) : 0;
+  var h='<div class="pfcard"><div class="pfcard-h">Required documents</div>'
+    +'<div style="color:#8a97ac;font-size:13px;margin:-4px 0 16px">Download each document, complete and sign it, then upload the signed copy. We\'ll review and confirm.</div>'
+    +'<div class="dcl-prog"><div class="dcl-bar"><i style="width:'+pct+'%"></i></div><div class="dcl-count">'+done+' of '+ONBOARDING_DOCS.length+' returned</div></div>'
+    +rows;
+  // any other ad-hoc documents on the account (registration doc, extra uploads)
+  var extra='';
+  if(c.document_path){ extra+=pfDocRow(c.document_name||'Registration document','Uploaded at sign-up','pfViewDoc(\''+esc(c.document_path)+'\')'); }
+  (_pfDocs||[]).forEach(function(d){ extra+=pfDocRow(d.file_name||'Document', d.created_at?('Uploaded '+fmtFull(String(d.created_at).slice(0,10))):'Uploaded', 'pfViewDoc(\''+esc(d.path)+'\')'); });
+  if(extra){ h+='<div class="pfcard-h" style="font-size:14px;margin:22px 0 10px">Other documents</div>'+extra; }
   return h+'</div>';
 }
 function pfTermsBody(c){
@@ -2054,7 +2111,15 @@ async function pfDocUpload(files){
 }
 async function pfLoadDocs(){
   var c=CURRENT_CUST; if(!c) return;
-  try{ var r=await sb.from('customer_files').select('*').eq('customer_id',c.id).order('created_at',{ascending:false}); if(!r.error&&r.data) _pfDocs=r.data; }catch(e){}
+  try{
+    var r=await sb.from('customer_files').select('*').eq('customer_id',c.id).order('created_at',{ascending:false});
+    if(!r.error&&r.data){
+      // split the signed checklist docs (category 'onboarding') from ad-hoc ones
+      _onbUploads={};
+      r.data.forEach(function(f){ if(f.category==='onboarding' && f.doc_key){ _onbUploads[f.doc_key]={path:f.path, file_name:f.file_name}; } });
+      _pfDocs=r.data.filter(function(f){ return f.category!=='onboarding'; });
+    }
+  }catch(e){}
 }
 async function saveProfile(){
   var c=CURRENT_CUST; if(!c) return;
